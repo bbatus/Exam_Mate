@@ -1,0 +1,22 @@
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Sadece bağımlılıklar için gerekli dosyaları kopyala
+COPY package*.json yarn.lock* ./
+
+# Bağımlılıkları yükle ve önbelleğe al
+RUN yarn install --frozen-lockfile --network-timeout 600000 && \
+    yarn add i18next react-i18next i18next-browser-languagedetector && \
+    yarn cache clean
+
+# Tüm dosyaları kopyala (node_modules hariç)
+COPY . .
+
+# Vite için gerekli çevre değişkenleri
+ENV VITE_DISABLE_NATIVE_MODULES=true
+ENV ROLLUP_SKIP_LOAD_NATIVE_PLUGIN=true
+ENV NODE_OPTIONS="--max-old-space-size=2048"
+
+# Uygulamayı çalıştır
+CMD ["yarn", "dev", "--", "--host"] 

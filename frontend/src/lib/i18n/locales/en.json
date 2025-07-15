@@ -1,0 +1,312 @@
+{
+  "common": {
+    "appName": "Exam Mate",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "back": "Back",
+    "next": "Next",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "view": "View",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "language": "Language",
+    "home": "Home"
+  },
+  "theme": {
+    "switchToLight": "Switch to Light Mode",
+    "switchToDark": "Switch to Dark Mode"
+  },
+  "home": {
+    "title": "Prepare for Certification Exams",
+    "subtitle": "Practice immediately without registration",
+    "cta": "Explore Exams",
+    "featuresTitle": "Platform Features",
+    "features": {
+      "noRegistration": {
+        "title": "No Registration Required",
+        "description": "Start practicing immediately without creating an account"
+      },
+      "detailedAnalysis": {
+        "title": "Detailed Analysis",
+        "description": "Get comprehensive feedback on your performance"
+      },
+      "upToDate": {
+        "title": "Up-to-date Questions",
+        "description": "Practice with the latest exam questions"
+      }
+    }
+  },
+  "examList": {
+    "loading": "Loading Exams...",
+    "availableExams": "Available Exams",
+    "selectExam": "Select the exam you want to prepare for and start practicing right away.",
+    "filterExams": "Filter Exams",
+    "searchExams": "Search exams",
+    "category": "Category",
+    "allCategories": "All Categories",
+    "difficulty": "Difficulty",
+    "noExamsFound": "No exams found matching your criteria.",
+    "examDescription": "This exam measures fundamental knowledge in cloud computing and is an important step for those looking to build a career in the industry.",
+    "startExam": "Start Exam",
+    "aboutPlatform": "Take Your Exam Preparation Seriously",
+    "platformDescription1": "With Exam Mate, preparing for certification exams has never been easier. Get access to practice questions without registration.",
+    "platformDescription2": "Our platform provides up-to-date questions and detailed explanations to help you succeed in your certification journey.",
+    "title": "Available Exams",
+    "noResults": "No exams found matching your criteria.",
+    "backToExams": "Back to Exam List",
+    "filterTitle": "Filter Exams",
+    "tabExams": "Exams",
+    "tabStatistics": "Statistics",
+    "categoryLabel": "Category",
+    "difficultyLabel": "Difficulty Level",
+    "searchLabel": "Search Exams",
+    "questions": "Questions",
+    "viewStatistics": "View Statistics"
+  },
+  "examMode": {
+    "title": "Select Exam Mode",
+    "practice": {
+      "title": "Practice Mode",
+      "description": "See correct answers and explanations after each question. Ideal for learning."
+    },
+    "real": {
+      "title": "Real Exam Mode",
+      "description": "See results only after completing the exam. Ideal for simulating the real exam experience."
+    },
+    "topic": {
+      "title": "Topic-Based Study",
+      "description": "Focus on questions from specific categories. Ideal for focusing on areas you need to improve."
+    },
+    "startPractice": "Start Practice Mode",
+    "startReal": "Start Real Exam Mode",
+    "startTopic": "Start Topic-Based Study"
+  },
+  "exams": {
+    "title": "Available Exams",
+    "difficulty": "Difficulty",
+    "questions": "Questions",
+    "time": "Time",
+    "start": "Start Exam",
+    "categories": {
+      "all": "All",
+      "cloud": "Cloud",
+      "devops": "DevOps",
+      "security": "Security",
+      "programming": "Programming"
+    },
+    "sortOptions": {
+      "popular": "Most Popular",
+      "newest": "Newest First",
+      "difficulty": "Difficulty"
+    }
+  },
+  "quiz": {
+    "timeRemaining": "Time Remaining",
+    "question": "Question",
+    "of": "of",
+    "previousQuestion": "Previous Question",
+    "nextQuestion": "Next Question",
+    "listQuestions": "List Questions",
+    "finishExam": "Finish Exam",
+    "confirmFinish": {
+      "title": "Finish Exam?",
+      "message": "You have {{unanswered}} unanswered questions. Are you sure you want to finish?",
+      "confirm": "Yes, Finish Exam",
+      "cancel": "No, Continue"
+    },
+    "practiceMode": "Practice Mode",
+    "realExamMode": "Real Exam Mode",
+    "topicBasedStudy": "Topic-Based Study",
+    "congratulations": "Congratulations!",
+    "examCompleted": "Exam Completed",
+    "yourScore": "Your Score",
+    "passedMessage": "You have successfully passed the exam!",
+    "failedMessage": "You can try again with more practice.",
+    "tryAgain": "Try Again",
+    "returnToHome": "Return to Home",
+    "totalTime": "Total Time",
+    "examMode": "Exam Mode",
+    "practice": "Practice",
+    "realExam": "Real Exam",
+    "summary": "Summary",
+    "detailedAnalysis": "Detailed Analysis",
+    "correct": "Correct",
+    "wrong": "Wrong",
+    "unanswered": "Unanswered",
+    "wrongQuestions": "Wrong Questions",
+    "unansweredQuestions": "Unanswered Questions",
+    "correctQuestions": "Correct Questions",
+    "youAnsweredCorrectly": "You answered these questions correctly",
+    "explanation": "Explanation",
+    "correctAnswer": "Correct Answer",
+    "wrongAnswer": "Wrong Answer",
+    "previous": "Previous",
+    "next": "Next",
+    "reportError": "Report Error"
+  },
+  "results": {
+    "title": "Exam Results",
+    "score": "Your Score",
+    "correct": "Correct",
+    "incorrect": "Incorrect",
+    "unanswered": "Unanswered",
+    "status": {
+      "passed": "PASSED",
+      "failed": "FAILED"
+    },
+    "tabs": {
+      "summary": "Summary",
+      "detailed": "Detailed Analysis"
+    },
+    "explanation": "Explanation",
+    "yourAnswer": "Your Answer",
+    "correctAnswer": "Correct Answer",
+    "actions": {
+      "newExam": "Start New Exam",
+      "share": "Share Results"
+    }
+  },
+  "admin": {
+    "title": "Exam Mate Admin",
+    "dashboard": "Dashboard",
+    "examManagement": "Exam Management",
+    "questionManagement": "Question Management",
+    "settings": "Settings",
+    "logout": "Logout",
+    "login": {
+      "title": "Admin Login",
+      "username": "Username",
+      "password": "Password",
+      "signIn": "Sign In",
+      "error": "Invalid username or password"
+    },
+    "stats": {
+      "totalExams": "Total Exams",
+      "totalQuestions": "Total Questions",
+      "totalUsers": "Total Users",
+      "totalExamsTaken": "Exams Taken"
+    },
+    "recentExams": "Recent Exams",
+    "noExams": "No exams found",
+    "viewAllExams": "View All Exams",
+    "manageQuestions": "Manage Questions",
+    "exams": {
+      "title": "Exams",
+      "add": "Add New Exam",
+      "edit": "Edit Exam",
+      "create": "Create New Exam",
+      "bulkActions": "Bulk Actions",
+      "columns": {
+        "id": "ID",
+        "name": "Exam Name",
+        "questions": "Questions",
+        "created": "Created Date",
+        "actions": "Actions"
+      },
+      "deleteTitle": "Delete Exam",
+      "deleteConfirmation": "Are you sure you want to delete the exam \"{{title}}\"? This action cannot be undone.",
+      "createSuccess": "Exam created successfully",
+      "updateSuccess": "Exam updated successfully",
+      "createError": "Failed to create exam",
+      "updateError": "Failed to update exam",
+      "details": "Exam Details",
+      "titleField": "Exam Title"
+    },
+    "questions": {
+      "title": "Questions for {{examTitle}}",
+      "add": "Add New Question",
+      "edit": "Edit Question",
+      "create": "Create New Question",
+      "columns": {
+        "id": "ID",
+        "question": "Question",
+        "section": "Section",
+        "options": "Options",
+        "actions": "Actions"
+      },
+      "deleteTitle": "Delete Question",
+      "deleteConfirmation": "Are you sure you want to delete this question? This action cannot be undone.",
+      "createSuccess": "Question created successfully",
+      "updateSuccess": "Question updated successfully",
+      "createError": "Failed to create question",
+      "updateError": "Failed to update question",
+      "details": "Question Details",
+      "questionField": "Question Text",
+      "sectionField": "Section",
+      "optionsField": "Answer Options",
+      "correctOptionField": "Correct Option",
+      "explanationField": "Explanation"
+    }
+  },
+  "legal": {
+    "termsOfService": "Terms of Service",
+    "privacyPolicy": "Privacy Policy",
+    "cookiePolicy": "Cookie Policy",
+    "lastUpdated": "Last Updated",
+    "terms": {
+      "acceptance": "Acceptance of Terms",
+      "acceptanceText": "By accessing or using Exam Mate, you agree to be bound by these Terms of Service.",
+      "intellectualProperty": "Intellectual Property",
+      "intellectualPropertyText": "All content on this platform, including questions, answers, and explanations, is the property of Exam Mate and protected by copyright laws.",
+      "userConduct": "User Conduct",
+      "userConductText": "You agree not to misuse the platform or attempt to access restricted areas without authorization.",
+      "disclaimer": "Disclaimer of Warranties",
+      "disclaimerText": "The platform is provided 'as is' without warranties of any kind, either express or implied.",
+      "limitation": "Limitation of Liability",
+      "limitationText": "Exam Mate shall not be liable for any indirect, incidental, special, consequential or punitive damages.",
+      "governing": "Governing Law",
+      "governingText": "These Terms shall be governed by and construed in accordance with the laws of Turkey.",
+      "changes": "Changes to Terms",
+      "changesText": "We reserve the right to modify these terms at any time. Your continued use of the platform constitutes acceptance of any changes.",
+      "contact": "Contact Information",
+      "contactText": "If you have any questions about these Terms, please contact us."
+    },
+    "privacy": {
+      "introduction": "Introduction",
+      "introductionText": "This Privacy Policy explains how we collect and use information when you use our platform.",
+      "informationCollection": "Information Collection",
+      "informationCollectionText": "We collect minimal information necessary for the functioning of our platform.",
+      "cookiesUsage": "Cookies Usage",
+      "cookiesUsageText": "We use cookies to enhance your experience on our platform.",
+      "thirdPartyServices": "Third-Party Services",
+      "thirdPartyServicesText": "We may use third-party services that collect information as you use our platform.",
+      "dataProtection": "Data Protection",
+      "dataProtectionText": "We implement appropriate security measures to protect your information.",
+      "userRights": "Your Rights",
+      "userRightsText": "You have the right to access, correct, or delete your information.",
+      "changes": "Changes to This Policy",
+      "changesText": "We may update this policy from time to time. We will notify you of any changes by posting the new policy on this page.",
+      "contact": "Contact Us",
+      "contactText": "If you have any questions about this Privacy Policy, please contact us."
+    },
+    "cookies": {
+      "introduction": "Introduction",
+      "introductionText": "This Cookie Policy explains how we use cookies and similar technologies on our platform.",
+      "whatAreCookies": "What Are Cookies",
+      "whatAreCookiesText": "Cookies are small text files that are stored on your device when you visit a website.",
+      "typeOfCookies": "Types of Cookies We Use",
+      "typeOfCookiesText": "We use essential cookies for the functioning of our platform and analytics cookies to improve our services.",
+      "howWeUse": "How We Use Cookies",
+      "howWeUseText": "We use cookies to remember your preferences and provide you with a better experience.",
+      "thirdPartyCookies": "Third-Party Cookies",
+      "thirdPartyCookiesText": "Some cookies are placed by third parties on our behalf.",
+      "controlCookies": "How to Control Cookies",
+      "controlCookiesText": "You can control and/or delete cookies as you wish through your browser settings.",
+      "changes": "Changes to This Policy",
+      "changesText": "We may update this policy from time to time. We will notify you of any changes by posting the new policy on this page.",
+      "contact": "Contact Us",
+      "contactText": "If you have any questions about this Cookie Policy, please contact us."
+    }
+  },
+  "footer": {
+    "allRightsReserved": "All Rights Reserved",
+    "termsOfService": "Terms of Service",
+    "privacyPolicy": "Privacy Policy",
+    "cookiePolicy": "Cookie Policy"
+  }
+} 

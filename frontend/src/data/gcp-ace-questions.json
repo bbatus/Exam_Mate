@@ -1,0 +1,662 @@
+{
+  "examTitle": "Google Cloud Associate Cloud Engineer",
+  "examCode": "GCP-ACE",
+  "questions": [
+    {
+      "id": 1,
+      "question": "You need to create a resource hierarchy for a company with multiple departments. What is the correct order from top to bottom?",
+      "options": [
+        "Project → Folder → Organization",
+        "Organization → Project → Folder",
+        "Organization → Folder → Project",
+        "Folder → Organization → Project"
+      ],
+      "correctAnswer": 2,
+      "category": "Setting up a cloud solution environment",
+      "explanation": "In Google Cloud, the resource hierarchy goes from Organization (top) to Folders to Projects (bottom)."
+    },
+    {
+      "id": 2,
+      "question": "Which IAM role should you assign to a developer who needs to deploy applications but should not be able to delete projects?",
+      "options": [
+        "roles/owner",
+        "roles/editor",
+        "roles/viewer",
+        "roles/appengine.deployer"
+      ],
+      "correctAnswer": 1,
+      "category": "Setting up a cloud solution environment",
+      "explanation": "The Editor role allows users to modify most resources but not delete projects."
+    },
+    {
+      "id": 3,
+      "question": "You want to automatically add users to groups when they join your organization. Which Google Cloud service should you use?",
+      "options": [
+        "Cloud Identity",
+        "Cloud IAM",
+        "Cloud Directory Sync",
+        "Cloud Identity-Aware Proxy"
+      ],
+      "correctAnswer": 0,
+      "category": "Setting up a cloud solution environment",
+      "explanation": "Cloud Identity is used for identity management and can automate user provisioning."
+    },
+    {
+      "id": 4,
+      "question": "Which command enables the Compute Engine API for your current project?",
+      "options": [
+        "gcloud services enable compute.googleapis.com",
+        "gcloud api enable compute-engine",
+        "gcloud compute enable-api",
+        "gcloud enable compute.googleapis.com"
+      ],
+      "correctAnswer": 0,
+      "category": "Setting up a cloud solution environment",
+      "explanation": "The correct command is 'gcloud services enable compute.googleapis.com'."
+    },
+    {
+      "id": 5,
+      "question": "You need to increase your project's quota for Compute Engine instances. What should you do?",
+      "options": [
+        "Contact Google Cloud Support",
+        "Use the Quotas page in Cloud Console",
+        "Increase billing limits",
+        "Wait for automatic increase"
+      ],
+      "correctAnswer": 1,
+      "category": "Setting up a cloud solution environment",
+      "explanation": "You can request quota increases through the Quotas page in the Cloud Console."
+    },
+    {
+      "id": 6,
+      "question": "Which tool helps you analyze your Google Cloud resources and get recommendations?",
+      "options": [
+        "Cloud Asset Inventory",
+        "Gemini Cloud Assist",
+        "Cloud Monitoring",
+        "Both A and B"
+      ],
+      "correctAnswer": 3,
+      "category": "Setting up a cloud solution environment",
+      "explanation": "Both Cloud Asset Inventory and Gemini Cloud Assist provide resource analysis and recommendations."
+    },
+    {
+      "id": 7,
+      "question": "You want to create a billing alert when your project costs exceed $100. Where should you configure this?",
+      "options": [
+        "Cloud Monitoring",
+        "Cloud Billing",
+        "Cloud Console Dashboard",
+        "Cloud Logging"
+      ],
+      "correctAnswer": 1,
+      "category": "Setting up a cloud solution environment",
+      "explanation": "Billing alerts are configured in the Cloud Billing section of the console."
+    },
+    {
+      "id": 8,
+      "question": "What is the purpose of billing exports in Google Cloud?",
+      "options": [
+        "To reduce billing costs",
+        "To export billing data to BigQuery for analysis",
+        "To automatically pay bills",
+        "To share billing with other projects"
+      ],
+      "correctAnswer": 1,
+      "category": "Setting up a cloud solution environment",
+      "explanation": "Billing exports allow you to export detailed billing data to BigQuery for analysis."
+    },
+    {
+      "id": 9,
+      "question": "You need to deploy a stateless web application that can scale to zero when not in use. Which compute option is most suitable?",
+      "options": [
+        "Compute Engine",
+        "Google Kubernetes Engine",
+        "Cloud Run",
+        "App Engine Flexible"
+      ],
+      "correctAnswer": 2,
+      "category": "Planning and implementing a cloud solution",
+      "explanation": "Cloud Run is designed for stateless containers and can scale to zero when not in use."
+    },
+    {
+      "id": 10,
+      "question": "Which storage option provides the highest IOPS for a Compute Engine instance?",
+      "options": [
+        "Standard Persistent Disk",
+        "SSD Persistent Disk",
+        "Google Cloud Hyperdisk",
+        "Local SSD"
+      ],
+      "correctAnswer": 3,
+      "category": "Planning and implementing a cloud solution",
+      "explanation": "Local SSD provides the highest IOPS but is ephemeral and attached to a specific VM instance."
+    },
+    {
+      "id": 11,
+      "question": "You want to create a managed instance group that scales between 3 and 10 instances. Which component do you need first?",
+      "options": [
+        "Load balancer",
+        "Instance template",
+        "Health check",
+        "Auto scaler"
+      ],
+      "correctAnswer": 1,
+      "category": "Planning and implementing a cloud solution",
+      "explanation": "An instance template is required first to define the VM configuration for the managed instance group."
+    },
+    {
+      "id": 12,
+      "question": "What is the main benefit of using Spot VM instances?",
+      "options": [
+        "Better performance",
+        "Higher availability",
+        "Lower cost",
+        "More storage"
+      ],
+      "correctAnswer": 2,
+      "category": "Planning and implementing a cloud solution",
+      "explanation": "Spot VMs offer significantly lower prices compared to standard VMs but can be preempted."
+    },
+    {
+      "id": 13,
+      "question": "You need to deploy a GKE cluster that automatically manages nodes. Which mode should you choose?",
+      "options": [
+        "GKE Standard",
+        "GKE Autopilot",
+        "GKE Private",
+        "GKE Regional"
+      ],
+      "correctAnswer": 1,
+      "category": "Planning and implementing a cloud solution",
+      "explanation": "GKE Autopilot automatically manages the underlying infrastructure, including nodes."
+    },
+    {
+      "id": 14,
+      "question": "Which Google Cloud service is best for storing time-series data at scale?",
+      "options": [
+        "Cloud SQL",
+        "Cloud Spanner",
+        "Cloud Bigtable",
+        "Cloud Firestore"
+      ],
+      "correctAnswer": 2,
+      "category": "Planning and implementing a cloud solution",
+      "explanation": "Cloud Bigtable is optimized for time-series data and can handle high throughput."
+    },
+    {
+      "id": 15,
+      "question": "You need to process streaming data in real-time. Which service should you use?",
+      "options": [
+        "BigQuery",
+        "Cloud Dataflow",
+        "Cloud Pub/Sub",
+        "Cloud Storage"
+      ],
+      "correctAnswer": 1,
+      "category": "Planning and implementing a cloud solution",
+      "explanation": "Cloud Dataflow is designed for real-time stream processing and batch processing."
+    },
+    {
+      "id": 16,
+      "question": "Which Cloud Storage class is most cost-effective for data accessed once a month?",
+      "options": [
+        "Standard",
+        "Nearline",
+        "Coldline",
+        "Archive"
+      ],
+      "correctAnswer": 1,
+      "category": "Planning and implementing a cloud solution",
+      "explanation": "Nearline storage is designed for data accessed less than once a month."
+    },
+    {
+      "id": 17,
+      "question": "You want to create a private GKE cluster. What does this mean?",
+      "options": [
+        "Cluster is not accessible from internet",
+        "Nodes don't have external IP addresses",
+        "Pods can't communicate with each other",
+        "Cluster is only accessible by the owner"
+      ],
+      "correctAnswer": 1,
+      "category": "Planning and implementing a cloud solution",
+      "explanation": "In a private GKE cluster, nodes do not have external IP addresses, enhancing security."
+    },
+    {
+      "id": 18,
+      "question": "Which VPC mode allows you to define custom IP ranges for subnets?",
+      "options": [
+        "Auto mode",
+        "Custom mode",
+        "Legacy mode",
+        "Shared mode"
+      ],
+      "correctAnswer": 1,
+      "category": "Planning and implementing a cloud solution",
+      "explanation": "Custom mode VPC networks allow you to define your own subnet IP ranges."
+    },
+    {
+      "id": 19,
+      "question": "You need to allow HTTP traffic to your Compute Engine instances. Which type of firewall rule should you create?",
+      "options": [
+        "Egress rule",
+        "Ingress rule",
+        "Internal rule",
+        "External rule"
+      ],
+      "correctAnswer": 1,
+      "category": "Planning and implementing a cloud solution",
+      "explanation": "Ingress rules control incoming traffic to your instances."
+    },
+    {
+      "id": 20,
+      "question": "Which load balancer type is best for global HTTP(S) traffic?",
+      "options": [
+        "Network Load Balancer",
+        "Internal Load Balancer",
+        "HTTP(S) Load Balancer",
+        "TCP/UDP Load Balancer"
+      ],
+      "correctAnswer": 2,
+      "category": "Planning and implementing a cloud solution",
+      "explanation": "The HTTP(S) Load Balancer is designed for global HTTP(S) traffic with features like SSL termination."
+    },
+    {
+      "id": 21,
+      "question": "What is the main benefit of using Infrastructure as Code (IaC)?",
+      "options": [
+        "Faster deployment",
+        "Version control and repeatability",
+        "Lower costs",
+        "Better security"
+      ],
+      "correctAnswer": 1,
+      "category": "Planning and implementing a cloud solution",
+      "explanation": "IaC allows you to version control your infrastructure and create repeatable deployments."
+    },
+    {
+      "id": 22,
+      "question": "Which tool is Google's recommended IaC solution for Google Cloud?",
+      "options": [
+        "Terraform",
+        "Fabric FAST",
+        "Config Connector",
+        "Helm"
+      ],
+      "correctAnswer": 1,
+      "category": "Planning and implementing a cloud solution",
+      "explanation": "Google recommends Fabric FAST as their IaC solution for Google Cloud."
+    },
+    {
+      "id": 23,
+      "question": "How do you SSH into a Compute Engine instance from the command line?",
+      "options": [
+        "gcloud compute ssh instance-name",
+        "gcloud ssh instance-name",
+        "gcloud connect instance-name",
+        "gcloud vm connect instance-name"
+      ],
+      "correctAnswer": 0,
+      "category": "Ensuring successful operation of a cloud solution",
+      "explanation": "The correct command is 'gcloud compute ssh instance-name'."
+    },
+    {
+      "id": 24,
+      "question": "You want to create a snapshot of a Compute Engine disk. Which command should you use?",
+      "options": [
+        "gcloud compute snapshots create",
+        "gcloud compute disks snapshot",
+        "gcloud compute disks snapshot-create",
+        "gcloud snapshots create"
+      ],
+      "correctAnswer": 0,
+      "category": "Ensuring successful operation of a cloud solution",
+      "explanation": "The correct command is 'gcloud compute snapshots create'."
+    },
+    {
+      "id": 25,
+      "question": "How do you configure a GKE cluster to access Artifact Registry?",
+      "options": [
+        "Configure service account with Artifact Registry Reader role",
+        "Enable Artifact Registry API",
+        "Create network rules",
+        "Install Docker"
+      ],
+      "correctAnswer": 0,
+      "category": "Ensuring successful operation of a cloud solution",
+      "explanation": "Configure the GKE service account with the Artifact Registry Reader role for access."
+    },
+    {
+      "id": 26,
+      "question": "You want to see all pods in a GKE cluster. Which command should you use?",
+      "options": [
+        "gcloud container pods list",
+        "kubectl get pods --all-namespaces",
+        "gcloud kubernetes pods list",
+        "kubectl list pods"
+      ],
+      "correctAnswer": 1,
+      "category": "Ensuring successful operation of a cloud solution",
+      "explanation": "The correct command is 'kubectl get pods --all-namespaces'."
+    },
+    {
+      "id": 27,
+      "question": "What is the purpose of Horizontal Pod Autoscaler (HPA) in GKE?",
+      "options": [
+        "Scale pods vertically",
+        "Scale pods horizontally based on metrics",
+        "Scale nodes in the cluster",
+        "Scale storage volumes"
+      ],
+      "correctAnswer": 1,
+      "category": "Ensuring successful operation of a cloud solution",
+      "explanation": "HPA automatically scales the number of pods based on observed metrics like CPU utilization."
+    },
+    {
+      "id": 28,
+      "question": "You want to deploy a new version of a Cloud Run service with zero downtime. What should you do?",
+      "options": [
+        "Delete the old service first",
+        "Use traffic splitting",
+        "Deploy to a new region",
+        "Use blue-green deployment"
+      ],
+      "correctAnswer": 1,
+      "category": "Ensuring successful operation of a cloud solution",
+      "explanation": "Traffic splitting allows you to gradually shift traffic to the new version."
+    },
+    {
+      "id": 29,
+      "question": "Which lifecycle rule action permanently deletes objects from Cloud Storage?",
+      "options": [
+        "SetStorageClass",
+        "Delete",
+        "Archive",
+        "Transition"
+      ],
+      "correctAnswer": 1,
+      "category": "Ensuring successful operation of a cloud solution",
+      "explanation": "The Delete action permanently removes objects from Cloud Storage."
+    },
+    {
+      "id": 30,
+      "question": "You want to execute a SQL query in BigQuery. Which command should you use?",
+      "options": [
+        "bq query \"SELECT * FROM table\"",
+        "gcloud bigquery query \"SELECT * FROM table\"",
+        "bq select \"SELECT * FROM table\"",
+        "gcloud sql query \"SELECT * FROM table\""
+      ],
+      "correctAnswer": 0,
+      "category": "Ensuring successful operation of a cloud solution",
+      "explanation": "The correct command is 'bq query \"SELECT * FROM table\"'."
+    },
+    {
+      "id": 31,
+      "question": "How do you backup a Cloud SQL instance?",
+      "options": [
+        "Create a snapshot",
+        "Export to Cloud Storage",
+        "Use automatic backups",
+        "All of the above"
+      ],
+      "correctAnswer": 3,
+      "category": "Ensuring successful operation of a cloud solution",
+      "explanation": "Cloud SQL instances can be backed up using snapshots, exports to Cloud Storage, or automatic backups."
+    },
+    {
+      "id": 32,
+      "question": "You want to add a new subnet to an existing VPC. What must be true about the IP range?",
+      "options": [
+        "It must be in the same region as other subnets",
+        "It must not overlap with existing subnets",
+        "It must be a public IP range",
+        "It must be larger than existing subnets"
+      ],
+      "correctAnswer": 1,
+      "category": "Ensuring successful operation of a cloud solution",
+      "explanation": "Subnet IP ranges must not overlap with other subnets in the same VPC."
+    },
+    {
+      "id": 33,
+      "question": "Which service provides managed DNS for Google Cloud?",
+      "options": [
+        "Cloud DNS",
+        "Cloud NAT",
+        "Cloud CDN",
+        "Cloud Load Balancing"
+      ],
+      "correctAnswer": 0,
+      "category": "Ensuring successful operation of a cloud solution",
+      "explanation": "Cloud DNS is Google's managed DNS service."
+    },
+    {
+      "id": 34,
+      "question": "You want to create a monitoring alert when CPU utilization exceeds 80%. Which service should you use?",
+      "options": [
+        "Cloud Logging",
+        "Cloud Monitoring",
+        "Cloud Trace",
+        "Cloud Profiler"
+      ],
+      "correctAnswer": 1,
+      "category": "Ensuring successful operation of a cloud solution",
+      "explanation": "Cloud Monitoring is used to create alerts based on metrics like CPU utilization."
+    },
+    {
+      "id": 35,
+      "question": "Where should you look to troubleshoot application latency issues?",
+      "options": [
+        "Cloud Logging",
+        "Cloud Monitoring",
+        "Cloud Trace",
+        "Cloud Debugger"
+      ],
+      "correctAnswer": 2,
+      "category": "Ensuring successful operation of a cloud solution",
+      "explanation": "Cloud Trace helps identify and troubleshoot latency issues in applications."
+    },
+    {
+      "id": 36,
+      "question": "What is the purpose of the Ops Agent?",
+      "options": [
+        "To deploy applications",
+        "To collect telemetry data",
+        "To manage infrastructure",
+        "To monitor costs"
+      ],
+      "correctAnswer": 1,
+      "category": "Ensuring successful operation of a cloud solution",
+      "explanation": "The Ops Agent collects logs and metrics (telemetry data) from VMs."
+    },
+    {
+      "id": 37,
+      "question": "You want to export logs to BigQuery for analysis. Which service should you configure?",
+      "options": [
+        "Cloud Logging",
+        "Cloud Monitoring",
+        "Cloud Trace",
+        "Cloud Profiler"
+      ],
+      "correctAnswer": 0,
+      "category": "Ensuring successful operation of a cloud solution",
+      "explanation": "Cloud Logging allows you to export logs to destinations like BigQuery."
+    },
+    {
+      "id": 38,
+      "question": "Which log type tracks who did what in your Google Cloud environment?",
+      "options": [
+        "System logs",
+        "Application logs",
+        "Audit logs",
+        "Error logs"
+      ],
+      "correctAnswer": 2,
+      "category": "Ensuring successful operation of a cloud solution",
+      "explanation": "Audit logs record administrative activities, data access, and system events."
+    },
+    {
+      "id": 39,
+      "question": "What is the difference between basic and predefined IAM roles?",
+      "options": [
+        "Basic roles are more secure",
+        "Basic roles are broader, predefined roles are more granular",
+        "Predefined roles are deprecated",
+        "No difference"
+      ],
+      "correctAnswer": 1,
+      "category": "Configuring access and security",
+      "explanation": "Basic roles (Owner, Editor, Viewer) are broad, while predefined roles target specific services and actions."
+    },
+    {
+      "id": 40,
+      "question": "You want to create a custom IAM role. Which permissions should you include?",
+      "options": [
+        "Only the minimum permissions needed",
+        "All available permissions",
+        "Only basic permissions",
+        "Only predefined permissions"
+      ],
+      "correctAnswer": 0,
+      "category": "Configuring access and security",
+      "explanation": "Following the principle of least privilege, include only the minimum permissions needed."
+    },
+    {
+      "id": 41,
+      "question": "What is the best practice for service account management?",
+      "options": [
+        "Use the same service account for all resources",
+        "Create separate service accounts for different functions",
+        "Use user accounts instead of service accounts",
+        "Share service account keys frequently"
+      ],
+      "correctAnswer": 1,
+      "category": "Configuring access and security",
+      "explanation": "Create separate service accounts for different functions to limit the blast radius of potential security issues."
+    },
+    {
+      "id": 42,
+      "question": "How do you assign a service account to a Compute Engine instance?",
+      "options": [
+        "During instance creation or after creation",
+        "Only during instance creation",
+        "Only after instance creation",
+        "Service accounts cannot be assigned to instances"
+      ],
+      "correctAnswer": 0,
+      "category": "Configuring access and security",
+      "explanation": "Service accounts can be assigned during instance creation or changed afterward."
+    },
+    {
+      "id": 43,
+      "question": "What is service account impersonation?",
+      "options": [
+        "Creating fake service accounts",
+        "One service account acting as another",
+        "Using service accounts for authentication",
+        "Sharing service account keys"
+      ],
+      "correctAnswer": 1,
+      "category": "Configuring access and security",
+      "explanation": "Service account impersonation allows one principal to act as a service account without using its key."
+    },
+    {
+      "id": 44,
+      "question": "How long do short-lived service account credentials last by default?",
+      "options": [
+        "1 hour",
+        "24 hours",
+        "1 week",
+        "1 month"
+      ],
+      "correctAnswer": 0,
+      "category": "Configuring access and security",
+      "explanation": "Short-lived service account credentials typically last for 1 hour by default."
+    },
+    {
+      "id": 45,
+      "question": "You want to allow a GKE pod to access Cloud Storage. What should you configure?",
+      "options": [
+        "Service account with appropriate IAM roles",
+        "Network firewall rules",
+        "Storage bucket permissions",
+        "API keys"
+      ],
+      "correctAnswer": 0,
+      "category": "Configuring access and security",
+      "explanation": "Configure a service account with appropriate IAM roles and assign it to the GKE pod."
+    },
+    {
+      "id": 46,
+      "question": "Which command shows the current IAM policy for a project?",
+      "options": [
+        "gcloud projects get-iam-policy PROJECT_ID",
+        "gcloud iam policies get PROJECT_ID",
+        "gcloud policy get PROJECT_ID",
+        "gcloud projects show-policy PROJECT_ID"
+      ],
+      "correctAnswer": 0,
+      "category": "Configuring access and security",
+      "explanation": "The correct command is 'gcloud projects get-iam-policy PROJECT_ID'."
+    },
+    {
+      "id": 47,
+      "question": "What is the principle of least privilege?",
+      "options": [
+        "Give users minimum access needed to do their job",
+        "Give users maximum access for convenience",
+        "Give all users the same access level",
+        "Give users access only to their own resources"
+      ],
+      "correctAnswer": 0,
+      "category": "Configuring access and security",
+      "explanation": "The principle of least privilege means giving users only the minimum access needed to perform their job."
+    },
+    {
+      "id": 48,
+      "question": "You need to rotate service account keys regularly. What is the recommended approach?",
+      "options": [
+        "Manual key rotation every month",
+        "Use short-lived credentials or workload identity",
+        "Never rotate keys",
+        "Rotate keys every year"
+      ],
+      "correctAnswer": 1,
+      "category": "Configuring access and security",
+      "explanation": "Using short-lived credentials or workload identity is preferred over manual key rotation."
+    },
+    {
+      "id": 49,
+      "question": "How do you enable audit logging for a specific service?",
+      "options": [
+        "Configure audit logs in Cloud Logging",
+        "Enable in IAM audit configuration",
+        "Set up in Cloud Monitoring",
+        "Configure in organization policy"
+      ],
+      "correctAnswer": 0,
+      "category": "Configuring access and security",
+      "explanation": "Audit logging is configured in Cloud Logging for specific services."
+    },
+    {
+      "id": 50,
+      "question": "What is Workload Identity in GKE?",
+      "options": [
+        "A way to identify workloads",
+        "A method to securely access Google Cloud services from GKE",
+        "A monitoring tool for workloads",
+        "A load balancing mechanism"
+      ],
+      "correctAnswer": 1,
+      "category": "Configuring access and security",
+      "explanation": "Workload Identity allows GKE workloads to securely access Google Cloud services without service account keys."
+    }
+  ],
+  "categories": [
+    "Setting up a cloud solution environment",
+    "Planning and implementing a cloud solution",
+    "Ensuring successful operation of a cloud solution",
+    "Configuring access and security"
+  ]
+} 

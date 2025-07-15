@@ -1,0 +1,21 @@
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Sadece bağımlılıklar için gerekli dosyaları kopyala
+COPY package*.json ./
+COPY prisma ./prisma/
+
+# Bağımlılıkları yükle ve önbelleğe al
+RUN npm ci --only=production && \
+    npx prisma generate && \
+    npm cache clean --force
+
+# Geliştirme bağımlılıklarını ayrıca yükle
+RUN npm install --only=development
+
+# Tüm dosyaları kopyala
+COPY . .
+
+# Uygulamayı çalıştır
+CMD ["npm", "run", "start:dev"] 

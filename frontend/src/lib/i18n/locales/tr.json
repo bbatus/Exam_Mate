@@ -1,0 +1,312 @@
+{
+  "common": {
+    "appName": "Exam Mate",
+    "loading": "Yükleniyor...",
+    "error": "Bir hata oluştu",
+    "back": "Geri",
+    "next": "İleri",
+    "submit": "Gönder",
+    "cancel": "İptal",
+    "save": "Kaydet",
+    "delete": "Sil",
+    "edit": "Düzenle",
+    "view": "Görüntüle",
+    "search": "Ara",
+    "filter": "Filtrele",
+    "sort": "Sırala",
+    "language": "Dil",
+    "home": "Ana Sayfa"
+  },
+  "theme": {
+    "switchToLight": "Aydınlık Moda Geç",
+    "switchToDark": "Karanlık Moda Geç"
+  },
+  "home": {
+    "title": "Sertifika Sınavlarına Hazırlanın",
+    "subtitle": "Kayıt olmadan hemen pratik yapın",
+    "cta": "Sınavları Keşfedin",
+    "featuresTitle": "Platform Özellikleri",
+    "features": {
+      "noRegistration": {
+        "title": "Kayıt Gerektirmez",
+        "description": "Hesap oluşturmadan hemen pratik yapmaya başlayın"
+      },
+      "detailedAnalysis": {
+        "title": "Detaylı Analiz",
+        "description": "Performansınız hakkında kapsamlı geri bildirim alın"
+      },
+      "upToDate": {
+        "title": "Güncel Sorular",
+        "description": "En son sınav sorularıyla pratik yapın"
+      }
+    }
+  },
+  "examList": {
+    "loading": "Sınavlar Yükleniyor...",
+    "availableExams": "Mevcut Sınavlar",
+    "selectExam": "Hazırlanmak istediğiniz sınavı seçin ve hemen pratik yapmaya başlayın.",
+    "filterExams": "Sınavları Filtrele",
+    "searchExams": "Sınavlarda ara",
+    "category": "Kategori",
+    "allCategories": "Tüm Kategoriler",
+    "difficulty": "Zorluk",
+    "noExamsFound": "Kriterlerinize uygun sınav bulunamadı.",
+    "examDescription": "Bu sınav, bulut bilişimde temel bilgileri ölçer ve sektörde kariyer yapmak isteyenler için önemli bir adımdır.",
+    "startExam": "Sınava Başla",
+    "aboutPlatform": "Sınav Hazırlığınızı Ciddiye Alın",
+    "platformDescription1": "Exam Mate ile sertifika sınavlarına hazırlanmak hiç bu kadar kolay olmamıştı. Kayıt olmadan pratik sorulara erişin.",
+    "platformDescription2": "Platformumuz, sertifika yolculuğunuzda başarılı olmanıza yardımcı olmak için güncel sorular ve detaylı açıklamalar sunar.",
+    "title": "Mevcut Sınavlar",
+    "noResults": "Kriterlerinize uygun sınav bulunamadı.",
+    "backToExams": "Sınav Listesine Dön",
+    "filterTitle": "Sınavları Filtrele",
+    "tabExams": "Sınavlar",
+    "tabStatistics": "İstatistikler",
+    "categoryLabel": "Kategori",
+    "difficultyLabel": "Zorluk Seviyesi",
+    "searchLabel": "Sınav Ara",
+    "questions": "Soru",
+    "viewStatistics": "İstatistikleri Görüntüle"
+  },
+  "examMode": {
+    "title": "Sınav Modu Seçin",
+    "practice": {
+      "title": "Pratik Modu",
+      "description": "Her sorudan sonra doğru cevabı ve açıklamayı görebilirsiniz. Öğrenme amaçlı idealdir."
+    },
+    "real": {
+      "title": "Gerçek Sınav Modu",
+      "description": "Sonuçları sadece sınav bitiminde görebilirsiniz. Gerçek sınav deneyimi için idealdir."
+    },
+    "topic": {
+      "title": "Konu Bazlı Çalışma",
+      "description": "Belirli kategorilerdeki soruları çözün. Zayıf olduğunuz konulara odaklanmak için idealdir."
+    },
+    "startPractice": "Pratik Modunda Başla",
+    "startReal": "Gerçek Sınav Modunda Başla",
+    "startTopic": "Konu Bazlı Çalışmaya Başla"
+  },
+  "exams": {
+    "title": "Mevcut Sınavlar",
+    "difficulty": "Zorluk",
+    "questions": "Sorular",
+    "time": "Süre",
+    "start": "Sınava Başla",
+    "categories": {
+      "all": "Tümü",
+      "cloud": "Bulut",
+      "devops": "DevOps",
+      "security": "Güvenlik",
+      "programming": "Programlama"
+    },
+    "sortOptions": {
+      "popular": "En Popüler",
+      "newest": "En Yeni",
+      "difficulty": "Zorluk"
+    }
+  },
+  "quiz": {
+    "timeRemaining": "Kalan Süre",
+    "question": "Soru",
+    "of": "/",
+    "previousQuestion": "Önceki Soru",
+    "nextQuestion": "Sonraki Soru",
+    "listQuestions": "Soruları Listele",
+    "finishExam": "Sınavı Bitir",
+    "confirmFinish": {
+      "title": "Sınavı Bitir?",
+      "message": "{{unanswered}} cevaplanmamış sorunuz var. Sınavı bitirmek istediğinizden emin misiniz?",
+      "confirm": "Evet, Sınavı Bitir",
+      "cancel": "Hayır, Devam Et"
+    },
+    "practiceMode": "Pratik Modu",
+    "realExamMode": "Gerçek Sınav Modu",
+    "topicBasedStudy": "Konu Bazlı Çalışma",
+    "congratulations": "Tebrikler!",
+    "examCompleted": "Sınav Tamamlandı",
+    "yourScore": "Skorunuz",
+    "passedMessage": "Sınavı başarıyla tamamladınız!",
+    "failedMessage": "Daha fazla pratik yaparak tekrar deneyebilirsiniz.",
+    "tryAgain": "Tekrar Dene",
+    "returnToHome": "Ana Sayfaya Dön",
+    "totalTime": "Toplam Süre",
+    "examMode": "Sınav Modu",
+    "practice": "Pratik",
+    "realExam": "Gerçek Sınav",
+    "summary": "Özet",
+    "detailedAnalysis": "Detaylı Analiz",
+    "correct": "Doğru",
+    "wrong": "Yanlış",
+    "unanswered": "Boş",
+    "wrongQuestions": "Yanlış Cevaplanan Sorular",
+    "unansweredQuestions": "Boş Bırakılan Sorular",
+    "correctQuestions": "Doğru Cevaplanan Sorular",
+    "youAnsweredCorrectly": "Aşağıdaki soruları doğru cevapladınız",
+    "explanation": "Açıklama",
+    "correctAnswer": "Doğru Cevap",
+    "wrongAnswer": "Yanlış Cevap",
+    "previous": "Önceki",
+    "next": "Sonraki",
+    "reportError": "Hata Bildir"
+  },
+  "results": {
+    "title": "Sınav Sonuçları",
+    "score": "Puanınız",
+    "correct": "Doğru",
+    "incorrect": "Yanlış",
+    "unanswered": "Cevaplanmamış",
+    "status": {
+      "passed": "GEÇTİ",
+      "failed": "KALDI"
+    },
+    "tabs": {
+      "summary": "Özet",
+      "detailed": "Detaylı Analiz"
+    },
+    "explanation": "Açıklama",
+    "yourAnswer": "Cevabınız",
+    "correctAnswer": "Doğru Cevap",
+    "actions": {
+      "newExam": "Yeni Sınava Başla",
+      "share": "Sonuçları Paylaş"
+    }
+  },
+  "admin": {
+    "title": "Exam Mate Yönetim",
+    "dashboard": "Gösterge Paneli",
+    "examManagement": "Sınav Yönetimi",
+    "questionManagement": "Soru Yönetimi",
+    "settings": "Ayarlar",
+    "logout": "Çıkış Yap",
+    "login": {
+      "title": "Yönetici Girişi",
+      "username": "Kullanıcı Adı",
+      "password": "Şifre",
+      "signIn": "Giriş Yap",
+      "error": "Geçersiz kullanıcı adı veya şifre"
+    },
+    "stats": {
+      "totalExams": "Toplam Sınav",
+      "totalQuestions": "Toplam Soru",
+      "totalUsers": "Toplam Kullanıcı",
+      "totalExamsTaken": "Alınan Sınavlar"
+    },
+    "recentExams": "Son Sınavlar",
+    "noExams": "Sınav bulunamadı",
+    "viewAllExams": "Tüm Sınavları Görüntüle",
+    "manageQuestions": "Soruları Yönet",
+    "exams": {
+      "title": "Sınavlar",
+      "add": "Yeni Sınav Ekle",
+      "edit": "Sınavı Düzenle",
+      "create": "Yeni Sınav Oluştur",
+      "bulkActions": "Toplu İşlemler",
+      "columns": {
+        "id": "ID",
+        "name": "Sınav Adı",
+        "questions": "Sorular",
+        "created": "Oluşturma Tarihi",
+        "actions": "İşlemler"
+      },
+      "deleteTitle": "Sınavı Sil",
+      "deleteConfirmation": "\"{{title}}\" sınavını silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.",
+      "createSuccess": "Sınav başarıyla oluşturuldu",
+      "updateSuccess": "Sınav başarıyla güncellendi",
+      "createError": "Sınav oluşturulamadı",
+      "updateError": "Sınav güncellenemedi",
+      "details": "Sınav Detayları",
+      "titleField": "Sınav Başlığı"
+    },
+    "questions": {
+      "title": "{{examTitle}} için Sorular",
+      "add": "Yeni Soru Ekle",
+      "edit": "Soruyu Düzenle",
+      "create": "Yeni Soru Oluştur",
+      "columns": {
+        "id": "ID",
+        "question": "Soru",
+        "section": "Bölüm",
+        "options": "Seçenekler",
+        "actions": "İşlemler"
+      },
+      "deleteTitle": "Soruyu Sil",
+      "deleteConfirmation": "Bu soruyu silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.",
+      "createSuccess": "Soru başarıyla oluşturuldu",
+      "updateSuccess": "Soru başarıyla güncellendi",
+      "createError": "Soru oluşturulamadı",
+      "updateError": "Soru güncellenemedi",
+      "details": "Soru Detayları",
+      "questionField": "Soru Metni",
+      "sectionField": "Bölüm",
+      "optionsField": "Cevap Seçenekleri",
+      "correctOptionField": "Doğru Seçenek",
+      "explanationField": "Açıklama"
+    }
+  },
+  "legal": {
+    "termsOfService": "Kullanım Koşulları",
+    "privacyPolicy": "Gizlilik Politikası",
+    "cookiePolicy": "Çerez Politikası",
+    "lastUpdated": "Son Güncelleme",
+    "terms": {
+      "acceptance": "Koşulların Kabulü",
+      "acceptanceText": "Exam Mate'e erişerek veya kullanarak, bu Kullanım Koşullarına bağlı kalmayı kabul etmiş olursunuz.",
+      "intellectualProperty": "Fikri Mülkiyet",
+      "intellectualPropertyText": "Bu platformdaki sorular, cevaplar ve açıklamalar dahil tüm içerik, Exam Mate'in mülkiyetindedir ve telif hakkı yasaları tarafından korunmaktadır.",
+      "userConduct": "Kullanıcı Davranışı",
+      "userConductText": "Platformu kötüye kullanmamayı veya yetkilendirme olmadan kısıtlı alanlara erişmeye çalışmamayı kabul edersiniz.",
+      "disclaimer": "Garantilerin Reddi",
+      "disclaimerText": "Platform, açık veya zımni herhangi bir garanti olmaksızın 'olduğu gibi' sağlanmaktadır.",
+      "limitation": "Sorumluluk Sınırlaması",
+      "limitationText": "Exam Mate, dolaylı, arızi, özel, sonuç olarak ortaya çıkan veya cezai zararlardan sorumlu olmayacaktır.",
+      "governing": "Geçerli Hukuk",
+      "governingText": "Bu Koşullar, Türkiye Cumhuriyeti yasalarına göre yönetilecek ve yorumlanacaktır.",
+      "changes": "Koşullarda Değişiklikler",
+      "changesText": "Bu koşulları herhangi bir zamanda değiştirme hakkını saklı tutarız. Platformu kullanmaya devam etmeniz, yapılan değişiklikleri kabul ettiğiniz anlamına gelir.",
+      "contact": "İletişim Bilgileri",
+      "contactText": "Bu Koşullar hakkında herhangi bir sorunuz varsa, lütfen bizimle iletişime geçin."
+    },
+    "privacy": {
+      "introduction": "Giriş",
+      "introductionText": "Bu Gizlilik Politikası, platformumuzu kullandığınızda bilgileri nasıl topladığımızı ve kullandığımızı açıklar.",
+      "informationCollection": "Bilgi Toplama",
+      "informationCollectionText": "Platformumuzun işleyişi için gerekli minimum bilgiyi topluyoruz.",
+      "cookiesUsage": "Çerez Kullanımı",
+      "cookiesUsageText": "Platformumuzda deneyiminizi geliştirmek için çerezler kullanıyoruz.",
+      "thirdPartyServices": "Üçüncü Taraf Hizmetleri",
+      "thirdPartyServicesText": "Platformumuzu kullanırken bilgi toplayan üçüncü taraf hizmetlerini kullanabiliriz.",
+      "dataProtection": "Veri Koruma",
+      "dataProtectionText": "Bilgilerinizi korumak için uygun güvenlik önlemleri uyguluyoruz.",
+      "userRights": "Haklarınız",
+      "userRightsText": "Bilgilerinize erişme, düzeltme veya silme hakkına sahipsiniz.",
+      "changes": "Bu Politikadaki Değişiklikler",
+      "changesText": "Bu politikayı zaman zaman güncelleyebiliriz. Değişiklikleri bu sayfada yeni politikayı yayınlayarak size bildireceğiz.",
+      "contact": "Bize Ulaşın",
+      "contactText": "Bu Gizlilik Politikası hakkında herhangi bir sorunuz varsa, lütfen bizimle iletişime geçin."
+    },
+    "cookies": {
+      "introduction": "Giriş",
+      "introductionText": "Bu Çerez Politikası, platformumuzda çerezleri ve benzer teknolojileri nasıl kullandığımızı açıklar.",
+      "whatAreCookies": "Çerezler Nedir",
+      "whatAreCookiesText": "Çerezler, bir web sitesini ziyaret ettiğinizde cihazınızda depolanan küçük metin dosyalarıdır.",
+      "typeOfCookies": "Kullandığımız Çerez Türleri",
+      "typeOfCookiesText": "Platformumuzun işleyişi için gerekli çerezleri ve hizmetlerimizi iyileştirmek için analitik çerezleri kullanıyoruz.",
+      "howWeUse": "Çerezleri Nasıl Kullanıyoruz",
+      "howWeUseText": "Tercihlerinizi hatırlamak ve size daha iyi bir deneyim sunmak için çerezleri kullanıyoruz.",
+      "thirdPartyCookies": "Üçüncü Taraf Çerezleri",
+      "thirdPartyCookiesText": "Bazı çerezler, bizim adımıza üçüncü taraflar tarafından yerleştirilir.",
+      "controlCookies": "Çerezleri Nasıl Kontrol Edersiniz",
+      "controlCookiesText": "Tarayıcı ayarlarınız aracılığıyla çerezleri istediğiniz gibi kontrol edebilir ve/veya silebilirsiniz.",
+      "changes": "Bu Politikadaki Değişiklikler",
+      "changesText": "Bu politikayı zaman zaman güncelleyebiliriz. Değişiklikleri bu sayfada yeni politikayı yayınlayarak size bildireceğiz.",
+      "contact": "Bize Ulaşın",
+      "contactText": "Bu Çerez Politikası hakkında herhangi bir sorunuz varsa, lütfen bizimle iletişime geçin."
+    }
+  },
+  "footer": {
+    "allRightsReserved": "Tüm Hakları Saklıdır",
+    "termsOfService": "Kullanım Koşulları",
+    "privacyPolicy": "Gizlilik Politikası",
+    "cookiePolicy": "Çerez Politikası"
+  }
+} 

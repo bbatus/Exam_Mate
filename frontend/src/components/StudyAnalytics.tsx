@@ -1,0 +1,738 @@
+import React, { useState, useEffect } from 'react';
+import {
+  Box,
+  Typography,
+  Paper,
+  Grid,
+  Card,
+  CardContent,
+  Divider,
+  Tabs,
+  Tab,
+  CircularProgress,
+  useTheme,
+  alpha,
+} from '@mui/material';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import BarChartIcon from '@mui/icons-material/BarChart';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement,
+  RadialLinearScale,
+} from 'chart.js';
+import { Line, Bar, Radar, Doughnut } from 'react-chartjs-2';
+import { FadeIn } from './UIAnimations';
+
+// Register ChartJS components
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement,
+  RadialLinearScale
+);
+
+interface StudySession {
+  date: string;
+  duration: number; // in minutes
+  correctAnswers: number;
+  totalQuestions: number;
+  topics: { [key: string]: number }; // topic: number of questions
+}
+
+interface WeekdayStudy {
+  day: string;
+  avgDuration: number;
+  avgScore: number;
+}
+
+interface TimeOfDayStudy {
+  timeSlot: string;
+  avgDuration: number;
+  avgScore: number;
+}
+
+interface TopicPerformance {
+  topic: string;
+  correctPercentage: number;
+  questionsAttempted: number;
+}
+
+interface StudyAnalyticsData {
+  totalStudyTime: number; // in minutes
+  totalSessions: number;
+  averageScore: number;
+  studySessions: StudySession[];
+  weekdayAnalysis: WeekdayStudy[];
+  timeOfDayAnalysis: TimeOfDayStudy[];
+  topicPerformance: TopicPerformance[];
+}
+
+interface StudyAnalyticsProps {
+  userId?: string; // Optional, could be used to fetch specific user data
+}
+
+const StudyAnalytics: React.FC<StudyAnalyticsProps> = ({ userId }) => {
+  const [analyticsData, setAnalyticsData] = useState<StudyAnalyticsData | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<number>(0);
+  const theme = useTheme();
+
+  // Mock data for study analytics
+  const mockAnalyticsData: StudyAnalyticsData = {
+    totalStudyTime: 2120, // in minutes
+    totalSessions: 28,
+    averageScore: 74.2,
+    studySessions: [
+      {
+        date: '2023-07-01',
+        duration: 45,
+        correctAnswers: 18,
+        totalQuestions: 25,
+        topics: { 'Cloud Fundamentals': 10, 'Cloud Security': 8, 'Cloud Economics': 7 }
+      },
+      {
+        date: '2023-07-02',
+        duration: 60,
+        correctAnswers: 22,
+        totalQuestions: 30,
+        topics: { 'Cloud Fundamentals': 12, 'Cloud Security': 10, 'Cloud Economics': 8 }
+      },
+      {
+        date: '2023-07-04',
+        duration: 30,
+        correctAnswers: 12,
+        totalQuestions: 15,
+        topics: { 'Cloud Fundamentals': 5, 'Cloud Security': 5, 'Cloud Economics': 5 }
+      },
+      {
+        date: '2023-07-06',
+        duration: 90,
+        correctAnswers: 35,
+        totalQuestions: 45,
+        topics: { 'Cloud Fundamentals': 15, 'Cloud Security': 15, 'Cloud Economics': 15 }
+      },
+      {
+        date: '2023-07-08',
+        duration: 75,
+        correctAnswers: 28,
+        totalQuestions: 40,
+        topics: { 'Cloud Fundamentals': 15, 'Cloud Security': 10, 'Cloud Products': 15 }
+      },
+      {
+        date: '2023-07-09',
+        duration: 60,
+        correctAnswers: 24,
+        totalQuestions: 30,
+        topics: { 'Cloud Security': 10, 'Cloud Products': 10, 'Cloud Migration': 10 }
+      },
+      {
+        date: '2023-07-11',
+        duration: 120,
+        correctAnswers: 42,
+        totalQuestions: 60,
+        topics: { 'Cloud Fundamentals': 20, 'Cloud Security': 20, 'Cloud Products': 20 }
+      },
+      {
+        date: '2023-07-13',
+        duration: 90,
+        correctAnswers: 36,
+        totalQuestions: 45,
+        topics: { 'Cloud Security': 15, 'Cloud Products': 15, 'Cloud Migration': 15 }
+      },
+      {
+        date: '2023-07-14',
+        duration: 60,
+        correctAnswers: 25,
+        totalQuestions: 30,
+        topics: { 'Cloud Products': 10, 'Cloud Migration': 10, 'Cloud Innovation': 10 }
+      },
+      {
+        date: '2023-07-16',
+        duration: 70,
+        correctAnswers: 28,
+        totalQuestions: 35,
+        topics: { 'Fundamentals of gen AI': 15, 'Google Cloud\'s gen AI offerings': 20 }
+      },
+      {
+        date: '2023-07-18',
+        duration: 90,
+        correctAnswers: 38,
+        totalQuestions: 50,
+        topics: { 'Fundamentals of gen AI': 20, 'Google Cloud\'s gen AI offerings': 15, 'Techniques to improve gen AI model output': 15 }
+      },
+      {
+        date: '2023-07-20',
+        duration: 60,
+        correctAnswers: 26,
+        totalQuestions: 35,
+        topics: { 'Google Cloud\'s gen AI offerings': 15, 'Techniques to improve gen AI model output': 10, 'Business strategies for gen AI solutions': 10 }
+      }
+    ],
+    weekdayAnalysis: [
+      { day: 'Pazartesi', avgDuration: 75, avgScore: 70 },
+      { day: 'Salı', avgDuration: 90, avgScore: 75 },
+      { day: 'Çarşamba', avgDuration: 60, avgScore: 68 },
+      { day: 'Perşembe', avgDuration: 105, avgScore: 80 },
+      { day: 'Cuma', avgDuration: 45, avgScore: 65 },
+      { day: 'Cumartesi', avgDuration: 120, avgScore: 85 },
+      { day: 'Pazar', avgDuration: 110, avgScore: 78 }
+    ],
+    timeOfDayAnalysis: [
+      { timeSlot: 'Sabah (6-12)', avgDuration: 45, avgScore: 82 },
+      { timeSlot: 'Öğlen (12-17)', avgDuration: 60, avgScore: 75 },
+      { timeSlot: 'Akşam (17-22)', avgDuration: 90, avgScore: 70 },
+      { timeSlot: 'Gece (22-6)', avgDuration: 120, avgScore: 65 }
+    ],
+    topicPerformance: [
+      { topic: 'Cloud Fundamentals', correctPercentage: 85, questionsAttempted: 120 },
+      { topic: 'Cloud Security', correctPercentage: 70, questionsAttempted: 100 },
+      { topic: 'Cloud Economics', correctPercentage: 65, questionsAttempted: 80 },
+      { topic: 'Cloud Products', correctPercentage: 60, questionsAttempted: 90 },
+      { topic: 'Cloud Migration', correctPercentage: 55, questionsAttempted: 60 },
+      { topic: 'Cloud Innovation', correctPercentage: 50, questionsAttempted: 40 },
+      { topic: 'Fundamentals of gen AI', correctPercentage: 78, questionsAttempted: 35 },
+      { topic: 'Google Cloud\'s gen AI offerings', correctPercentage: 72, questionsAttempted: 50 },
+      { topic: 'Techniques to improve gen AI model output', correctPercentage: 65, questionsAttempted: 25 },
+      { topic: 'Business strategies for gen AI solutions', correctPercentage: 60, questionsAttempted: 10 }
+    ]
+  };
+
+  useEffect(() => {
+    const fetchAnalyticsData = async () => {
+      try {
+        setLoading(true);
+        
+        // Simulate API call with timeout
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
+        // Use mock data for now
+        setAnalyticsData(mockAnalyticsData);
+      } catch (error) {
+        console.error('Error fetching analytics data:', error);
+        setError('Analiz verileri yüklenirken bir hata oluştu.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAnalyticsData();
+  }, [userId]);
+
+  const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
+    setActiveTab(newValue);
+  };
+
+  // Format minutes to hours and minutes
+  const formatTime = (minutes: number): string => {
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+    return `${hours}s ${mins}dk`;
+  };
+
+  // Prepare data for progress over time chart
+  const prepareProgressData = () => {
+    if (!analyticsData) return null;
+
+    const dates = analyticsData.studySessions.map(session => {
+      const date = new Date(session.date);
+      return date.toLocaleDateString('tr-TR', { day: '2-digit', month: 'short' });
+    });
+
+    const scores = analyticsData.studySessions.map(session => 
+      (session.correctAnswers / session.totalQuestions) * 100
+    );
+
+    const durations = analyticsData.studySessions.map(session => session.duration);
+
+    return {
+      labels: dates,
+      datasets: [
+        {
+          label: 'Doğruluk Oranı (%)',
+          data: scores,
+          borderColor: theme.palette.primary.main,
+          backgroundColor: alpha(theme.palette.primary.main, 0.5),
+          yAxisID: 'y',
+        },
+        {
+          label: 'Çalışma Süresi (dk)',
+          data: durations,
+          borderColor: theme.palette.secondary.main,
+          backgroundColor: alpha(theme.palette.secondary.main, 0.5),
+          yAxisID: 'y1',
+        }
+      ]
+    };
+  };
+
+  // Prepare data for weekday analysis chart
+  const prepareWeekdayData = () => {
+    if (!analyticsData) return null;
+
+    return {
+      labels: analyticsData.weekdayAnalysis.map(item => item.day),
+      datasets: [
+        {
+          label: 'Ortalama Çalışma Süresi (dk)',
+          data: analyticsData.weekdayAnalysis.map(item => item.avgDuration),
+          backgroundColor: alpha(theme.palette.primary.main, 0.7),
+        },
+        {
+          label: 'Ortalama Skor (%)',
+          data: analyticsData.weekdayAnalysis.map(item => item.avgScore),
+          backgroundColor: alpha(theme.palette.secondary.main, 0.7),
+        }
+      ]
+    };
+  };
+
+  // Prepare data for time of day analysis chart
+  const prepareTimeOfDayData = () => {
+    if (!analyticsData) return null;
+
+    return {
+      labels: analyticsData.timeOfDayAnalysis.map(item => item.timeSlot),
+      datasets: [
+        {
+          label: 'Ortalama Çalışma Süresi (dk)',
+          data: analyticsData.timeOfDayAnalysis.map(item => item.avgDuration),
+          backgroundColor: [
+            alpha(theme.palette.info.main, 0.7),
+            alpha(theme.palette.success.main, 0.7),
+            alpha(theme.palette.warning.main, 0.7),
+            alpha(theme.palette.error.main, 0.7)
+          ],
+          borderWidth: 1,
+        }
+      ]
+    };
+  };
+
+  // Prepare data for topic performance radar chart
+  const prepareTopicPerformanceData = () => {
+    if (!analyticsData) return null;
+
+    return {
+      labels: analyticsData.topicPerformance.map(item => item.topic),
+      datasets: [
+        {
+          label: 'Doğruluk Oranı (%)',
+          data: analyticsData.topicPerformance.map(item => item.correctPercentage),
+          backgroundColor: alpha(theme.palette.primary.main, 0.2),
+          borderColor: theme.palette.primary.main,
+          pointBackgroundColor: theme.palette.primary.main,
+          pointBorderColor: '#fff',
+          pointHoverBackgroundColor: '#fff',
+          pointHoverBorderColor: theme.palette.primary.main,
+        }
+      ]
+    };
+  };
+
+  // Prepare data for topic distribution doughnut chart
+  const prepareTopicDistributionData = () => {
+    if (!analyticsData) return null;
+
+    return {
+      labels: analyticsData.topicPerformance.map(item => item.topic),
+      datasets: [
+        {
+          data: analyticsData.topicPerformance.map(item => item.questionsAttempted),
+          backgroundColor: [
+            alpha(theme.palette.primary.main, 0.7),
+            alpha(theme.palette.secondary.main, 0.7),
+            alpha(theme.palette.success.main, 0.7),
+            alpha(theme.palette.warning.main, 0.7),
+            alpha(theme.palette.error.main, 0.7),
+            alpha(theme.palette.info.main, 0.7)
+          ],
+          borderWidth: 1,
+        }
+      ]
+    };
+  };
+
+  if (loading) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '400px' }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  if (error || !analyticsData) {
+    return (
+      <Box sx={{ p: 3, bgcolor: alpha(theme.palette.error.main, 0.1), borderRadius: 2 }}>
+        <Typography color="error">{error || 'Analiz verileri bulunamadı.'}</Typography>
+      </Box>
+    );
+  }
+
+  return (
+    <FadeIn>
+      <Paper 
+        elevation={0} 
+        sx={{ 
+          p: 3, 
+          borderRadius: 2, 
+          border: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
+          bgcolor: alpha(theme.palette.background.paper, 0.7),
+          overflow: 'hidden'
+        }}
+      >
+        <Typography variant="h6" fontWeight="bold" gutterBottom>
+          Çalışma Alışkanlıkları ve Performans Analizi
+        </Typography>
+
+        <Grid container spacing={3} sx={{ mb: 4 }}>
+          <Grid item xs={12} sm={6} md={3}>
+            <Card elevation={1} sx={{ borderRadius: 2, height: '100%' }}>
+              <CardContent>
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                  <AccessTimeIcon color="primary" sx={{ mr: 1 }} />
+                  <Typography variant="subtitle2" color="text.secondary">
+                    Toplam Çalışma Süresi
+                  </Typography>
+                </Box>
+                <Typography variant="h5" fontWeight="bold">
+                  {formatTime(analyticsData.totalStudyTime)}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {analyticsData.totalSessions} oturumda
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          
+          <Grid item xs={12} sm={6} md={3}>
+            <Card elevation={1} sx={{ borderRadius: 2, height: '100%' }}>
+              <CardContent>
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                  <TrendingUpIcon color="secondary" sx={{ mr: 1 }} />
+                  <Typography variant="subtitle2" color="text.secondary">
+                    Ortalama Skor
+                  </Typography>
+                </Box>
+                <Typography variant="h5" fontWeight="bold">
+                  %{analyticsData.averageScore.toFixed(1)}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Tüm oturumların ortalaması
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          
+          <Grid item xs={12} sm={6} md={3}>
+            <Card elevation={1} sx={{ borderRadius: 2, height: '100%' }}>
+              <CardContent>
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                  <BarChartIcon color="success" sx={{ mr: 1 }} />
+                  <Typography variant="subtitle2" color="text.secondary">
+                    En Güçlü Konu
+                  </Typography>
+                </Box>
+                <Typography variant="h5" fontWeight="bold">
+                  {analyticsData.topicPerformance.sort((a, b) => b.correctPercentage - a.correctPercentage)[0].topic}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  %{analyticsData.topicPerformance.sort((a, b) => b.correctPercentage - a.correctPercentage)[0].correctPercentage} doğruluk oranı
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          
+          <Grid item xs={12} sm={6} md={3}>
+            <Card elevation={1} sx={{ borderRadius: 2, height: '100%' }}>
+              <CardContent>
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                  <CalendarMonthIcon color="warning" sx={{ mr: 1 }} />
+                  <Typography variant="subtitle2" color="text.secondary">
+                    En Verimli Gün
+                  </Typography>
+                </Box>
+                <Typography variant="h5" fontWeight="bold">
+                  {analyticsData.weekdayAnalysis.sort((a, b) => b.avgScore - a.avgScore)[0].day}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  %{analyticsData.weekdayAnalysis.sort((a, b) => b.avgScore - a.avgScore)[0].avgScore} ortalama skor
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
+        
+        <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 3 }}>
+          <Tabs value={activeTab} onChange={handleTabChange} aria-label="analytics tabs">
+            <Tab label="İlerleme" id="tab-0" aria-controls="tabpanel-0" />
+            <Tab label="Zaman Analizi" id="tab-1" aria-controls="tabpanel-1" />
+            <Tab label="Konu Performansı" id="tab-2" aria-controls="tabpanel-2" />
+          </Tabs>
+        </Box>
+        
+        {/* Progress Over Time Tab */}
+        {activeTab === 0 && (
+          <Box role="tabpanel" id="tabpanel-0" aria-labelledby="tab-0">
+            <Typography variant="h6" gutterBottom>
+              Zaman İçinde İlerleme
+            </Typography>
+            <Typography variant="body2" color="text.secondary" paragraph>
+              Çalışma oturumlarınızdaki doğruluk oranı ve çalışma süresinin zaman içindeki değişimi.
+            </Typography>
+            <Box sx={{ height: 400, mb: 4 }}>
+              <Line 
+                data={prepareProgressData() as any}
+                options={{
+                  responsive: true,
+                  interaction: {
+                    mode: 'index' as const,
+                    intersect: false,
+                  },
+                  scales: {
+                    y: {
+                      type: 'linear' as const,
+                      display: true,
+                      position: 'left' as const,
+                      title: {
+                        display: true,
+                        text: 'Doğruluk Oranı (%)'
+                      },
+                      min: 0,
+                      max: 100,
+                    },
+                    y1: {
+                      type: 'linear' as const,
+                      display: true,
+                      position: 'right' as const,
+                      title: {
+                        display: true,
+                        text: 'Çalışma Süresi (dk)'
+                      },
+                      grid: {
+                        drawOnChartArea: false,
+                      },
+                    },
+                  },
+                }}
+              />
+            </Box>
+            
+            <Divider sx={{ my: 3 }} />
+            
+            <Typography variant="h6" gutterBottom>
+              Öneriler
+            </Typography>
+            <Grid container spacing={2}>
+              <Grid item xs={12} md={4}>
+                <Card elevation={0} sx={{ bgcolor: alpha(theme.palette.info.main, 0.1), borderRadius: 2 }}>
+                  <CardContent>
+                    <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
+                      Çalışma Süresi
+                    </Typography>
+                    <Typography variant="body2">
+                      En verimli çalışmalarınız 60-90 dakikalık oturumlarda gerçekleşiyor. Bu süreyi hedeflemeye çalışın.
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Card elevation={0} sx={{ bgcolor: alpha(theme.palette.success.main, 0.1), borderRadius: 2 }}>
+                  <CardContent>
+                    <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
+                      Düzenlilik
+                    </Typography>
+                    <Typography variant="body2">
+                      Düzenli çalışma alışkanlığı geliştirmelisiniz. Aralarda 2-3 günden fazla boşluk bırakmayın.
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Card elevation={0} sx={{ bgcolor: alpha(theme.palette.warning.main, 0.1), borderRadius: 2 }}>
+                  <CardContent>
+                    <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
+                      Konu Dağılımı
+                    </Typography>
+                    <Typography variant="body2">
+                      Cloud Migration ve Cloud Innovation konularına daha fazla zaman ayırmalısınız.
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            </Grid>
+          </Box>
+        )}
+        
+        {/* Time Analysis Tab */}
+        {activeTab === 1 && (
+          <Box role="tabpanel" id="tabpanel-1" aria-labelledby="tab-1">
+            <Grid container spacing={4}>
+              <Grid item xs={12} md={6}>
+                <Typography variant="h6" gutterBottom>
+                  Hafta İçi Analizi
+                </Typography>
+                <Typography variant="body2" color="text.secondary" paragraph>
+                  Haftanın günlerine göre çalışma süreniz ve performansınız.
+                </Typography>
+                <Box sx={{ height: 350 }}>
+                  <Bar 
+                    data={prepareWeekdayData() as any}
+                    options={{
+                      responsive: true,
+                      scales: {
+                        y: {
+                          beginAtZero: true,
+                        }
+                      }
+                    }}
+                  />
+                </Box>
+                <Box sx={{ mt: 2 }}>
+                  <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
+                    Öneriler:
+                  </Typography>
+                  <Typography variant="body2">
+                    Cumartesi günleri en yüksek performansı gösteriyorsunuz. Önemli konuları bu günlerde çalışmayı deneyebilirsiniz. Cuma günleri ise performansınız düşük, bu günlerde daha kısa ve odaklı çalışmalar planlamanız faydalı olabilir.
+                  </Typography>
+                </Box>
+              </Grid>
+              
+              <Grid item xs={12} md={6}>
+                <Typography variant="h6" gutterBottom>
+                  Gün İçi Analizi
+                </Typography>
+                <Typography variant="body2" color="text.secondary" paragraph>
+                  Günün farklı saatlerindeki çalışma veriminiz.
+                </Typography>
+                <Box sx={{ height: 350 }}>
+                  <Doughnut 
+                    data={prepareTimeOfDayData() as any}
+                    options={{
+                      responsive: true,
+                      plugins: {
+                        legend: {
+                          position: 'bottom' as const,
+                        }
+                      }
+                    }}
+                  />
+                </Box>
+                <Box sx={{ mt: 2 }}>
+                  <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
+                    Öneriler:
+                  </Typography>
+                  <Typography variant="body2">
+                    Sabah saatlerinde (6-12) en yüksek performansı gösteriyorsunuz, ancak en az çalışma süreniz bu zaman diliminde. Mümkünse sabah saatlerinde daha fazla çalışma planlamanız veriminizi artırabilir.
+                  </Typography>
+                </Box>
+              </Grid>
+            </Grid>
+          </Box>
+        )}
+        
+        {/* Topic Performance Tab */}
+        {activeTab === 2 && (
+          <Box role="tabpanel" id="tabpanel-2" aria-labelledby="tab-2">
+            <Grid container spacing={4}>
+              <Grid item xs={12} md={6}>
+                <Typography variant="h6" gutterBottom>
+                  Konu Bazlı Performans
+                </Typography>
+                <Typography variant="body2" color="text.secondary" paragraph>
+                  Farklı konulardaki doğruluk oranlarınız.
+                </Typography>
+                <Box sx={{ height: 400 }}>
+                  <Radar 
+                    data={prepareTopicPerformanceData() as any}
+                    options={{
+                      responsive: true,
+                      scales: {
+                        r: {
+                          min: 0,
+                          max: 100,
+                          ticks: {
+                            stepSize: 20
+                          }
+                        }
+                      }
+                    }}
+                  />
+                </Box>
+              </Grid>
+              
+              <Grid item xs={12} md={6}>
+                <Typography variant="h6" gutterBottom>
+                  Konu Dağılımı
+                </Typography>
+                <Typography variant="body2" color="text.secondary" paragraph>
+                  Çözdüğünüz soruların konulara göre dağılımı.
+                </Typography>
+                <Box sx={{ height: 400 }}>
+                  <Doughnut 
+                    data={prepareTopicDistributionData() as any}
+                    options={{
+                      responsive: true,
+                      plugins: {
+                        legend: {
+                          position: 'bottom' as const,
+                        }
+                      }
+                    }}
+                  />
+                </Box>
+              </Grid>
+              
+              <Grid item xs={12}>
+                <Divider sx={{ my: 2 }} />
+                <Typography variant="h6" gutterBottom>
+                  Konu Bazlı Öneriler
+                </Typography>
+                <Grid container spacing={2}>
+                  {analyticsData.topicPerformance
+                    .sort((a, b) => a.correctPercentage - b.correctPercentage)
+                    .slice(0, 3)
+                    .map((topic, index) => (
+                      <Grid item xs={12} md={4} key={index}>
+                        <Card elevation={0} sx={{ bgcolor: alpha(theme.palette.warning.main, 0.1), borderRadius: 2 }}>
+                          <CardContent>
+                            <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
+                              {topic.topic}
+                            </Typography>
+                            <Typography variant="body2" paragraph>
+                              Bu konuda %{topic.correctPercentage} doğruluk oranına sahipsiniz.
+                            </Typography>
+                            <Typography variant="body2">
+                              Bu konuya daha fazla odaklanmalı ve özellikle pratik yapmalısınız. Konuyla ilgili temel kavramları tekrar gözden geçirmeniz faydalı olabilir.
+                            </Typography>
+                          </CardContent>
+                        </Card>
+                      </Grid>
+                    ))}
+                </Grid>
+              </Grid>
+            </Grid>
+          </Box>
+        )}
+      </Paper>
+    </FadeIn>
+  );
+};
+
+export default StudyAnalytics; 
