@@ -9,9 +9,14 @@ export default defineConfig({
     watch: {
       usePolling: true,
     },
-    host: true, 
+    host: '0.0.0.0', 
     strictPort: false, // Farklı bir port kullanabilsin
-    port: 5173, 
+    port: 5173,
+    allowedHosts: [
+      'localhost',
+      'goexammate.com',
+      'www.goexammate.com'
+    ]
   },
   optimizeDeps: {
     exclude: ['@rollup/rollup-linux-arm64-musl'] // Sorun çıkaran bağımlılığı dışla
