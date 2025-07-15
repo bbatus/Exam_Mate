@@ -20,6 +20,7 @@ const create_exam_dto_1 = require("./dto/create-exam.dto");
 const update_exam_dto_1 = require("./dto/update-exam.dto");
 const create_question_dto_1 = require("./dto/create-question.dto");
 const update_question_dto_1 = require("./dto/update-question.dto");
+const jwt_auth_guard_1 = require("../auth/guards/jwt-auth.guard");
 let ExamsController = class ExamsController {
     examsService;
     constructor(examsService) {
@@ -30,6 +31,9 @@ let ExamsController = class ExamsController {
     }
     findOne(id) {
         return this.examsService.findOne(id);
+    }
+    getExamQuestions(examId) {
+        return this.examsService.getExamQuestions(examId);
     }
     createExamResult(id, createExamResultDto) {
         if (id !== createExamResultDto.examId) {
@@ -64,6 +68,9 @@ let ExamsController = class ExamsController {
     removeQuestion(id) {
         return this.examsService.removeQuestion(id);
     }
+    bulkCreateQuestions(examId, questions) {
+        return this.examsService.bulkCreateQuestions(examId, questions);
+    }
 };
 exports.ExamsController = ExamsController;
 __decorate([
@@ -79,6 +86,13 @@ __decorate([
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
 ], ExamsController.prototype, "findOne", null);
+__decorate([
+    (0, common_1.Get)(':examId/questions'),
+    __param(0, (0, common_1.Param)('examId', common_1.ParseIntPipe)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", void 0)
+], ExamsController.prototype, "getExamQuestions", null);
 __decorate([
     (0, common_1.Post)(':id/results'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
@@ -109,6 +123,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ExamsController.prototype, "getExamStatistics", null);
 __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -116,6 +131,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ExamsController.prototype, "createExam", null);
 __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Put)(':id'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __param(1, (0, common_1.Body)()),
@@ -124,6 +140,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ExamsController.prototype, "updateExam", null);
 __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
@@ -131,14 +148,16 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ExamsController.prototype, "removeExam", null);
 __decorate([
-    (0, common_1.Post)(':id/questions'),
-    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, common_1.Post)(':examId/questions'),
+    __param(0, (0, common_1.Param)('examId', common_1.ParseIntPipe)),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number, create_question_dto_1.CreateQuestionDto]),
     __metadata("design:returntype", void 0)
 ], ExamsController.prototype, "createQuestion", null);
 __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Put)('questions/:id'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __param(1, (0, common_1.Body)()),
@@ -147,12 +166,22 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ExamsController.prototype, "updateQuestion", null);
 __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Delete)('questions/:id'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
 ], ExamsController.prototype, "removeQuestion", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, common_1.Post)(':examId/questions/bulk'),
+    __param(0, (0, common_1.Param)('examId', common_1.ParseIntPipe)),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Array]),
+    __metadata("design:returntype", void 0)
+], ExamsController.prototype, "bulkCreateQuestions", null);
 exports.ExamsController = ExamsController = __decorate([
     (0, common_1.Controller)('exams'),
     __metadata("design:paramtypes", [exams_service_1.ExamsService])

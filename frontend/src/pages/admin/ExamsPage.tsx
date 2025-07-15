@@ -49,8 +49,10 @@ const ExamsPage: React.FC = () => {
 
   useEffect(() => {
     const checkAuth = () => {
+      const token = localStorage.getItem('adminToken');
       const isAdmin = localStorage.getItem('isAdmin');
-      if (!isAdmin) {
+      
+      if (!token || !isAdmin) {
         navigate('/admin/login');
       }
     };
@@ -87,8 +89,12 @@ const ExamsPage: React.FC = () => {
     if (!examToDelete) return;
 
     try {
+      const token = localStorage.getItem('adminToken');
       const response = await fetch(`http://localhost:5001/exams/${examToDelete.id}`, {
         method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
       });
 
       if (!response.ok) {

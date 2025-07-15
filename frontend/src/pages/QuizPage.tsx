@@ -1180,7 +1180,7 @@ const QuizPage: React.FC = () => {
     <div>
       <AdBanner position="top" size="medium" />
       
-      <Box sx={{ mb: 2 }}>
+      <Box sx={{ mb: 2, maxWidth: "800px", mx: "auto" }}>
         <Typography variant="h5" component="h1" gutterBottom fontWeight="bold">
           {exam.title}
         </Typography>
@@ -1224,14 +1224,14 @@ const QuizPage: React.FC = () => {
       
       <ScaleIn>
         <CardAnimation>
-          <Card sx={{ mb: 4, borderRadius: 2 }}>
+          <Card sx={{ mb: 4, borderRadius: 2, maxWidth: "1000px", width: "100%", mx: "auto" }}>
             <CardContent>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                              <Typography variant="body1" gutterBottom sx={{ fontSize: '0.95rem' }}>
-                {currentQuestion.question}
-              </Typography>
+                <Typography variant="body1" gutterBottom sx={{ fontSize: '1rem', flex: 1, mr: 2 }}>
+                  {currentQuestion.question}
+                </Typography>
                 
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
                   {/* Add QuestionBookmark component */}
                   <QuestionBookmark 
                     examId={exam.id} 
@@ -1281,11 +1281,12 @@ const QuizPage: React.FC = () => {
                         <FormControlLabel
                           value={option}
                           control={<Radio size="small" />}
-                          label={<Typography variant="body2" sx={{ fontSize: '0.9rem' }}>{option}</Typography>}
+                          label={<Typography variant="body2" sx={{ fontSize: '0.95rem' }}>{option}</Typography>}
                           sx={{
-                            p: 0.75,
+                            p: 1,
                             borderRadius: 1,
-                            mb: 0.75,
+                            mb: 1,
+                            width: '100%',
                             ...(showResult && {
                               bgcolor: isThisOptionSelected ? (
                                 isThisOptionCorrect ? alpha('#4caf50', 0.1) : alpha('#f44336', 0.1)
@@ -1345,41 +1346,58 @@ const QuizPage: React.FC = () => {
             
             <Divider />
             
-            <CardActions sx={{ p: 2, justifyContent: 'space-between' }}>
+            <CardActions sx={{ p: 2, justifyContent: 'space-between', flexWrap: 'wrap', gap: 2 }}>
               <ButtonAnimation>
                 <Button
                   variant="outlined"
                   startIcon={<NavigateBeforeIcon />}
                   onClick={handlePreviousQuestion}
                   disabled={currentQuestionIndex === 0}
+                  sx={{ mb: { xs: 1, sm: 0 } }}
                 >
                   {t('quiz.previous')}
                 </Button>
               </ButtonAnimation>
               
-              <Box>
-                {currentQuestionIndex === exam.questions.length - 1 ? (
+              <Box sx={{ display: 'flex', gap: { xs: 1, sm: 2 }, flexWrap: { xs: 'wrap', sm: 'nowrap' }, justifyContent: 'flex-end' }}>
+                {examMode === 'practice' && !showExplanation && (
                   <ButtonAnimation>
                     <Button
                       variant="contained"
                       color="primary"
-                      onClick={handleFinishClick}
+                      onClick={() => setShowExplanation(true)}
+                      disabled={!isAnswered}
+                      size="medium"
                     >
-                      {t('quiz.finishExam')}
-                    </Button>
-                  </ButtonAnimation>
-                ) : (
-                  <ButtonAnimation>
-                    <Button
-                      variant="contained"
-                      endIcon={<NavigateNextIcon />}
-                      onClick={handleNextQuestion}
-                      color="primary"
-                    >
-                      {t('quiz.next')}
+                      {t('quiz.explanation')}
                     </Button>
                   </ButtonAnimation>
                 )}
+                
+                <ButtonAnimation>
+                  <Button
+                    variant="contained"
+                    color="error"
+                    startIcon={<DoneAllIcon />}
+                    onClick={handleFinishClick}
+                    size="medium"
+                  >
+                    {t('quiz.finishExam')}
+                  </Button>
+                </ButtonAnimation>
+                
+                <ButtonAnimation>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    endIcon={<NavigateNextIcon />}
+                    onClick={handleNextQuestion}
+                    disabled={currentQuestionIndex === exam.questions.length - 1}
+                    size="medium"
+                  >
+                    {t('quiz.next')}
+                  </Button>
+                </ButtonAnimation>
               </Box>
             </CardActions>
           </Card>
@@ -1390,18 +1408,18 @@ const QuizPage: React.FC = () => {
         open={isFinishDialogOpen}
         onClose={() => setIsFinishDialogOpen(false)}
       >
-        <DialogTitle>Sınavı Tamamla</DialogTitle>
+        <DialogTitle>{t('quiz.confirmFinish.title')}</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            {selectedAnswers.filter(answer => answer === null).length} soruyu cevaplamadınız. Sınavı tamamlamak istediğinize emin misiniz?
+            {t('quiz.confirmFinish.message', { unanswered: selectedAnswers.filter(answer => answer === null).length })}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setIsFinishDialogOpen(false)} color="primary">
-            İptal
+            {t('quiz.confirmFinish.cancel')}
           </Button>
           <Button onClick={handleSubmit} color="primary" variant="contained">
-            Sınavı Tamamla
+            {t('quiz.confirmFinish.confirm')}
           </Button>
         </DialogActions>
       </Dialog>

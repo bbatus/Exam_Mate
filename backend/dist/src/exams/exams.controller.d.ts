@@ -32,6 +32,18 @@ export declare class ExamsController {
         createdAt: Date;
         updatedAt: Date;
     }) | null, null, import("@prisma/client/runtime/library").DefaultArgs, import(".prisma/client").Prisma.PrismaClientOptions>;
+    getExamQuestions(examId: number): Promise<{
+        id: number;
+        createdAt: Date;
+        updatedAt: Date;
+        question: string;
+        section: string;
+        options: string[];
+        correct: number;
+        explanation: string;
+        category: string | null;
+        examId: number;
+    }[]>;
     createExamResult(id: number, createExamResultDto: CreateExamResultDto): Promise<{
         exam: {
             id: number;
@@ -200,4 +212,16 @@ export declare class ExamsController {
         category: string | null;
         examId: number;
     }>;
+    bulkCreateQuestions(examId: number, questions: CreateQuestionDto[]): Promise<{
+        id: number;
+        createdAt: Date;
+        updatedAt: Date;
+        question: string;
+        section: string;
+        options: string[];
+        correct: number;
+        explanation: string;
+        category: string | null;
+        examId: number;
+    }[]>;
 }

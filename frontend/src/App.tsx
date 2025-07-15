@@ -7,6 +7,7 @@ import AdminLoginPage from './pages/AdminLoginPage';
 import AdminDashboardPage from './pages/admin/AdminDashboardPage';
 import ExamsPage from './pages/admin/ExamsPage';
 import ExamFormPage from './pages/admin/ExamFormPage';
+import QuestionsPage from './pages/admin/QuestionsPage';
 import TermsPage from './pages/TermsPage';
 import PrivacyPage from './pages/PrivacyPage';
 import CookiesPage from './pages/CookiesPage';
@@ -216,6 +217,7 @@ function App() {
               <Route path="/admin/exams" element={<ExamsPage />} />
               <Route path="/admin/exams/new" element={<ExamFormPage />} />
               <Route path="/admin/exams/:id/edit" element={<ExamFormPage />} />
+              <Route path="/admin/exams/:examId/questions" element={<QuestionsPage />} />
             </Routes>
             <AccessibilityMenu onSettingsChange={setAccessibilitySettings} />
           </Box>
@@ -289,7 +291,7 @@ function App() {
                   onClick={() => navigate('/learning-path')}
                   sx={{ mx: 0.5 }}
                 >
-                  Konu Haritası
+                  {t('navigation.learningPath')}
                 </Button>
                 <Button 
                   color="inherit" 
@@ -297,7 +299,7 @@ function App() {
                   onClick={() => navigate('/career-path')}
                   sx={{ mx: 0.5 }}
                 >
-                  Kariyer Yolu
+                  {t('navigation.careerPath')}
                 </Button>
                 <Button 
                   color="inherit" 
@@ -305,7 +307,7 @@ function App() {
                   onClick={() => navigate('/analytics')}
                   sx={{ mx: 0.5 }}
                 >
-                  Analitik
+                  {t('navigation.analytics')}
                 </Button>
               </Box>
               
@@ -324,13 +326,13 @@ function App() {
                   onClose={handleMenuClose}
                 >
                   <MenuItem onClick={() => handleNavigate('/learning-path')}>
-                    <MapIcon sx={{ mr: 1 }} /> Konu Haritası
+                    <MapIcon sx={{ mr: 1 }} /> {t('navigation.learningPath')}
                   </MenuItem>
                   <MenuItem onClick={() => handleNavigate('/career-path')}>
-                    <WorkIcon sx={{ mr: 1 }} /> Kariyer Yolu
+                    <WorkIcon sx={{ mr: 1 }} /> {t('navigation.careerPath')}
                   </MenuItem>
                   <MenuItem onClick={() => handleNavigate('/analytics')}>
-                    <AssessmentIcon sx={{ mr: 1 }} /> Analitik
+                    <AssessmentIcon sx={{ mr: 1 }} /> {t('navigation.analytics')}
                   </MenuItem>
                 </Menu>
               </Box>

@@ -32,6 +32,7 @@ import {
 } from 'chart.js';
 import { Line, Bar, Radar, Doughnut } from 'react-chartjs-2';
 import { FadeIn } from './UIAnimations';
+import { useTranslation } from 'react-i18next';
 
 // Register ChartJS components
 ChartJS.register(
@@ -93,6 +94,7 @@ const StudyAnalytics: React.FC<StudyAnalyticsProps> = ({ userId }) => {
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<number>(0);
   const theme = useTheme();
+  const { t } = useTranslation();
 
   // Mock data for study analytics
   const mockAnalyticsData: StudyAnalyticsData = {
@@ -220,13 +222,13 @@ const StudyAnalytics: React.FC<StudyAnalyticsProps> = ({ userId }) => {
         setLoading(true);
         
         // Simulate API call with timeout
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise(resolve => setTimeout(resolve, 1000));
         
         // Use mock data for now
         setAnalyticsData(mockAnalyticsData);
       } catch (error) {
         console.error('Error fetching analytics data:', error);
-        setError('Analiz verileri yüklenirken bir hata oluştu.');
+        setError('Analitik verileri yüklenirken bir hata oluştu.');
       } finally {
         setLoading(false);
       }
@@ -265,14 +267,14 @@ const StudyAnalytics: React.FC<StudyAnalyticsProps> = ({ userId }) => {
       labels: dates,
       datasets: [
         {
-          label: 'Doğruluk Oranı (%)',
+          label: t('analytics.accuracyRate'),
           data: scores,
           borderColor: theme.palette.primary.main,
           backgroundColor: alpha(theme.palette.primary.main, 0.5),
           yAxisID: 'y',
         },
         {
-          label: 'Çalışma Süresi (dk)',
+          label: t('analytics.studyTime'),
           data: durations,
           borderColor: theme.palette.secondary.main,
           backgroundColor: alpha(theme.palette.secondary.main, 0.5),
@@ -290,12 +292,12 @@ const StudyAnalytics: React.FC<StudyAnalyticsProps> = ({ userId }) => {
       labels: analyticsData.weekdayAnalysis.map(item => item.day),
       datasets: [
         {
-          label: 'Ortalama Çalışma Süresi (dk)',
+          label: t('analytics.studyTime'),
           data: analyticsData.weekdayAnalysis.map(item => item.avgDuration),
           backgroundColor: alpha(theme.palette.primary.main, 0.7),
         },
         {
-          label: 'Ortalama Skor (%)',
+          label: t('analytics.averageScore'),
           data: analyticsData.weekdayAnalysis.map(item => item.avgScore),
           backgroundColor: alpha(theme.palette.secondary.main, 0.7),
         }
@@ -311,7 +313,7 @@ const StudyAnalytics: React.FC<StudyAnalyticsProps> = ({ userId }) => {
       labels: analyticsData.timeOfDayAnalysis.map(item => item.timeSlot),
       datasets: [
         {
-          label: 'Ortalama Çalışma Süresi (dk)',
+          label: t('analytics.studyTime'),
           data: analyticsData.timeOfDayAnalysis.map(item => item.avgDuration),
           backgroundColor: [
             alpha(theme.palette.info.main, 0.7),
@@ -333,7 +335,7 @@ const StudyAnalytics: React.FC<StudyAnalyticsProps> = ({ userId }) => {
       labels: analyticsData.topicPerformance.map(item => item.topic),
       datasets: [
         {
-          label: 'Doğruluk Oranı (%)',
+          label: t('analytics.accuracyRate'),
           data: analyticsData.topicPerformance.map(item => item.correctPercentage),
           backgroundColor: alpha(theme.palette.primary.main, 0.2),
           borderColor: theme.palette.primary.main,
@@ -380,7 +382,7 @@ const StudyAnalytics: React.FC<StudyAnalyticsProps> = ({ userId }) => {
   if (error || !analyticsData) {
     return (
       <Box sx={{ p: 3, bgcolor: alpha(theme.palette.error.main, 0.1), borderRadius: 2 }}>
-        <Typography color="error">{error || 'Analiz verileri bulunamadı.'}</Typography>
+        <Typography color="error">{error || t('common.error')}</Typography>
       </Box>
     );
   }
@@ -398,7 +400,7 @@ const StudyAnalytics: React.FC<StudyAnalyticsProps> = ({ userId }) => {
         }}
       >
         <Typography variant="h6" fontWeight="bold" gutterBottom>
-          Çalışma Alışkanlıkları ve Performans Analizi
+          {t('analytics.studyHabits')}
         </Typography>
 
         <Grid container spacing={3} sx={{ mb: 4 }}>
@@ -408,14 +410,14 @@ const StudyAnalytics: React.FC<StudyAnalyticsProps> = ({ userId }) => {
                 <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
                   <AccessTimeIcon color="primary" sx={{ mr: 1 }} />
                   <Typography variant="subtitle2" color="text.secondary">
-                    Toplam Çalışma Süresi
+                    {t('analytics.totalStudyTime')}
                   </Typography>
                 </Box>
                 <Typography variant="h5" fontWeight="bold">
                   {formatTime(analyticsData.totalStudyTime)}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  {analyticsData.totalSessions} oturumda
+                  {analyticsData.totalSessions} {t('analytics.sessions')}
                 </Typography>
               </CardContent>
             </Card>
@@ -427,14 +429,14 @@ const StudyAnalytics: React.FC<StudyAnalyticsProps> = ({ userId }) => {
                 <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
                   <TrendingUpIcon color="secondary" sx={{ mr: 1 }} />
                   <Typography variant="subtitle2" color="text.secondary">
-                    Ortalama Skor
+                    {t('analytics.averageScore')}
                   </Typography>
                 </Box>
                 <Typography variant="h5" fontWeight="bold">
                   %{analyticsData.averageScore.toFixed(1)}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  Tüm oturumların ortalaması
+                  {t('analytics.allSessions')}
                 </Typography>
               </CardContent>
             </Card>
@@ -446,14 +448,14 @@ const StudyAnalytics: React.FC<StudyAnalyticsProps> = ({ userId }) => {
                 <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
                   <BarChartIcon color="success" sx={{ mr: 1 }} />
                   <Typography variant="subtitle2" color="text.secondary">
-                    En Güçlü Konu
+                    {t('analytics.strongestTopic')}
                   </Typography>
                 </Box>
                 <Typography variant="h5" fontWeight="bold">
                   {analyticsData.topicPerformance.sort((a, b) => b.correctPercentage - a.correctPercentage)[0].topic}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  %{analyticsData.topicPerformance.sort((a, b) => b.correctPercentage - a.correctPercentage)[0].correctPercentage} doğruluk oranı
+                  %{analyticsData.topicPerformance.sort((a, b) => b.correctPercentage - a.correctPercentage)[0].correctPercentage} {t('analytics.accuracy')}
                 </Typography>
               </CardContent>
             </Card>
@@ -465,14 +467,14 @@ const StudyAnalytics: React.FC<StudyAnalyticsProps> = ({ userId }) => {
                 <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
                   <CalendarMonthIcon color="warning" sx={{ mr: 1 }} />
                   <Typography variant="subtitle2" color="text.secondary">
-                    En Verimli Gün
+                    {t('analytics.mostProductiveDay')}
                   </Typography>
                 </Box>
                 <Typography variant="h5" fontWeight="bold">
                   {analyticsData.weekdayAnalysis.sort((a, b) => b.avgScore - a.avgScore)[0].day}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  %{analyticsData.weekdayAnalysis.sort((a, b) => b.avgScore - a.avgScore)[0].avgScore} ortalama skor
+                  %{analyticsData.weekdayAnalysis.sort((a, b) => b.avgScore - a.avgScore)[0].avgScore} {t('analytics.averageScoreDay')}
                 </Typography>
               </CardContent>
             </Card>
@@ -481,9 +483,9 @@ const StudyAnalytics: React.FC<StudyAnalyticsProps> = ({ userId }) => {
         
         <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 3 }}>
           <Tabs value={activeTab} onChange={handleTabChange} aria-label="analytics tabs">
-            <Tab label="İlerleme" id="tab-0" aria-controls="tabpanel-0" />
-            <Tab label="Zaman Analizi" id="tab-1" aria-controls="tabpanel-1" />
-            <Tab label="Konu Performansı" id="tab-2" aria-controls="tabpanel-2" />
+            <Tab label={t('analytics.tabs.progress')} id="tab-0" aria-controls="tabpanel-0" />
+            <Tab label={t('analytics.tabs.timeAnalysis')} id="tab-1" aria-controls="tabpanel-1" />
+            <Tab label={t('analytics.tabs.topicPerformance')} id="tab-2" aria-controls="tabpanel-2" />
           </Tabs>
         </Box>
         
@@ -491,10 +493,10 @@ const StudyAnalytics: React.FC<StudyAnalyticsProps> = ({ userId }) => {
         {activeTab === 0 && (
           <Box role="tabpanel" id="tabpanel-0" aria-labelledby="tab-0">
             <Typography variant="h6" gutterBottom>
-              Zaman İçinde İlerleme
+              {t('analytics.progressOverTime')}
             </Typography>
             <Typography variant="body2" color="text.secondary" paragraph>
-              Çalışma oturumlarınızdaki doğruluk oranı ve çalışma süresinin zaman içindeki değişimi.
+              {t('analytics.progressDescription')}
             </Typography>
             <Box sx={{ height: 400, mb: 4 }}>
               <Line 
@@ -512,7 +514,7 @@ const StudyAnalytics: React.FC<StudyAnalyticsProps> = ({ userId }) => {
                       position: 'left' as const,
                       title: {
                         display: true,
-                        text: 'Doğruluk Oranı (%)'
+                        text: t('analytics.accuracyRate')
                       },
                       min: 0,
                       max: 100,
@@ -523,7 +525,7 @@ const StudyAnalytics: React.FC<StudyAnalyticsProps> = ({ userId }) => {
                       position: 'right' as const,
                       title: {
                         display: true,
-                        text: 'Çalışma Süresi (dk)'
+                        text: t('analytics.studyTime')
                       },
                       grid: {
                         drawOnChartArea: false,
@@ -537,17 +539,17 @@ const StudyAnalytics: React.FC<StudyAnalyticsProps> = ({ userId }) => {
             <Divider sx={{ my: 3 }} />
             
             <Typography variant="h6" gutterBottom>
-              Öneriler
+              {t('analytics.suggestions')}
             </Typography>
             <Grid container spacing={2}>
               <Grid item xs={12} md={4}>
                 <Card elevation={0} sx={{ bgcolor: alpha(theme.palette.info.main, 0.1), borderRadius: 2 }}>
                   <CardContent>
                     <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-                      Çalışma Süresi
+                      {t('analytics.studyDuration')}
                     </Typography>
                     <Typography variant="body2">
-                      En verimli çalışmalarınız 60-90 dakikalık oturumlarda gerçekleşiyor. Bu süreyi hedeflemeye çalışın.
+                      {t('analytics.studyDurationTip')}
                     </Typography>
                   </CardContent>
                 </Card>
@@ -556,10 +558,10 @@ const StudyAnalytics: React.FC<StudyAnalyticsProps> = ({ userId }) => {
                 <Card elevation={0} sx={{ bgcolor: alpha(theme.palette.success.main, 0.1), borderRadius: 2 }}>
                   <CardContent>
                     <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-                      Düzenlilik
+                      {t('analytics.regularity')}
                     </Typography>
                     <Typography variant="body2">
-                      Düzenli çalışma alışkanlığı geliştirmelisiniz. Aralarda 2-3 günden fazla boşluk bırakmayın.
+                      {t('analytics.regularityTip')}
                     </Typography>
                   </CardContent>
                 </Card>
@@ -568,10 +570,10 @@ const StudyAnalytics: React.FC<StudyAnalyticsProps> = ({ userId }) => {
                 <Card elevation={0} sx={{ bgcolor: alpha(theme.palette.warning.main, 0.1), borderRadius: 2 }}>
                   <CardContent>
                     <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-                      Konu Dağılımı
+                      {t('analytics.topicDistribution')}
                     </Typography>
                     <Typography variant="body2">
-                      Cloud Migration ve Cloud Innovation konularına daha fazla zaman ayırmalısınız.
+                      {t('analytics.topicDistributionTip')}
                     </Typography>
                   </CardContent>
                 </Card>
@@ -586,10 +588,10 @@ const StudyAnalytics: React.FC<StudyAnalyticsProps> = ({ userId }) => {
             <Grid container spacing={4}>
               <Grid item xs={12} md={6}>
                 <Typography variant="h6" gutterBottom>
-                  Hafta İçi Analizi
+                  {t('analytics.weekdayAnalysis')}
                 </Typography>
                 <Typography variant="body2" color="text.secondary" paragraph>
-                  Haftanın günlerine göre çalışma süreniz ve performansınız.
+                  {t('analytics.weekdayDescription')}
                 </Typography>
                 <Box sx={{ height: 350 }}>
                   <Bar 
@@ -599,48 +601,39 @@ const StudyAnalytics: React.FC<StudyAnalyticsProps> = ({ userId }) => {
                       scales: {
                         y: {
                           beginAtZero: true,
+                          title: {
+                            display: true,
+                            text: t('analytics.studyTime')
+                          }
                         }
                       }
                     }}
                   />
                 </Box>
-                <Box sx={{ mt: 2 }}>
-                  <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
-                    Öneriler:
-                  </Typography>
-                  <Typography variant="body2">
-                    Cumartesi günleri en yüksek performansı gösteriyorsunuz. Önemli konuları bu günlerde çalışmayı deneyebilirsiniz. Cuma günleri ise performansınız düşük, bu günlerde daha kısa ve odaklı çalışmalar planlamanız faydalı olabilir.
-                  </Typography>
-                </Box>
               </Grid>
-              
               <Grid item xs={12} md={6}>
                 <Typography variant="h6" gutterBottom>
-                  Gün İçi Analizi
+                  {t('analytics.timeOfDayAnalysis')}
                 </Typography>
                 <Typography variant="body2" color="text.secondary" paragraph>
-                  Günün farklı saatlerindeki çalışma veriminiz.
+                  {t('analytics.timeOfDayDescription')}
                 </Typography>
                 <Box sx={{ height: 350 }}>
-                  <Doughnut 
+                  <Bar 
                     data={prepareTimeOfDayData() as any}
                     options={{
                       responsive: true,
-                      plugins: {
-                        legend: {
-                          position: 'bottom' as const,
+                      scales: {
+                        y: {
+                          beginAtZero: true,
+                          title: {
+                            display: true,
+                            text: t('analytics.studyTime')
+                          }
                         }
                       }
                     }}
                   />
-                </Box>
-                <Box sx={{ mt: 2 }}>
-                  <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
-                    Öneriler:
-                  </Typography>
-                  <Typography variant="body2">
-                    Sabah saatlerinde (6-12) en yüksek performansı gösteriyorsunuz, ancak en az çalışma süreniz bu zaman diliminde. Mümkünse sabah saatlerinde daha fazla çalışma planlamanız veriminizi artırabilir.
-                  </Typography>
                 </Box>
               </Grid>
             </Grid>
@@ -653,12 +646,12 @@ const StudyAnalytics: React.FC<StudyAnalyticsProps> = ({ userId }) => {
             <Grid container spacing={4}>
               <Grid item xs={12} md={6}>
                 <Typography variant="h6" gutterBottom>
-                  Konu Bazlı Performans
+                  {t('analytics.topicAnalysis')}
                 </Typography>
                 <Typography variant="body2" color="text.secondary" paragraph>
-                  Farklı konulardaki doğruluk oranlarınız.
+                  {t('analytics.topicAnalysisDescription')}
                 </Typography>
-                <Box sx={{ height: 400 }}>
+                <Box sx={{ height: 350 }}>
                   <Radar 
                     data={prepareTopicPerformanceData() as any}
                     options={{
@@ -676,56 +669,73 @@ const StudyAnalytics: React.FC<StudyAnalyticsProps> = ({ userId }) => {
                   />
                 </Box>
               </Grid>
-              
               <Grid item xs={12} md={6}>
                 <Typography variant="h6" gutterBottom>
-                  Konu Dağılımı
+                  {t('analytics.topicDistributionTitle')}
                 </Typography>
                 <Typography variant="body2" color="text.secondary" paragraph>
-                  Çözdüğünüz soruların konulara göre dağılımı.
+                  {t('analytics.topicDistributionDescription')}
                 </Typography>
-                <Box sx={{ height: 400 }}>
+                <Box sx={{ height: 350 }}>
                   <Doughnut 
                     data={prepareTopicDistributionData() as any}
                     options={{
                       responsive: true,
                       plugins: {
                         legend: {
-                          position: 'bottom' as const,
+                          position: 'right' as const,
                         }
                       }
                     }}
                   />
                 </Box>
               </Grid>
-              
-              <Grid item xs={12}>
-                <Divider sx={{ my: 2 }} />
-                <Typography variant="h6" gutterBottom>
-                  Konu Bazlı Öneriler
-                </Typography>
-                <Grid container spacing={2}>
-                  {analyticsData.topicPerformance
-                    .sort((a, b) => a.correctPercentage - b.correctPercentage)
-                    .slice(0, 3)
-                    .map((topic, index) => (
-                      <Grid item xs={12} md={4} key={index}>
-                        <Card elevation={0} sx={{ bgcolor: alpha(theme.palette.warning.main, 0.1), borderRadius: 2 }}>
-                          <CardContent>
-                            <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-                              {topic.topic}
-                            </Typography>
-                            <Typography variant="body2" paragraph>
-                              Bu konuda %{topic.correctPercentage} doğruluk oranına sahipsiniz.
-                            </Typography>
-                            <Typography variant="body2">
-                              Bu konuya daha fazla odaklanmalı ve özellikle pratik yapmalısınız. Konuyla ilgili temel kavramları tekrar gözden geçirmeniz faydalı olabilir.
-                            </Typography>
-                          </CardContent>
-                        </Card>
-                      </Grid>
-                    ))}
-                </Grid>
+            </Grid>
+            
+            <Divider sx={{ my: 3 }} />
+            
+            <Typography variant="h6" gutterBottom>
+              {t('analytics.recommendations')}
+            </Typography>
+            <Typography variant="body2" color="text.secondary" paragraph>
+              {t('analytics.recommendationsDescription')}
+            </Typography>
+            <Grid container spacing={2}>
+              <Grid item xs={12} md={4}>
+                <Card elevation={0} sx={{ bgcolor: alpha(theme.palette.warning.main, 0.1), borderRadius: 2 }}>
+                  <CardContent>
+                    <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
+                      {t('analytics.focusTopics')}
+                    </Typography>
+                    <Typography variant="body2">
+                      {t('analytics.focusTopicsTip')}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Card elevation={0} sx={{ bgcolor: alpha(theme.palette.info.main, 0.1), borderRadius: 2 }}>
+                  <CardContent>
+                    <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
+                      {t('analytics.reviewRegularly')}
+                    </Typography>
+                    <Typography variant="body2">
+                      {t('analytics.reviewRegularlyTip')}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Card elevation={0} sx={{ bgcolor: alpha(theme.palette.success.main, 0.1), borderRadius: 2 }}>
+                  <CardContent>
+                    <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
+                      {t('analytics.balanceStudy')}
+                    </Typography>
+                    <Typography variant="body2">
+                      {t('analytics.balanceStudyTip')}
+                    </Typography>
+                  </CardContent>
+                </Card>
               </Grid>
             </Grid>
           </Box>

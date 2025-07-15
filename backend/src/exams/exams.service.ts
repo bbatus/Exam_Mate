@@ -30,6 +30,12 @@ export class ExamsService {
     });
   }
 
+  async getExamQuestions(examId: number) {
+    return this.prisma.question.findMany({
+      where: { examId },
+    });
+  }
+
   async createExamResult(createExamResultDto: CreateExamResultDto) {
     const { examId, score, totalQuestions, questionAnswers, examMode, timeSpent } = createExamResultDto;
 
@@ -248,12 +254,31 @@ export class ExamsService {
   async removeExam(id: number) {
     const existingExam = await this.prisma.exam.findUnique({
       where: { id },
+      include: {
+        questions: true,
+        results: true
+      }
     });
 
     if (!existingExam) {
       throw new NotFoundException(`Exam with ID ${id} not found`);
     }
 
+    // Önce ilişkili sonuçları sil
+    if (existingExam.results.length > 0) {
+      await this.prisma.examResult.deleteMany({
+        where: { examId: id },
+      });
+    }
+
+    // Sonra ilişkili soruları sil
+    if (existingExam.questions.length > 0) {
+      await this.prisma.question.deleteMany({
+        where: { examId: id },
+      });
+    }
+
+    // Son olarak sınavı sil
     return this.prisma.exam.delete({
       where: { id },
     });
@@ -303,5 +328,28 @@ export class ExamsService {
     return this.prisma.question.delete({
       where: { id },
     });
+  }
+
+  async bulkCreateQuestions(examId: number, questions: CreateQuestionDto[]) {
+    const existingExam = await this.prisma.exam.findUnique({
+      where: { id: examId },
+    });
+
+    if (!existingExam) {
+      throw new NotFoundException(`Exam with ID ${examId} not found`);
+    }
+
+    // Process each question and add the examId
+    const questionsWithExamId = questions.map(question => ({
+      ...question,
+      examId,
+    }));
+
+    // Create all questions in a transaction
+    return this.prisma.$transaction(
+      questionsWithExamId.map(question => 
+        this.prisma.question.create({ data: question })
+      )
+    );
   }
 } 

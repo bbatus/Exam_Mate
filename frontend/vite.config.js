@@ -9,12 +9,20 @@ export default defineConfig({
             usePolling: true,
         },
         host: '0.0.0.0',
-        strictPort: true,
+        strictPort: false, // Farklı bir port kullanabilsin
         port: 5173,
         allowedHosts: [
             'localhost',
             'goexammate.com',
             'www.goexammate.com'
         ]
+    },
+    optimizeDeps: {
+        exclude: ['@rollup/rollup-linux-arm64-musl'] // Sorun çıkaran bağımlılığı dışla
+    },
+    build: {
+        commonjsOptions: {
+            include: [] // Rollup sorununu önlemek için
+        }
     }
 });

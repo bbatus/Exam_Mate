@@ -15,10 +15,12 @@ import CareerPathMap from '../components/CareerPathMap';
 import { FadeIn } from '../components/UIAnimations';
 import AdBanner from '../components/AdBanner';
 import PageLayout from '../components/PageLayout';
+import { useTranslation } from 'react-i18next';
 
 const CareerPathPage: React.FC = () => {
   const [selectedCareerPathId, setSelectedCareerPathId] = useState<number>(1); // Default to Cloud Engineer
   const theme = useTheme();
+  const { t } = useTranslation();
 
   const handleCareerPathChange = (event: SelectChangeEvent<number>) => {
     setSelectedCareerPathId(Number(event.target.value));
@@ -29,10 +31,10 @@ const CareerPathPage: React.FC = () => {
       <FadeIn>
         <Box sx={{ mb: 4 }}>
           <Typography variant="h4" component="h1" gutterBottom fontWeight="bold">
-            Kariyer Yolu Haritası
+            {t('careerPath.title')}
           </Typography>
           <Typography variant="body1" color="text.secondary" paragraph>
-            Bu interaktif harita, seçilen kariyer yolundaki sertifikaları ve aralarındaki ilişkileri görselleştirir. Hangi sertifikaları hangi sırayla almanız gerektiğini görerek kariyer planınızı daha etkili bir şekilde yapabilirsiniz.
+            {t('careerPath.description')}
           </Typography>
           
           <Paper 
@@ -47,15 +49,15 @@ const CareerPathPage: React.FC = () => {
           >
             <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 2 }}>
               <Typography variant="subtitle1" fontWeight="medium">
-                Kariyer yolu seçin:
+                {t('careerPath.selectPath')}
               </Typography>
               <FormControl sx={{ minWidth: 300 }}>
-                <InputLabel id="career-path-select-label">Kariyer Yolu</InputLabel>
+                <InputLabel id="career-path-select-label">{t('careerPath.pathLabel')}</InputLabel>
                 <Select
                   labelId="career-path-select-label"
                   id="career-path-select"
                   value={selectedCareerPathId}
-                  label="Kariyer Yolu"
+                  label={t('careerPath.pathLabel')}
                   onChange={handleCareerPathChange}
                 >
                   <MenuItem value={1}>Google Cloud Engineer</MenuItem>

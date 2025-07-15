@@ -413,6 +413,19 @@ const ExamListPage: React.FC = () => {
         <ExamStatistics examId={selectedExamId || 1} />
       )}
       
+      {/* Admin Panel Link */}
+      <Box sx={{ mt: 4, textAlign: 'center', opacity: 0.7 }}>
+        <Button 
+          component={RouterLink} 
+          to="/admin/login" 
+          variant="text" 
+          size="small"
+          sx={{ fontSize: '0.8rem', color: 'text.secondary' }}
+        >
+          {t('admin.login.title')}
+        </Button>
+      </Box>
+      
       <AdBanner position="bottom" size="large" />
     </PageLayout>
   );

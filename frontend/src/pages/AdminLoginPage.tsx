@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Box,
@@ -10,6 +10,7 @@ import {
   Alert,
   useTheme,
   alpha,
+  CircularProgress,
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useTranslation } from 'react-i18next';
@@ -18,23 +19,107 @@ const AdminLoginPage: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [initializing, setInitializing] = useState(true);
+  const [adminExists, setAdminExists] = useState(true);
   const navigate = useNavigate();
   const theme = useTheme();
   const { t } = useTranslation();
 
-  // Basit bir admin girişi simülasyonu
-  const handleLogin = (e: React.FormEvent) => {
+  useEffect(() => {
+    // Check if admin is already logged in
+    const token = localStorage.getItem('adminToken');
+    if (token) {
+      navigate('/admin/dashboard');
+    }
+
+    // Check if admin account exists
+    const checkAdminExists = async () => {
+      try {
+        const response = await fetch('http://localhost:5001/auth/check');
+        const data = await response.json();
+        setAdminExists(data.exists);
+      } catch (error) {
+        console.error('Error checking admin status:', error);
+      } finally {
+        setInitializing(false);
+      }
+    };
+
+    checkAdminExists();
+  }, [navigate]);
+
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Demo için basit bir doğrulama
-    if (username === 'admin' && password === 'admin123') {
-      // Gerçek bir uygulamada JWT token veya başka bir güvenli yöntem kullanılmalı
-      localStorage.setItem('adminToken', 'demo-token');
+    setLoading(true);
+    setError('');
+
+    try {
+      const response = await fetch('http://localhost:5001/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || t('admin.login.error'));
+      }
+
+      const data = await response.json();
+      localStorage.setItem('adminToken', data.access_token);
       localStorage.setItem('isAdmin', 'true');
       navigate('/admin/dashboard');
-    } else {
-      setError(t('admin.login.error'));
+    } catch (error) {
+      console.error('Login error:', error);
+      setError(typeof error === 'object' && error !== null && 'message' in error 
+        ? String(error.message) 
+        : t('admin.login.error'));
+    } finally {
+      setLoading(false);
     }
   };
+
+  const handleCreateAdmin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+
+    try {
+      const response = await fetch('http://localhost:5001/auth/admin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Could not create admin account');
+      }
+
+      // After creating admin, log in
+      await handleLogin(e);
+    } catch (error) {
+      console.error('Error creating admin:', error);
+      setError(typeof error === 'object' && error !== null && 'message' in error 
+        ? String(error.message) 
+        : 'Failed to create admin account');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (initializing) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
     <Container maxWidth="xs">
@@ -80,7 +165,7 @@ const AdminLoginPage: React.FC = () => {
               <LockOutlinedIcon color="primary" fontSize="large" />
             </Box>
             <Typography component="h1" variant="h5" fontWeight={600}>
-              {t('admin.login.title')}
+              {adminExists ? t('admin.login.title') : 'Create Admin Account'}
             </Typography>
           </Box>
 
@@ -90,7 +175,11 @@ const AdminLoginPage: React.FC = () => {
             </Alert>
           )}
 
-          <Box component="form" onSubmit={handleLogin} sx={{ mt: 1 }}>
+          <Box 
+            component="form" 
+            onSubmit={adminExists ? handleLogin : handleCreateAdmin} 
+            sx={{ mt: 1 }}
+          >
             <TextField
               margin="normal"
               required
@@ -103,6 +192,7 @@ const AdminLoginPage: React.FC = () => {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               sx={{ mb: 2 }}
+              disabled={loading}
             />
             <TextField
               margin="normal"
@@ -116,11 +206,13 @@ const AdminLoginPage: React.FC = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               sx={{ mb: 3 }}
+              disabled={loading}
             />
             <Button
               type="submit"
               fullWidth
               variant="contained"
+              disabled={loading}
               sx={{
                 py: 1.5,
                 background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.primary.dark})`,
@@ -128,7 +220,13 @@ const AdminLoginPage: React.FC = () => {
                 mb: 2,
               }}
             >
-              {t('admin.login.signIn')}
+              {loading ? (
+                <CircularProgress size={24} color="inherit" />
+              ) : adminExists ? (
+                t('admin.login.signIn')
+              ) : (
+                'Create Admin Account'
+              )}
             </Button>
           </Box>
         </Paper>

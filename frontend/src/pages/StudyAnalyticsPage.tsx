@@ -9,19 +9,21 @@ import StudyAnalytics from '../components/StudyAnalytics';
 import { FadeIn } from '../components/UIAnimations';
 import AdBanner from '../components/AdBanner';
 import PageLayout from '../components/PageLayout';
+import { useTranslation } from 'react-i18next';
 
 const StudyAnalyticsPage: React.FC = () => {
   const theme = useTheme();
+  const { t } = useTranslation();
 
   return (
     <PageLayout>
       <FadeIn>
         <Box sx={{ mb: 4 }}>
           <Typography variant="h4" component="h1" gutterBottom fontWeight="bold">
-            Çalışma Analitikleri
+            {t('analytics.title')}
           </Typography>
           <Typography variant="body1" color="text.secondary" paragraph>
-            Bu sayfa, çalışma alışkanlıklarınızı ve performansınızı analiz eder. Hangi konularda güçlü veya zayıf olduğunuzu, en verimli çalışma zamanlarınızı ve ilerlemenizi görsel grafiklerle takip edebilirsiniz.
+            {t('analytics.description')}
           </Typography>
           
           <Box 
@@ -34,7 +36,7 @@ const StudyAnalyticsPage: React.FC = () => {
             }}
           >
             <Typography variant="subtitle1" fontWeight="medium" color="info.main">
-              Not: Bu analitikler, mevcut oturumunuzdaki çalışma verilerinize dayanmaktadır. Daha kapsamlı analiz için üye olabilirsiniz.
+              {t('analytics.note')}
             </Typography>
           </Box>
         </Box>

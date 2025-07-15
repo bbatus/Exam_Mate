@@ -1,37 +1,34 @@
-import React, { ReactNode, useState, useContext } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import {
   Box,
   Drawer,
   AppBar,
   Toolbar,
-  List,
   Typography,
   Divider,
   IconButton,
+  List,
   ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  useTheme,
-  alpha,
   Button,
+  useTheme,
   useMediaQuery,
+  PaletteMode,
+  alpha,
 } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import QuizIcon from '@mui/icons-material/Quiz';
-import MenuIcon from '@mui/icons-material/Menu';
 import LogoutIcon from '@mui/icons-material/Logout';
-import CloseIcon from '@mui/icons-material/Close';
-import SchoolIcon from '@mui/icons-material/School';
 import { useTranslation } from 'react-i18next';
-import LanguageSwitcher from '../LanguageSwitcher';
+import { getStoredTheme, setStoredTheme } from '@/lib/theme';
 import ThemeToggle from '../ThemeToggle';
-import { getStoredTheme, setStoredTheme } from '../../lib/theme';
-import { PaletteMode } from '@mui/material';
 
 interface AdminLayoutProps {
-  children: ReactNode;
+  children: React.ReactNode;
 }
 
 const drawerWidth = 240;
@@ -44,6 +41,19 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { t } = useTranslation();
+
+  useEffect(() => {
+    const checkAuth = () => {
+      const token = localStorage.getItem('adminToken');
+      const isAdmin = localStorage.getItem('isAdmin');
+      
+      if (!token || !isAdmin) {
+        navigate('/admin/login');
+      }
+    };
+
+    checkAuth();
+  }, [navigate]);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -79,49 +89,32 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
 
   const drawer = (
     <div>
-      <Box
+      <Toolbar
         sx={{
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'space-between',
-          p: 2,
+          justifyContent: 'center',
+          px: [1],
         }}
       >
-        <Box 
-          sx={{ 
-            display: 'flex', 
-            alignItems: 'center',
-            cursor: 'pointer'
+        <Typography
+          variant="h6"
+          noWrap
+          component="div"
+          sx={{
+            fontWeight: 700,
+            ...(theme.palette.mode === 'dark'
+              ? {}
+              : {
+                  background: 'linear-gradient(90deg, #6366f1, #10b981)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }),
           }}
-          onClick={() => navigate('/admin/dashboard')}
         >
-          <img 
-            src="/logo.svg" 
-            alt="Exam Mate Admin Logo" 
-            style={{ 
-              height: '32px', 
-              marginRight: '10px',
-              filter: theme.palette.mode === 'dark' ? 'brightness(1.2)' : 'none'
-            }} 
-          />
-          <Typography
-            variant="h6"
-            sx={{
-              fontWeight: 700,
-              background: 'linear-gradient(90deg, #6366f1, #10b981)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-            }}
-          >
-            {t('admin.title')}
-          </Typography>
-        </Box>
-        {isMobile && (
-          <IconButton onClick={handleDrawerToggle}>
-            <CloseIcon />
-          </IconButton>
-        )}
-      </Box>
+          {t('admin.title')}
+        </Typography>
+      </Toolbar>
       <Divider />
       <List>
         {menuItems.map((item) => (
@@ -188,11 +181,12 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
       <AppBar
         position="fixed"
         sx={{
-          width: { md: `calc(100% - ${drawerWidth}px)` },
-          ml: { md: `${drawerWidth}px` },
-          boxShadow: 'none',
-          backdropFilter: 'blur(8px)',
-          backgroundColor: alpha(theme.palette.background.default, 0.8),
+          width: { sm: `calc(100% - ${drawerWidth}px)` },
+          ml: { sm: `${drawerWidth}px` },
+          bgcolor: alpha(theme.palette.background.paper, 0.8),
+          backdropFilter: 'blur(10px)',
+          color: theme.palette.text.primary,
+          boxShadow: 1,
         }}
       >
         <Toolbar>
@@ -201,19 +195,18 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { md: 'none' } }}
+            sx={{ mr: 2, display: { sm: 'none' } }}
           >
             <MenuIcon />
           </IconButton>
           <Box sx={{ flexGrow: 1 }} />
           <ThemeToggle toggleTheme={toggleTheme} isDarkMode={mode === 'dark'} />
-          <LanguageSwitcher />
         </Toolbar>
       </AppBar>
       <Box
         component="nav"
-        sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }}
-        aria-label="admin navigation"
+        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+        aria-label="mailbox folders"
       >
         <Drawer
           variant="temporary"
@@ -223,12 +216,8 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
             keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
-            display: { xs: 'block', md: 'none' },
-            '& .MuiDrawer-paper': {
-              boxSizing: 'border-box',
-              width: drawerWidth,
-              backgroundColor: theme.palette.background.default,
-            },
+            display: { xs: 'block', sm: 'none' },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
           }}
         >
           {drawer}
@@ -236,13 +225,8 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
         <Drawer
           variant="permanent"
           sx={{
-            display: { xs: 'none', md: 'block' },
-            '& .MuiDrawer-paper': {
-              boxSizing: 'border-box',
-              width: drawerWidth,
-              backgroundColor: theme.palette.background.default,
-              borderRight: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
-            },
+            display: { xs: 'none', sm: 'block' },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
           }}
           open
         >
@@ -254,11 +238,10 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
         sx={{
           flexGrow: 1,
           p: 3,
-          width: { md: `calc(100% - ${drawerWidth}px)` },
-          minHeight: '100vh',
+          width: { sm: `calc(100% - ${drawerWidth}px)` },
+          mt: { xs: 8, sm: 9 },
         }}
       >
-        <Toolbar />
         {children}
       </Box>
     </Box>

@@ -23,6 +23,7 @@ import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import { FadeIn, ScaleIn } from './UIAnimations';
+import { useTranslation } from 'react-i18next';
 
 // Define certification structure
 interface Certification {
@@ -58,6 +59,7 @@ const CareerPathMap: React.FC<CareerPathMapProps> = ({ careerPathId }) => {
   const [zoomLevel, setZoomLevel] = useState<number>(1);
   const [selectedCertification, setSelectedCertification] = useState<Certification | null>(null);
   const theme = useTheme();
+  const { t } = useTranslation();
 
   // Mock data for Cloud Engineer career path
   const mockCloudEngineerPath: CareerPath = {
@@ -76,7 +78,7 @@ const CareerPathMap: React.FC<CareerPathMapProps> = ({ careerPathId }) => {
         estimatedStudyHours: 40,
         examCost: '$99',
         popularity: 4,
-        position: { x: 150, y: 100 }
+        position: { x: 100, y: 100 }
       },
       {
         id: 2,
@@ -89,7 +91,7 @@ const CareerPathMap: React.FC<CareerPathMapProps> = ({ careerPathId }) => {
         estimatedStudyHours: 120,
         examCost: '$125',
         popularity: 5,
-        position: { x: 350, y: 100 }
+        position: { x: 300, y: 100 }
       },
       {
         id: 3,
@@ -102,7 +104,7 @@ const CareerPathMap: React.FC<CareerPathMapProps> = ({ careerPathId }) => {
         estimatedStudyHours: 200,
         examCost: '$200',
         popularity: 5,
-        position: { x: 550, y: 50 }
+        position: { x: 500, y: 50 }
       },
       {
         id: 4,
@@ -115,7 +117,7 @@ const CareerPathMap: React.FC<CareerPathMapProps> = ({ careerPathId }) => {
         estimatedStudyHours: 180,
         examCost: '$200',
         popularity: 4,
-        position: { x: 550, y: 150 }
+        position: { x: 500, y: 150 }
       },
       {
         id: 5,
@@ -128,7 +130,7 @@ const CareerPathMap: React.FC<CareerPathMapProps> = ({ careerPathId }) => {
         estimatedStudyHours: 190,
         examCost: '$200',
         popularity: 4,
-        position: { x: 550, y: 250 }
+        position: { x: 500, y: 250 }
       },
       {
         id: 6,
@@ -141,7 +143,7 @@ const CareerPathMap: React.FC<CareerPathMapProps> = ({ careerPathId }) => {
         estimatedStudyHours: 500,
         examCost: 'By invitation',
         popularity: 5,
-        position: { x: 750, y: 150 }
+        position: { x: 700, y: 150 }
       },
       {
         id: 7,
@@ -154,7 +156,7 @@ const CareerPathMap: React.FC<CareerPathMapProps> = ({ careerPathId }) => {
         estimatedStudyHours: 80,
         examCost: '$125',
         popularity: 5,
-        position: { x: 350, y: 200 }
+        position: { x: 300, y: 200 }
       }
     ]
   };
@@ -176,7 +178,7 @@ const CareerPathMap: React.FC<CareerPathMapProps> = ({ careerPathId }) => {
         estimatedStudyHours: 30,
         examCost: '$100',
         popularity: 5,
-        position: { x: 150, y: 100 }
+        position: { x: 100, y: 100 }
       },
       {
         id: 2,
@@ -189,7 +191,7 @@ const CareerPathMap: React.FC<CareerPathMapProps> = ({ careerPathId }) => {
         estimatedStudyHours: 120,
         examCost: '$150',
         popularity: 5,
-        position: { x: 350, y: 100 }
+        position: { x: 300, y: 100 }
       },
       {
         id: 3,
@@ -198,11 +200,50 @@ const CareerPathMap: React.FC<CareerPathMapProps> = ({ careerPathId }) => {
         level: 'advanced',
         description: 'Validates advanced technical skills and experience in designing distributed applications and systems on the AWS platform.',
         prerequisites: [2],
-        leadsTo: [],
-        estimatedStudyHours: 300,
+        leadsTo: [4, 5],
+        estimatedStudyHours: 200,
         examCost: '$300',
         popularity: 4,
-        position: { x: 550, y: 100 }
+        position: { x: 500, y: 100 }
+      },
+      {
+        id: 4,
+        name: 'AWS Certified DevOps Engineer - Professional',
+        provider: 'Amazon Web Services',
+        level: 'advanced',
+        description: 'Validates technical expertise in provisioning, operating, and managing distributed application systems on the AWS platform.',
+        prerequisites: [3],
+        leadsTo: [6],
+        estimatedStudyHours: 180,
+        examCost: '$300',
+        popularity: 4,
+        position: { x: 700, y: 50 }
+      },
+      {
+        id: 5,
+        name: 'AWS Certified Security - Specialty',
+        provider: 'Amazon Web Services',
+        level: 'advanced',
+        description: 'Validates expertise in security best practices and techniques specific to the AWS platform.',
+        prerequisites: [3],
+        leadsTo: [6],
+        estimatedStudyHours: 160,
+        examCost: '$300',
+        popularity: 4,
+        position: { x: 700, y: 150 }
+      },
+      {
+        id: 6,
+        name: 'AWS Certified Data Analytics - Specialty',
+        provider: 'Amazon Web Services',
+        level: 'advanced',
+        description: 'Validates expertise in designing, building, securing, and maintaining analytics solutions on AWS.',
+        prerequisites: [3, 4, 5],
+        leadsTo: [],
+        estimatedStudyHours: 170,
+        examCost: '$300',
+        popularity: 4,
+        position: { x: 900, y: 100 }
       }
     ]
   };
@@ -349,7 +390,7 @@ const CareerPathMap: React.FC<CareerPathMapProps> = ({ careerPathId }) => {
   if (error || !careerPath) {
     return (
       <Box sx={{ p: 3, bgcolor: alpha(theme.palette.error.main, 0.1), borderRadius: 2 }}>
-        <Typography color="error">{error || 'Kariyer yolu bilgisi bulunamadı.'}</Typography>
+        <Typography color="error">{error || t('common.error')}</Typography>
       </Box>
     );
   }
@@ -367,19 +408,16 @@ const CareerPathMap: React.FC<CareerPathMapProps> = ({ careerPathId }) => {
         }}
       >
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <WorkIcon color="primary" />
-            <Typography variant="h6" fontWeight="bold">
-              {careerPath.name} Kariyer Yolu
-            </Typography>
-          </Box>
+          <Typography variant="h6" fontWeight="bold">
+            {careerPath.name} - {t('careerPath.certificationMap')}
+          </Typography>
           <Box>
-            <Tooltip title="Küçült">
+            <Tooltip title={t('careerPath.zoomOut')}>
               <IconButton onClick={handleZoomOut} size="small">
                 <ZoomOutIcon />
               </IconButton>
             </Tooltip>
-            <Tooltip title="Büyüt">
+            <Tooltip title={t('careerPath.zoomIn')}>
               <IconButton onClick={handleZoomIn} size="small">
                 <ZoomInIcon />
               </IconButton>
@@ -387,16 +425,10 @@ const CareerPathMap: React.FC<CareerPathMapProps> = ({ careerPathId }) => {
           </Box>
         </Box>
 
-        <Typography variant="body2" color="text.secondary" paragraph>
-          {careerPath.description}
-        </Typography>
-
         <Box 
           sx={{ 
             position: 'relative', 
-            height: '500px', 
-            border: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
-            borderRadius: 1,
+            height: '500px',
             bgcolor: alpha(theme.palette.background.default, 0.5),
             overflow: 'hidden',
             transform: `scale(${zoomLevel})`,
@@ -435,8 +467,8 @@ const CareerPathMap: React.FC<CareerPathMapProps> = ({ careerPathId }) => {
                   elevation={selectedCertification?.id === cert.id ? 6 : 1}
                   onClick={() => handleCertificationClick(cert)}
                   sx={{
-                    p: 2,
-                    width: 220, // Genişliği artırıyorum
+                    p: 1.5,
+                    width: 180, // Daha küçük genişlik
                     borderRadius: 2,
                     cursor: 'pointer',
                     border: `2px solid ${getLevelColor(cert.level)}`,
@@ -455,16 +487,16 @@ const CareerPathMap: React.FC<CareerPathMapProps> = ({ careerPathId }) => {
                     <Typography 
                       variant="subtitle2" 
                       fontWeight="bold"
-                      sx={{ fontSize: '0.9rem', maxWidth: '70%' }} // Yazı boyutunu artırıyorum ve genişlik sınırı ekliyorum
+                      sx={{ fontSize: '0.8rem', maxWidth: '70%' }} // Daha küçük yazı
                     >
                       {cert.name}
                     </Typography>
                     <Chip 
-                      label={cert.level} 
+                      label={t(`careerPath.level.${cert.level}`)} 
                       size="small" 
                       sx={{ 
-                        height: 20, 
-                        fontSize: '0.7rem', // Yazı boyutunu artırıyorum
+                        height: 18, 
+                        fontSize: '0.65rem', // Daha küçük yazı
                         bgcolor: alpha(getLevelColor(cert.level), 0.1),
                         color: getLevelColor(cert.level),
                         border: `1px solid ${getLevelColor(cert.level)}`
@@ -475,12 +507,12 @@ const CareerPathMap: React.FC<CareerPathMapProps> = ({ careerPathId }) => {
                   <Typography 
                     variant="caption" 
                     color="text.secondary"
-                    sx={{ display: 'block', fontSize: '0.8rem', mb: 1 }} // Yazı boyutunu artırıyorum
+                    sx={{ display: 'block', fontSize: '0.7rem', mb: 0.5 }} // Daha küçük yazı ve margin
                   >
                     {cert.provider}
                   </Typography>
                   
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, mb: 1 }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, mb: 0.5 }}>
                     {renderPopularityStars(cert.popularity)}
                   </Box>
                   
@@ -488,17 +520,17 @@ const CareerPathMap: React.FC<CareerPathMapProps> = ({ careerPathId }) => {
                     display: 'flex', 
                     justifyContent: 'space-between', 
                     alignItems: 'center',
-                    mt: 1, // Biraz boşluk ekliyorum
-                    pt: 1, // Biraz boşluk ekliyorum
-                    borderTop: `1px solid ${alpha(theme.palette.divider, 0.3)}` // Ayırıcı çizgi ekliyorum
+                    mt: 0.5, // Daha az margin
+                    pt: 0.5, // Daha az padding
+                    borderTop: `1px solid ${alpha(theme.palette.divider, 0.3)}`
                   }}>
                     <Typography 
                       variant="caption" 
                       sx={{ 
                         color: theme.palette.text.secondary,
                         display: 'block',
-                        fontSize: '0.8rem', // Yazı boyutunu artırıyorum
-                        fontWeight: 'medium' // Biraz daha kalın yapıyorum
+                        fontSize: '0.7rem', // Daha küçük yazı
+                        fontWeight: 'medium'
                       }}
                     >
                       {cert.estimatedStudyHours}h
@@ -508,8 +540,8 @@ const CareerPathMap: React.FC<CareerPathMapProps> = ({ careerPathId }) => {
                       sx={{ 
                         color: theme.palette.text.secondary,
                         display: 'block',
-                        fontSize: '0.8rem', // Yazı boyutunu artırıyorum
-                        fontWeight: 'medium' // Biraz daha kalın yapıyorum
+                        fontSize: '0.7rem', // Daha küçük yazı
+                        fontWeight: 'medium'
                       }}
                     >
                       {cert.examCost}
@@ -534,7 +566,7 @@ const CareerPathMap: React.FC<CareerPathMapProps> = ({ careerPathId }) => {
                   </Typography>
                 </Box>
                 <Chip 
-                  label={selectedCertification.level.toUpperCase()} 
+                  label={t(`careerPath.level.${selectedCertification.level}`).toUpperCase()} 
                   sx={{ 
                     bgcolor: alpha(getLevelColor(selectedCertification.level), 0.1),
                     color: getLevelColor(selectedCertification.level),
@@ -546,7 +578,7 @@ const CareerPathMap: React.FC<CareerPathMapProps> = ({ careerPathId }) => {
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, mb: 2 }}>
                 {renderPopularityStars(selectedCertification.popularity)}
                 <Typography variant="body2" color="text.secondary" sx={{ ml: 1 }}>
-                  Popülerlik
+                  {t('careerPath.popularity')}
                 </Typography>
               </Box>
               
@@ -557,18 +589,18 @@ const CareerPathMap: React.FC<CareerPathMapProps> = ({ careerPathId }) => {
               <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
                 <Box>
                   <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
-                    Tahmini Çalışma Süresi
+                    {t('careerPath.estimatedStudyTime')}
                   </Typography>
                   <Chip 
                     icon={<SchoolIcon />} 
-                    label={`${selectedCertification.estimatedStudyHours} saat`} 
+                    label={`${selectedCertification.estimatedStudyHours} ${t('careerPath.hours')}`} 
                     color="primary" 
                     variant="outlined"
                   />
                 </Box>
                 <Box>
                   <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
-                    Sınava Hazırlan
+                    {t('careerPath.examCost')}
                   </Typography>
                   <Chip 
                     label={selectedCertification.examCost} 
@@ -583,70 +615,83 @@ const CareerPathMap: React.FC<CareerPathMapProps> = ({ careerPathId }) => {
               <Box sx={{ mb: 2 }}>
                 <Typography variant="subtitle2" fontWeight="bold" gutterBottom sx={{ display: 'flex', alignItems: 'center' }}>
                   <TrendingUpIcon fontSize="small" sx={{ mr: 0.5 }} />
-                  Sertifika Yolu
+                  {t('careerPath.prerequisites')}
                 </Typography>
                 
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                  {selectedCertification.prerequisites.length > 0 && (
-                    <Box>
-                      <Typography variant="body2" color="text.secondary" gutterBottom>
-                        Ön Koşul Sertifikalar:
-                      </Typography>
-                      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-                        {selectedCertification.prerequisites.map(preId => {
-                          const preCert = careerPath.certifications.find(c => c.id === preId);
-                          return preCert ? (
-                            <Chip 
-                              key={preId}
-                              size="small" 
-                              label={preCert.name} 
-                              onClick={() => handleCertificationClick(preCert)}
-                              sx={{ 
-                                bgcolor: alpha(getLevelColor(preCert.level), 0.1),
-                                color: getLevelColor(preCert.level),
-                              }}
-                            />
-                          ) : null;
-                        })}
-                      </Box>
+                  {selectedCertification.prerequisites.length > 0 ? (
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                      {selectedCertification.prerequisites.map(preId => {
+                        const preCert = careerPath.certifications.find(c => c.id === preId);
+                        return preCert ? (
+                          <Chip 
+                            key={preId}
+                            label={preCert.name} 
+                            size="small" 
+                            onClick={() => handleCertificationClick(preCert)}
+                            sx={{ 
+                              bgcolor: alpha(getLevelColor(preCert.level), 0.1),
+                              color: getLevelColor(preCert.level),
+                              border: `1px solid ${getLevelColor(preCert.level)}`,
+                              cursor: 'pointer'
+                            }} 
+                          />
+                        ) : null;
+                      })}
                     </Box>
-                  )}
-                  
-                  {selectedCertification.leadsTo.length > 0 && (
-                    <Box>
-                      <Typography variant="body2" color="text.secondary" gutterBottom>
-                        Bu Sertifikadan Sonra:
-                      </Typography>
-                      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-                        {selectedCertification.leadsTo.map(nextId => {
-                          const nextCert = careerPath.certifications.find(c => c.id === nextId);
-                          return nextCert ? (
-                            <Chip 
-                              key={nextId}
-                              size="small" 
-                              label={nextCert.name} 
-                              onClick={() => handleCertificationClick(nextCert)}
-                              sx={{ 
-                                bgcolor: alpha(getLevelColor(nextCert.level), 0.1),
-                                color: getLevelColor(nextCert.level),
-                              }}
-                            />
-                          ) : null;
-                        })}
-                      </Box>
-                    </Box>
+                  ) : (
+                    <Typography variant="body2" color="text.secondary">
+                      {t('careerPath.noDependencies')}
+                    </Typography>
                   )}
                 </Box>
               </Box>
+              
+              <Box sx={{ mb: 2 }}>
+                <Typography variant="subtitle2" fontWeight="bold" gutterBottom sx={{ display: 'flex', alignItems: 'center' }}>
+                  <WorkIcon fontSize="small" sx={{ mr: 0.5 }} />
+                  {t('careerPath.leadsTo')}
+                </Typography>
+                
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                  {selectedCertification.leadsTo.length > 0 ? (
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                      {selectedCertification.leadsTo.map(nextId => {
+                        const nextCert = careerPath.certifications.find(c => c.id === nextId);
+                        return nextCert ? (
+                          <Chip 
+                            key={nextId}
+                            label={nextCert.name} 
+                            size="small" 
+                            onClick={() => handleCertificationClick(nextCert)}
+                            sx={{ 
+                              bgcolor: alpha(getLevelColor(nextCert.level), 0.1),
+                              color: getLevelColor(nextCert.level),
+                              border: `1px solid ${getLevelColor(nextCert.level)}`,
+                              cursor: 'pointer'
+                            }} 
+                          />
+                        ) : null;
+                      })}
+                    </Box>
+                  ) : (
+                    <Typography variant="body2" color="text.secondary">
+                      {t('careerPath.noLeadsTo')}
+                    </Typography>
+                  )}
+                </Box>
+              </Box>
+              
+              <CardActions sx={{ justifyContent: 'flex-end', pt: 2 }}>
+                <Button 
+                  variant="contained" 
+                  color="primary" 
+                  startIcon={<SchoolIcon />}
+                >
+                  {t('careerPath.prepareForExam')}
+                </Button>
+              </CardActions>
             </CardContent>
-            <CardActions>
-              <Button size="small" color="primary">
-                Detaylı Bilgi
-              </Button>
-              <Button size="small" color="secondary">
-                Sınava Hazırlan
-              </Button>
-            </CardActions>
           </Card>
         )}
       </Paper>

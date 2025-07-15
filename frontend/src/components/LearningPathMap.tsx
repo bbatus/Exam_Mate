@@ -13,7 +13,8 @@ import {
   alpha,
   CircularProgress,
   ToggleButtonGroup,
-  ToggleButton
+  ToggleButton,
+  Button
 } from '@mui/material';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import ZoomOutIcon from '@mui/icons-material/ZoomOut';
@@ -21,6 +22,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import PendingIcon from '@mui/icons-material/Pending';
 import LockIcon from '@mui/icons-material/Lock';
 import { FadeIn, ScaleIn } from './UIAnimations';
+import { useTranslation } from 'react-i18next';
 
 // Define topic structure
 interface Topic {
@@ -53,6 +55,7 @@ const LearningPathMap: React.FC<LearningPathMapProps> = ({ examId }) => {
   const [selectedTopic, setSelectedTopic] = useState<Topic | null>(null);
   const [selectedExamId, setSelectedExamId] = useState<number>(examId || 1);
   const theme = useTheme();
+  const { t } = useTranslation();
 
   // Mock data for Google Digital Leader exam topics
   const mockGoogleDigitalLeaderExam: Exam = {
@@ -67,7 +70,7 @@ const LearningPathMap: React.FC<LearningPathMapProps> = ({ examId }) => {
         status: 'in-progress',
         dependencies: [],
         questionsCount: 25,
-        position: { x: 50, y: 50 }
+        position: { x: 150, y: 150 }
       },
       {
         id: 2,
@@ -77,7 +80,7 @@ const LearningPathMap: React.FC<LearningPathMapProps> = ({ examId }) => {
         status: 'in-progress',
         dependencies: [1],
         questionsCount: 20,
-        position: { x: 150, y: 120 }
+        position: { x: 400, y: 300 }
       },
       {
         id: 3,
@@ -87,7 +90,7 @@ const LearningPathMap: React.FC<LearningPathMapProps> = ({ examId }) => {
         status: 'in-progress',
         dependencies: [1],
         questionsCount: 15,
-        position: { x: 150, y: 0 }
+        position: { x: 400, y: 50 }
       },
       {
         id: 4,
@@ -97,7 +100,7 @@ const LearningPathMap: React.FC<LearningPathMapProps> = ({ examId }) => {
         status: 'in-progress',
         dependencies: [1, 2],
         questionsCount: 30,
-        position: { x: 250, y: 80 }
+        position: { x: 650, y: 200 }
       },
       {
         id: 5,
@@ -107,7 +110,7 @@ const LearningPathMap: React.FC<LearningPathMapProps> = ({ examId }) => {
         status: 'locked',
         dependencies: [1, 2, 3],
         questionsCount: 18,
-        position: { x: 250, y: 180 }
+        position: { x: 650, y: 400 }
       },
       {
         id: 6,
@@ -117,7 +120,7 @@ const LearningPathMap: React.FC<LearningPathMapProps> = ({ examId }) => {
         status: 'locked',
         dependencies: [4],
         questionsCount: 22,
-        position: { x: 350, y: 80 }
+        position: { x: 900, y: 200 }
       }
     ]
   };
@@ -135,7 +138,7 @@ const LearningPathMap: React.FC<LearningPathMapProps> = ({ examId }) => {
         status: 'in-progress',
         dependencies: [],
         questionsCount: 22,
-        position: { x: 50, y: 50 }
+        position: { x: 150, y: 200 }
       },
       {
         id: 2,
@@ -145,7 +148,7 @@ const LearningPathMap: React.FC<LearningPathMapProps> = ({ examId }) => {
         status: 'in-progress',
         dependencies: [1],
         questionsCount: 18,
-        position: { x: 150, y: 100 }
+        position: { x: 450, y: 350 }
       },
       {
         id: 3,
@@ -155,7 +158,7 @@ const LearningPathMap: React.FC<LearningPathMapProps> = ({ examId }) => {
         status: 'in-progress',
         dependencies: [1],
         questionsCount: 30,
-        position: { x: 150, y: 0 }
+        position: { x: 450, y: 50 }
       },
       {
         id: 4,
@@ -165,7 +168,7 @@ const LearningPathMap: React.FC<LearningPathMapProps> = ({ examId }) => {
         status: 'locked',
         dependencies: [1, 3],
         questionsCount: 15,
-        position: { x: 250, y: 50 }
+        position: { x: 750, y: 200 }
       }
     ]
   };
@@ -183,7 +186,7 @@ const LearningPathMap: React.FC<LearningPathMapProps> = ({ examId }) => {
         status: 'in-progress',
         dependencies: [],
         questionsCount: 8,
-        position: { x: 50, y: 50 }
+        position: { x: 150, y: 200 }
       },
       {
         id: 2,
@@ -193,7 +196,7 @@ const LearningPathMap: React.FC<LearningPathMapProps> = ({ examId }) => {
         status: 'in-progress',
         dependencies: [1],
         questionsCount: 14,
-        position: { x: 180, y: 50 }
+        position: { x: 450, y: 200 }
       },
       {
         id: 3,
@@ -203,7 +206,7 @@ const LearningPathMap: React.FC<LearningPathMapProps> = ({ examId }) => {
         status: 'in-progress',
         dependencies: [1, 2],
         questionsCount: 12,
-        position: { x: 310, y: 50 }
+        position: { x: 750, y: 200 }
       },
       {
         id: 4,
@@ -213,7 +216,7 @@ const LearningPathMap: React.FC<LearningPathMapProps> = ({ examId }) => {
         status: 'in-progress',
         dependencies: [3],
         questionsCount: 16,
-        position: { x: 310, y: 150 }
+        position: { x: 750, y: 450 }
       },
       {
         id: 5,
@@ -223,7 +226,7 @@ const LearningPathMap: React.FC<LearningPathMapProps> = ({ examId }) => {
         status: 'locked',
         dependencies: [1, 4],
         questionsCount: 12,
-        position: { x: 180, y: 150 }
+        position: { x: 450, y: 450 }
       }
     ]
   };
@@ -241,7 +244,7 @@ const LearningPathMap: React.FC<LearningPathMapProps> = ({ examId }) => {
         status: 'in-progress',
         dependencies: [],
         questionsCount: 15,
-        position: { x: 50, y: 50 }
+        position: { x: 150, y: 200 }
       },
       {
         id: 2,
@@ -251,7 +254,7 @@ const LearningPathMap: React.FC<LearningPathMapProps> = ({ examId }) => {
         status: 'in-progress',
         dependencies: [1],
         questionsCount: 18,
-        position: { x: 180, y: 50 }
+        position: { x: 450, y: 200 }
       },
       {
         id: 3,
@@ -261,7 +264,7 @@ const LearningPathMap: React.FC<LearningPathMapProps> = ({ examId }) => {
         status: 'in-progress',
         dependencies: [1, 2],
         questionsCount: 10,
-        position: { x: 180, y: 150 }
+        position: { x: 450, y: 450 }
       },
       {
         id: 4,
@@ -271,7 +274,7 @@ const LearningPathMap: React.FC<LearningPathMapProps> = ({ examId }) => {
         status: 'in-progress',
         dependencies: [2, 3],
         questionsCount: 7,
-        position: { x: 310, y: 100 }
+        position: { x: 750, y: 325 }
       }
     ]
   };
@@ -379,7 +382,7 @@ const LearningPathMap: React.FC<LearningPathMapProps> = ({ examId }) => {
   if (error || !exam) {
     return (
       <Box sx={{ p: 3, bgcolor: alpha(theme.palette.error.main, 0.1), borderRadius: 2 }}>
-        <Typography color="error">{error || 'Sınav bilgisi bulunamadı.'}</Typography>
+        <Typography color="error">{error || t('common.error')}</Typography>
       </Box>
     );
   }
@@ -398,23 +401,11 @@ const LearningPathMap: React.FC<LearningPathMapProps> = ({ examId }) => {
       >
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
           <Typography variant="h6" fontWeight="bold">
-            {exam.title} - Konu Haritası
+            {exam.title} - {t('learningPath.topicMap')}
           </Typography>
-          <Box>
-            <Tooltip title="Küçült">
-              <IconButton onClick={handleZoomOut} size="small">
-                <ZoomOutIcon />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Büyüt">
-              <IconButton onClick={handleZoomIn} size="small">
-                <ZoomInIcon />
-              </IconButton>
-            </Tooltip>
-          </Box>
         </Box>
 
-        <Box sx={{ mb: 3 }}>
+        <Box sx={{ mb: 3, overflowX: 'auto' }}>
           <ToggleButtonGroup
             value={selectedExamId}
             exclusive
@@ -422,6 +413,13 @@ const LearningPathMap: React.FC<LearningPathMapProps> = ({ examId }) => {
             aria-label="exam selection"
             size="small"
             color="primary"
+            sx={{ 
+              flexWrap: { xs: 'wrap', md: 'nowrap' },
+              '& .MuiToggleButton-root': {
+                minWidth: { xs: '100%', sm: 'auto' },
+                mb: { xs: 1, md: 0 }
+              }
+            }}
           >
             <ToggleButton value={1} aria-label="Google Cloud Digital Leader">
               Google Cloud Digital Leader
@@ -438,170 +436,246 @@ const LearningPathMap: React.FC<LearningPathMapProps> = ({ examId }) => {
           </ToggleButtonGroup>
         </Box>
 
+        <Box sx={{ mb: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <Typography variant="body2" color="text.secondary">
+            <em>{t('learningPath.tip')}</em>
+          </Typography>
+          <Box>
+            <Tooltip title={t('learningPath.zoomOut')}>
+              <IconButton onClick={handleZoomOut} size="small">
+                <ZoomOutIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title={t('learningPath.zoomIn')}>
+              <IconButton onClick={handleZoomIn} size="small">
+                <ZoomInIcon />
+              </IconButton>
+            </Tooltip>
+          </Box>
+        </Box>
+        
         <Box 
           sx={{ 
             position: 'relative', 
-            height: '500px', 
+            height: '500px',
+            width: '100%',
             border: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
             borderRadius: 1,
             bgcolor: alpha(theme.palette.background.default, 0.5),
             overflow: 'hidden',
-            transform: `scale(${zoomLevel})`,
-            transformOrigin: 'center center',
-            transition: 'transform 0.3s ease',
             mb: 3
           }}
         >
-          <svg 
-            width="100%" 
-            height="100%" 
-            style={{ 
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              pointerEvents: 'none'
+          <Box
+            sx={{
+              position: 'relative',
+              height: '1000px',
+              width: '1200px',
+              transform: `scale(${zoomLevel})`,
+              transformOrigin: 'center center',
+              transition: 'transform 0.3s ease',
             }}
           >
-            {renderConnections()}
-          </svg>
-
-          {exam.topics.map((topic) => (
-            <Box
-              key={topic.id}
-              sx={{
+            <svg 
+              width="100%" 
+              height="100%" 
+              style={{ 
                 position: 'absolute',
-                top: topic.position.y,
-                left: topic.position.x,
-                transform: 'translate(-50%, -50%)',
-                zIndex: selectedTopic?.id === topic.id ? 10 : 1,
-                transition: 'all 0.3s ease',
+                top: 0,
+                left: 0,
+                pointerEvents: 'none'
               }}
             >
-              <ScaleIn>
-                <Paper
-                  elevation={selectedTopic?.id === topic.id ? 6 : 1}
-                  onClick={() => handleTopicClick(topic)}
-                  sx={{
-                    p: 2,
-                    width: 150,
-                    borderRadius: 2,
-                    cursor: 'pointer',
-                    border: `2px solid ${
-                      topic.status === 'completed'
-                        ? theme.palette.success.main
-                        : topic.status === 'locked'
-                        ? theme.palette.text.disabled
-                        : theme.palette.primary.main
-                    }`,
-                    bgcolor: 
-                      selectedTopic?.id === topic.id 
-                        ? alpha(theme.palette.primary.main, 0.1)
-                        : topic.status === 'locked'
-                        ? alpha(theme.palette.action.disabledBackground, 0.5)
-                        : alpha(theme.palette.background.paper, 0.9),
-                    '&:hover': {
+              {renderConnections()}
+            </svg>
+
+            {exam.topics.map((topic) => (
+              <Box
+                key={topic.id}
+                sx={{
+                  position: 'absolute',
+                  top: topic.position.y,
+                  left: topic.position.x,
+                  transform: 'translate(-50%, -50%)',
+                  zIndex: selectedTopic?.id === topic.id ? 10 : 1,
+                  transition: 'all 0.3s ease',
+                }}
+              >
+                <ScaleIn>
+                  <Paper
+                    elevation={selectedTopic?.id === topic.id ? 6 : 1}
+                    onClick={() => handleTopicClick(topic)}
+                    sx={{
+                      p: 2.5,
+                      width: 180,
+                      borderRadius: 2,
+                      cursor: 'pointer',
+                      border: `2px solid ${
+                        topic.status === 'completed'
+                          ? theme.palette.success.main
+                          : topic.status === 'locked'
+                          ? theme.palette.text.disabled
+                          : theme.palette.primary.main
+                      }`,
                       bgcolor: 
-                        topic.status === 'locked'
-                          ? alpha(theme.palette.action.disabledBackground, 0.7)
-                          : alpha(theme.palette.primary.main, 0.1),
-                      transform: 'scale(1.05)'
-                    },
-                    transition: 'transform 0.2s ease, background-color 0.2s ease',
-                  }}
-                >
-                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+                        selectedTopic?.id === topic.id 
+                          ? alpha(theme.palette.primary.main, 0.1)
+                          : topic.status === 'locked'
+                          ? alpha(theme.palette.action.disabledBackground, 0.5)
+                          : alpha(theme.palette.background.paper, 0.9),
+                      '&:hover': {
+                        bgcolor: 
+                          topic.status === 'locked'
+                            ? alpha(theme.palette.action.disabledBackground, 0.7)
+                            : alpha(theme.palette.primary.main, 0.1),
+                        transform: 'scale(1.05)'
+                      },
+                      transition: 'transform 0.2s ease, background-color 0.2s ease',
+                    }}
+                  >
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1.5 }}>
+                      <Typography 
+                        variant="subtitle2" 
+                        fontWeight="bold"
+                        sx={{ 
+                          color: topic.status === 'locked' ? theme.palette.text.disabled : 'inherit',
+                          fontSize: '0.9rem',
+                          lineHeight: 1.3,
+                          mr: 1
+                        }}
+                      >
+                        {topic.name}
+                      </Typography>
+                      {topic.status === 'completed' && (
+                        <CheckCircleIcon fontSize="small" color="success" />
+                      )}
+                      {topic.status === 'locked' && (
+                        <LockIcon fontSize="small" color="disabled" />
+                      )}
+                      {topic.status === 'in-progress' && (
+                        <PendingIcon fontSize="small" color="primary" />
+                      )}
+                    </Box>
+                    
+                    <Box sx={{ position: 'relative', height: 8, bgcolor: alpha(theme.palette.divider, 0.2), borderRadius: 3, mb: 1.5 }}>
+                      <Box
+                        sx={{
+                          position: 'absolute',
+                          top: 0,
+                          left: 0,
+                          height: '100%',
+                          width: `${topic.progress}%`,
+                          bgcolor: 
+                            topic.status === 'completed'
+                              ? theme.palette.success.main
+                              : topic.status === 'locked'
+                              ? theme.palette.text.disabled
+                              : theme.palette.primary.main,
+                          borderRadius: 3,
+                        }}
+                      />
+                    </Box>
+                    
                     <Typography 
-                      variant="subtitle2" 
-                      fontWeight="bold"
+                      variant="caption" 
                       sx={{ 
-                        color: topic.status === 'locked' ? theme.palette.text.disabled : 'inherit',
-                        fontSize: '0.8rem'
+                        color: topic.status === 'locked' ? theme.palette.text.disabled : theme.palette.text.secondary,
+                        display: 'block',
+                        fontSize: '0.75rem'
                       }}
                     >
-                      {topic.name}
+                      {topic.questionsCount} {t('learningPath.questions')} • {topic.progress}% {t('learningPath.completed')}
                     </Typography>
-                    {topic.status === 'completed' && (
-                      <CheckCircleIcon fontSize="small" color="success" />
-                    )}
-                    {topic.status === 'locked' && (
-                      <LockIcon fontSize="small" color="disabled" />
-                    )}
-                    {topic.status === 'in-progress' && (
-                      <PendingIcon fontSize="small" color="primary" />
-                    )}
+                  </Paper>
+                </ScaleIn>
+              </Box>
+            ))}
+          </Box>
+        </Box>
+
+        {selectedTopic && (
+          <Card sx={{ mt: 2, borderRadius: 2, boxShadow: 3 }}>
+            <CardContent>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
+                <Typography variant="h6" fontWeight="bold" gutterBottom>
+                  {selectedTopic.name}
+                </Typography>
+                
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  {selectedTopic.status === 'completed' && (
+                    <Chip 
+                      icon={<CheckCircleIcon />} 
+                      label={t('learningPath.completed')} 
+                      color="success" 
+                      size="small" 
+                      sx={{ mr: 1 }}
+                    />
+                  )}
+                  {selectedTopic.status === 'in-progress' && (
+                    <Chip 
+                      icon={<PendingIcon />} 
+                      label={t('learningPath.inProgress')} 
+                      color="primary" 
+                      size="small" 
+                      sx={{ mr: 1 }}
+                    />
+                  )}
+                  {selectedTopic.status === 'locked' && (
+                    <Chip 
+                      icon={<LockIcon />} 
+                      label={t('learningPath.locked')} 
+                      color="default" 
+                      size="small" 
+                      sx={{ mr: 1 }}
+                    />
+                  )}
+                </Box>
+              </Box>
+              
+              <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                <Box sx={{ flexGrow: 1, mr: 2 }}>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
+                    <Typography variant="body2" color="text.secondary">{t('learningPath.progress')}</Typography>
+                    <Typography variant="body2" fontWeight="medium">{selectedTopic.progress}%</Typography>
                   </Box>
-                  
-                  <Box sx={{ position: 'relative', height: 6, bgcolor: alpha(theme.palette.divider, 0.2), borderRadius: 3, mb: 1 }}>
+                  <Box sx={{ position: 'relative', height: 8, bgcolor: alpha(theme.palette.divider, 0.2), borderRadius: 3 }}>
                     <Box
                       sx={{
                         position: 'absolute',
                         top: 0,
                         left: 0,
                         height: '100%',
-                        width: `${topic.progress}%`,
+                        width: `${selectedTopic.progress}%`,
                         bgcolor: 
-                          topic.status === 'completed'
+                          selectedTopic.status === 'completed'
                             ? theme.palette.success.main
-                            : topic.status === 'locked'
+                            : selectedTopic.status === 'locked'
                             ? theme.palette.text.disabled
                             : theme.palette.primary.main,
                         borderRadius: 3,
                       }}
                     />
                   </Box>
-                  
-                  <Typography 
-                    variant="caption" 
-                    sx={{ 
-                      color: topic.status === 'locked' ? theme.palette.text.disabled : theme.palette.text.secondary,
-                      display: 'block',
-                      fontSize: '0.7rem'
-                    }}
-                  >
-                    {topic.questionsCount} Soru
-                  </Typography>
-                </Paper>
-              </ScaleIn>
-            </Box>
-          ))}
-        </Box>
-
-        {selectedTopic && (
-          <Card sx={{ mt: 2, borderRadius: 2 }}>
-            <CardContent>
-              <Typography variant="h6" fontWeight="bold" gutterBottom>
-                {selectedTopic.name}
-              </Typography>
-              
-              <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
+                </Box>
+                
                 <Chip 
                   size="small" 
-                  label={`${selectedTopic.progress}% Tamamlandı`} 
-                  color={
-                    selectedTopic.status === 'completed'
-                      ? 'success'
-                      : selectedTopic.status === 'locked'
-                      ? 'default'
-                      : 'primary'
-                  }
-                  variant="outlined"
-                />
-                <Chip 
-                  size="small" 
-                  label={`${selectedTopic.questionsCount} Soru`} 
+                  label={`${selectedTopic.questionsCount} ${t('learningPath.questions')}`} 
                   color="secondary" 
                   variant="outlined"
                 />
               </Box>
               
-              <Typography variant="body2" color="text.secondary" paragraph>
-                {selectedTopic.description}
-              </Typography>
+              <Paper sx={{ p: 2, bgcolor: alpha(theme.palette.background.default, 0.5), mb: 2, borderRadius: 2 }}>
+                <Typography variant="body2" paragraph sx={{ mb: 0 }}>
+                  {selectedTopic.description}
+                </Typography>
+              </Paper>
               
-              <Divider sx={{ my: 1 }} />
+              <Divider sx={{ my: 2 }} />
               
               <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
-                Bağımlı Olduğu Konular:
+                {t('learningPath.dependencies')}
               </Typography>
               
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
@@ -613,15 +687,28 @@ const LearningPathMap: React.FC<LearningPathMapProps> = ({ examId }) => {
                         key={depId}
                         size="small" 
                         label={dependentTopic.name} 
+                        color="primary"
                         onClick={() => handleTopicClick(dependentTopic)}
+                        sx={{ '&:hover': { boxShadow: 1 } }}
                       />
                     ) : null;
                   })
                 ) : (
                   <Typography variant="body2" color="text.secondary">
-                    Bu konu bağımsızdır, herhangi bir ön koşul gerektirmez.
+                    {t('learningPath.noDependencies')}
                   </Typography>
                 )}
+              </Box>
+              
+              <Box sx={{ mt: 2, display: 'flex', justifyContent: 'flex-end' }}>
+                <Button 
+                  variant="contained" 
+                  color="primary" 
+                  size="small"
+                  disabled={selectedTopic.status === 'locked'}
+                >
+                  {t('learningPath.studyTopic')}
+                </Button>
               </Box>
             </CardContent>
           </Card>

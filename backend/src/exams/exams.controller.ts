@@ -1,10 +1,11 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, UseGuards } from '@nestjs/common';
 import { ExamsService } from './exams.service';
 import { CreateExamResultDto } from './dto/create-exam-result.dto';
 import { CreateExamDto } from './dto/create-exam.dto';
 import { UpdateExamDto } from './dto/update-exam.dto';
 import { CreateQuestionDto } from './dto/create-question.dto';
 import { UpdateQuestionDto } from './dto/update-question.dto';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @Controller('exams')
 export class ExamsController {
@@ -21,12 +22,16 @@ export class ExamsController {
     return this.examsService.findOne(id);
   }
 
+  @Get(':examId/questions')
+  getExamQuestions(@Param('examId', ParseIntPipe) examId: number) {
+    return this.examsService.getExamQuestions(examId);
+  }
+
   @Post(':id/results')
   createExamResult(
     @Param('id', ParseIntPipe) id: number,
     @Body() createExamResultDto: CreateExamResultDto,
   ) {
-    // Parametre olarak gelen ID ile DTO'daki ID'nin aynı olduğundan emin olalım
     if (id !== createExamResultDto.examId) {
       createExamResultDto.examId = id;
     }
@@ -49,11 +54,13 @@ export class ExamsController {
   }
 
   // Admin endpoints
+  @UseGuards(JwtAuthGuard)
   @Post()
   createExam(@Body() createExamDto: CreateExamDto) {
     return this.examsService.createExam(createExamDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Put(':id')
   updateExam(
     @Param('id', ParseIntPipe) id: number,
@@ -62,20 +69,22 @@ export class ExamsController {
     return this.examsService.updateExam(id, updateExamDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   removeExam(@Param('id', ParseIntPipe) id: number) {
     return this.examsService.removeExam(id);
   }
 
-  // Question management
-  @Post(':id/questions')
+  @UseGuards(JwtAuthGuard)
+  @Post(':examId/questions')
   createQuestion(
-    @Param('id', ParseIntPipe) examId: number,
+    @Param('examId', ParseIntPipe) examId: number,
     @Body() createQuestionDto: CreateQuestionDto,
   ) {
     return this.examsService.createQuestion(examId, createQuestionDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Put('questions/:id')
   updateQuestion(
     @Param('id', ParseIntPipe) id: number,
@@ -84,8 +93,18 @@ export class ExamsController {
     return this.examsService.updateQuestion(id, updateQuestionDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete('questions/:id')
   removeQuestion(@Param('id', ParseIntPipe) id: number) {
     return this.examsService.removeQuestion(id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post(':examId/questions/bulk')
+  bulkCreateQuestions(
+    @Param('examId', ParseIntPipe) examId: number,
+    @Body() questions: CreateQuestionDto[],
+  ) {
+    return this.examsService.bulkCreateQuestions(examId, questions);
   }
 } 

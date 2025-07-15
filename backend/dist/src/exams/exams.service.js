@@ -28,6 +28,11 @@ let ExamsService = class ExamsService {
             },
         });
     }
+    async getExamQuestions(examId) {
+        return this.prisma.question.findMany({
+            where: { examId },
+        });
+    }
     async createExamResult(createExamResultDto) {
         const { examId, score, totalQuestions, questionAnswers, examMode, timeSpent } = createExamResultDto;
         const examResult = await this.prisma.examResult.create({
@@ -208,9 +213,23 @@ let ExamsService = class ExamsService {
     async removeExam(id) {
         const existingExam = await this.prisma.exam.findUnique({
             where: { id },
+            include: {
+                questions: true,
+                results: true
+            }
         });
         if (!existingExam) {
             throw new common_1.NotFoundException(`Exam with ID ${id} not found`);
+        }
+        if (existingExam.results.length > 0) {
+            await this.prisma.examResult.deleteMany({
+                where: { examId: id },
+            });
+        }
+        if (existingExam.questions.length > 0) {
+            await this.prisma.question.deleteMany({
+                where: { examId: id },
+            });
         }
         return this.prisma.exam.delete({
             where: { id },
@@ -252,6 +271,19 @@ let ExamsService = class ExamsService {
         return this.prisma.question.delete({
             where: { id },
         });
+    }
+    async bulkCreateQuestions(examId, questions) {
+        const existingExam = await this.prisma.exam.findUnique({
+            where: { id: examId },
+        });
+        if (!existingExam) {
+            throw new common_1.NotFoundException(`Exam with ID ${examId} not found`);
+        }
+        const questionsWithExamId = questions.map(question => ({
+            ...question,
+            examId,
+        }));
+        return this.prisma.$transaction(questionsWithExamId.map(question => this.prisma.question.create({ data: question })));
     }
 };
 exports.ExamsService = ExamsService;

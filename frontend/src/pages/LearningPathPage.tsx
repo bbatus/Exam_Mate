@@ -15,10 +15,12 @@ import LearningPathMap from '../components/LearningPathMap';
 import { FadeIn } from '../components/UIAnimations';
 import AdBanner from '../components/AdBanner';
 import PageLayout from '../components/PageLayout';
+import { useTranslation } from 'react-i18next';
 
 const LearningPathPage: React.FC = () => {
   const [selectedExamId, setSelectedExamId] = useState<number>(1); // Default to Google Cloud Digital Leader
   const theme = useTheme();
+  const { t } = useTranslation();
 
   const handleExamChange = (event: SelectChangeEvent<number>) => {
     setSelectedExamId(Number(event.target.value));
@@ -29,10 +31,10 @@ const LearningPathPage: React.FC = () => {
       <FadeIn>
         <Box sx={{ mb: 4 }}>
           <Typography variant="h4" component="h1" gutterBottom fontWeight="bold">
-            Konu Haritası
+            {t('learningPath.title')}
           </Typography>
           <Typography variant="body1" color="text.secondary" paragraph>
-            Bu interaktif harita, seçilen sınavın konu başlıklarını ve aralarındaki ilişkileri görselleştirir. Konuların bağımlılıklarını görerek çalışma planınızı daha etkili bir şekilde yapabilirsiniz.
+            {t('learningPath.description')}
           </Typography>
           
           <Paper 
@@ -47,15 +49,15 @@ const LearningPathPage: React.FC = () => {
           >
             <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 2 }}>
               <Typography variant="subtitle1" fontWeight="medium">
-                Sınav seçin:
+                {t('learningPath.selectExam')}
               </Typography>
               <FormControl sx={{ minWidth: 300 }}>
-                <InputLabel id="exam-select-label">Sınav</InputLabel>
+                <InputLabel id="exam-select-label">{t('learningPath.examLabel')}</InputLabel>
                 <Select
                   labelId="exam-select-label"
                   id="exam-select"
                   value={selectedExamId}
-                  label="Sınav"
+                  label={t('learningPath.examLabel')}
                   onChange={handleExamChange}
                 >
                   <MenuItem value={1}>Google Cloud Digital Leader</MenuItem>

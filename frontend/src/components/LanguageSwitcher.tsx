@@ -1,8 +1,9 @@
 import { useTranslation } from 'react-i18next';
 import { useState, useEffect } from 'react';
+import { Box, ToggleButtonGroup, ToggleButton, Typography } from '@mui/material';
 
 const LanguageSwitcher = () => {
-  const { i18n, t } = useTranslation();
+  const { i18n } = useTranslation();
   const [currentLanguage, setCurrentLanguage] = useState(i18n.language);
 
   useEffect(() => {
@@ -15,31 +16,39 @@ const LanguageSwitcher = () => {
   };
 
   return (
-    <div className="flex items-center space-x-2">
-      <span className="text-sm text-gray-300">{t('common.language')}:</span>
-      <div className="flex space-x-1">
-        <button
-          className={`px-2 py-1 text-xs rounded ${
-            currentLanguage === 'en'
-              ? 'bg-blue-600 text-white'
-              : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-          }`}
+    <Box sx={{ display: 'flex', alignItems: 'center', ml: 2 }}>
+      <ToggleButtonGroup
+        value={currentLanguage}
+        exclusive
+        size="small"
+        aria-label="language selector"
+      >
+        <ToggleButton 
+          value="en" 
           onClick={() => changeLanguage('en')}
+          sx={{ 
+            px: 1,
+            py: 0.5,
+            fontSize: '0.75rem',
+            color: currentLanguage === 'en' ? 'white' : 'inherit',
+          }}
         >
           EN
-        </button>
-        <button
-          className={`px-2 py-1 text-xs rounded ${
-            currentLanguage === 'tr'
-              ? 'bg-blue-600 text-white'
-              : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-          }`}
+        </ToggleButton>
+        <ToggleButton 
+          value="tr" 
           onClick={() => changeLanguage('tr')}
+          sx={{ 
+            px: 1,
+            py: 0.5,
+            fontSize: '0.75rem',
+            color: currentLanguage === 'tr' ? 'white' : 'inherit',
+          }}
         >
           TR
-        </button>
-      </div>
-    </div>
+        </ToggleButton>
+      </ToggleButtonGroup>
+    </Box>
   );
 };
 
