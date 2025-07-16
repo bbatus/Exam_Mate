@@ -62,7 +62,7 @@ server {
     
     # HTTP'den HTTPS'e yönlendirme
     location / {
-        return 301 https://\$host\$request_uri;
+        return 301 https://goexammate.com\$request_uri;
     }
 }
 
@@ -125,29 +125,39 @@ NGINX_CONF_FILE=nginx-goexammate.conf
 echo "🔄 Deployment başlatılıyor..."
 
 # Eğer varsa, mevcut docker container'ları durdur
-docker-compose -f $DEPLOY_DIR/docker-compose.yml down 2>/dev/null || true
+docker-compose -f \$DEPLOY_DIR/docker-compose.yml down 2>/dev/null || true
 
 # Önceki dağıtımdan kalan dosyaları temizle, ancak veritabanı verilerini koru
-if [ -d "$DEPLOY_DIR" ]; then
-    cd $DEPLOY_DIR
+if [ -d "\$DEPLOY_DIR" ]; then
+    cd \$DEPLOY_DIR
     # Eğer varsa, veritabanı volume'unu yedekle
     docker volume ls | grep postgres_data > /dev/null 2>&1 && echo "📦 Veritabanı volume'u korunuyor..."
     
     # Mevcut git repo'yu güncelle (daha hızlı)
     echo "📥 Git repo güncelleniyor..."
     git fetch --all
+    
+    # Problematik dosyaları temizle
+    echo "🧹 Problematik dosyaları temizleniyor..."
+    sudo rm -rf backend/dist/ || true
+    sudo rm -rf node_modules/ || true
+    
+    # Sahiplik sorunlarını çöz
+    sudo chown -R \$(whoami):\$(whoami) . || true
+    
+    # Git reset işlemini gerçekleştir
     git reset --hard origin/main
 else
     # Repo yoksa, yeni klonla
     echo "📥 Repo klonlanıyor..."
-    mkdir -p $DEPLOY_DIR
-    git clone --depth 1 $REPO_URL $DEPLOY_DIR
-    cd $DEPLOY_DIR
+    mkdir -p \$DEPLOY_DIR
+    git clone --depth 1 \$REPO_URL \$DEPLOY_DIR
+    cd \$DEPLOY_DIR
 fi
 
 # Nginx yapılandırmasını güncelle
 echo "🔧 Nginx yapılandırması güncelleniyor..."
-sudo cp $NGINX_CONF_FILE /etc/nginx/sites-available/goexammate
+sudo cp ~/\$NGINX_CONF_FILE /etc/nginx/sites-available/goexammate
 sudo ln -sf /etc/nginx/sites-available/goexammate /etc/nginx/sites-enabled/
 sudo rm -f /etc/nginx/sites-enabled/default
 sudo nginx -t && sudo systemctl reload nginx
@@ -238,6 +248,31 @@ EOL
             }
         }
 
+        stage('Database Migration Deploy') {
+            steps {
+                script {
+                    withCredentials([
+                        sshUserPrivateKey(
+                            credentialsId: 'exam-mate-key',
+                            keyFileVariable: 'SSH_KEY',
+                            usernameVariable: 'SSH_USER'
+                        )
+                    ]) {
+                        sh """
+                            chmod 600 \$SSH_KEY
+                            
+                            ssh -o StrictHostKeyChecking=no -i \$SSH_KEY ${params.SSH_USERNAME}@${params.REMOTE_SERVER_IP} "
+                                echo '🔄 Database migrasyonları uygulanıyor...'
+                                docker exec exam_mate_backend npx prisma migrate deploy
+                                docker exec exam_mate_backend npx prisma generate
+                                echo '✅ Database migrasyonları başarıyla uygulandı!'
+                            "
+                        """
+                    }
+                }
+            }
+        }
+
         stage('Nginx Check') {
             steps {
                 script {
@@ -284,4 +319,4 @@ EOL
             echo "❌ Pipeline başarısız oldu. Logları kontrol edin."
         }
     }
-} 
+}

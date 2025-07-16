@@ -18,4 +18,4 @@ RUN npm install --only=development
 COPY . .
 
 # Uygulamayı çalıştır
-CMD ["npm", "run", "start:dev"] 
+CMD ["sh", "-c", "npx prisma migrate deploy && npm run start:dev"] 
