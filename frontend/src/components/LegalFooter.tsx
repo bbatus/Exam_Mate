@@ -51,7 +51,7 @@ const LegalFooter: React.FC = () => {
       <Divider sx={{ mb: 3 }} />
       
       <Typography variant="body2" color="text.secondary" gutterBottom>
-        © {currentYear} Exam Mate. {t('footer.allRightsReserved')}
+        © {currentYear} Exam Mate v2.0. {t('footer.allRightsReserved')}
       </Typography>
       
       <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 2, mt: 1 }}>
