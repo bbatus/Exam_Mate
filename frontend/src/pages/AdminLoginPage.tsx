@@ -31,12 +31,13 @@ const AdminLoginPage: React.FC = () => {
     const token = localStorage.getItem('adminToken');
     if (token) {
       navigate('/admin/dashboard');
+      return;
     }
 
     // Check if admin account exists
     const checkAdminExists = async () => {
       try {
-        const response = await fetch('http://localhost:5001/auth/check');
+        const response = await fetch('/api/auth/check');
         const data = await response.json();
         setAdminExists(data.exists);
       } catch (error) {
@@ -55,7 +56,7 @@ const AdminLoginPage: React.FC = () => {
     setError('');
 
     try {
-      const response = await fetch('http://localhost:5001/auth/login', {
+      const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -88,7 +89,7 @@ const AdminLoginPage: React.FC = () => {
     setError('');
 
     try {
-      const response = await fetch('http://localhost:5001/auth/admin', {
+      const response = await fetch('/api/auth/admin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -102,7 +103,22 @@ const AdminLoginPage: React.FC = () => {
       }
 
       // After creating admin, log in
-      await handleLogin(e);
+      const loginResponse = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+      
+      if (!loginResponse.ok) {
+        throw new Error('Admin created but login failed');
+      }
+      
+      const data = await loginResponse.json();
+      localStorage.setItem('adminToken', data.access_token);
+      localStorage.setItem('isAdmin', 'true');
+      navigate('/admin/dashboard');
     } catch (error) {
       console.error('Error creating admin:', error);
       setError(typeof error === 'object' && error !== null && 'message' in error 

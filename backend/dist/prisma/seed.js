@@ -738,38 +738,68 @@ const genAIQuestions = [
 ];
 async function main() {
     console.log('Seeding...');
-    const exam = await prisma.exam.create({
-        data: {
-            title: 'Google Cloud Digital Leader',
-        },
+    const existingExams = await prisma.exam.findMany({
+        select: { title: true }
     });
-    for (const q of questions) {
-        await prisma.question.create({
+    const existingTitles = new Set(existingExams.map(exam => exam.title));
+    let exam;
+    if (!existingTitles.has('Google Cloud Digital Leader')) {
+        exam = await prisma.exam.create({
             data: {
-                ...q,
-                examId: exam.id,
+                title: 'Google Cloud Digital Leader',
             },
         });
+        console.log('Created Google Cloud Digital Leader exam with ID:', exam.id);
+        for (const q of questions) {
+            await prisma.question.create({
+                data: {
+                    ...q,
+                    examId: exam.id,
+                },
+            });
+        }
     }
-    const genAIExam = await prisma.exam.create({
-        data: {
-            title: 'Google Cloud Generative AI Leader',
-        },
-    });
-    for (const q of genAIQuestions) {
-        await prisma.question.create({
-            data: {
-                ...q,
-                examId: genAIExam.id,
-            },
+    else {
+        console.log('Google Cloud Digital Leader exam already exists, skipping creation');
+        exam = await prisma.exam.findFirst({
+            where: { title: 'Google Cloud Digital Leader' }
         });
     }
-    const aceExam = await prisma.exam.create({
-        data: {
-            title: 'Google Cloud Associate Cloud Engineer',
-        },
-    });
-    console.log('Created Google Cloud Associate Cloud Engineer exam with ID:', aceExam.id);
+    let genAIExam;
+    if (!existingTitles.has('Google Cloud Generative AI Leader')) {
+        genAIExam = await prisma.exam.create({
+            data: {
+                title: 'Google Cloud Generative AI Leader',
+            },
+        });
+        console.log('Created Google Cloud Generative AI Leader exam with ID:', genAIExam.id);
+        for (const q of genAIQuestions) {
+            await prisma.question.create({
+                data: {
+                    ...q,
+                    examId: genAIExam.id,
+                },
+            });
+        }
+    }
+    else {
+        console.log('Google Cloud Generative AI Leader exam already exists, skipping creation');
+        genAIExam = await prisma.exam.findFirst({
+            where: { title: 'Google Cloud Generative AI Leader' }
+        });
+    }
+    let aceExam;
+    if (!existingTitles.has('Google Cloud Associate Cloud Engineer')) {
+        aceExam = await prisma.exam.create({
+            data: {
+                title: 'Google Cloud Associate Cloud Engineer',
+            },
+        });
+        console.log('Created Google Cloud Associate Cloud Engineer exam with ID:', aceExam.id);
+    }
+    else {
+        console.log('Google Cloud Associate Cloud Engineer exam already exists, skipping creation');
+    }
     console.log('Seeding finished.');
 }
 main()

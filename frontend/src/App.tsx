@@ -1,4 +1,4 @@
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { useState, useMemo, useEffect, createContext } from 'react';
 import ExamListPage from './pages/ExamListPage';
 import QuizPage from './pages/QuizPage';
@@ -68,6 +68,7 @@ export const AccessibilityContext = createContext<AccessibilitySettings>({
 
 function App() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [mode, setMode] = useState<PaletteMode>(getStoredTheme());
   const [accessibilitySettings, setAccessibilitySettings] = useState<AccessibilitySettings>({
     fontSize: 100,
@@ -83,6 +84,9 @@ function App() {
   const theme = useMemo(() => createAppTheme(mode, accessibilitySettings.highContrast), [mode, accessibilitySettings.highContrast]);
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const { t } = useTranslation();
+  
+  // URL'yi kontrol ederek admin sayfalarında olup olmadığımızı belirle
+  const isAdminPage = location.pathname.startsWith('/admin');
 
   // Tema değiştirme fonksiyonu
   const toggleTheme = () => {
@@ -155,9 +159,6 @@ function App() {
     
   }, [accessibilitySettings, mode]);
 
-  // URL'yi kontrol ederek admin sayfalarında olup olmadığımızı belirle
-  const isAdminPage = window.location.pathname.startsWith('/admin');
-
   // Sayfa arkaplan rengini tema moduna göre ayarla
   useEffect(() => {
     if (!accessibilitySettings.highContrast) {
@@ -201,7 +202,14 @@ function App() {
     };
   }, [accessibilitySettings.keyboardNavigation, navigate, toggleTheme]);
 
-  // Admin sayfalarında AppBar göstermeyelim, çünkü AdminLayout içinde zaten var
+  // AdSense'i başlat
+  useEffect(() => {
+    if (!isAdminPage) {
+      initializeAdsense();
+    }
+  }, [isAdminPage]);
+
+  // Admin sayfalarında farklı layout kullan
   if (isAdminPage) {
     return (
       <ThemeProvider theme={theme}>
@@ -227,11 +235,7 @@ function App() {
     );
   }
 
-  // AdSense'i başlat
-  useEffect(() => {
-    initializeAdsense();
-  }, []);
-
+  // Normal sayfalar için standart layout
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

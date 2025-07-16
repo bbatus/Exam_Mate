@@ -265,6 +265,8 @@ EOL
                                 echo '🔄 Database migrasyonları uygulanıyor...'
                                 docker exec exam_mate_backend npx prisma migrate deploy
                                 docker exec exam_mate_backend npx prisma generate
+                                echo '🌱 Veritabanı seed işlemi uygulanıyor...'
+                                docker exec exam_mate_backend npx prisma db seed
                                 echo '✅ Database migrasyonları başarıyla uygulandı!'
                             "
                         """

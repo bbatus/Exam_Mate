@@ -56,5 +56,7 @@ echo "🔄 Veritabanı migrasyonları uygulanıyor..."
 sleep 10  # Veritabanı ve backend'in başlaması için bekle
 docker exec exam_mate_backend npx prisma migrate deploy
 docker exec exam_mate_backend npx prisma generate
+echo "🌱 Veritabanı seed işlemi uygulanıyor..."
+docker exec exam_mate_backend npx prisma db seed
 
 echo "✅ Deployment tamamlandı!" 
