@@ -1,6 +1,8 @@
 import React, { ReactNode } from 'react';
 import { Box, useMediaQuery, useTheme } from '@mui/material';
 import AdBanner from './AdBanner';
+import Advertisement from './Advertisement';
+import { getAdConfig } from '../lib/adConfig';
 
 interface PageLayoutProps {
   children: ReactNode;
@@ -38,7 +40,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({ children, showAds = true }) => 
             alignItems: 'center',
           }}
         >
-          <AdBanner position="left" size="medium" />
+          <Advertisement position="left" />
         </Box>
       )}
       
@@ -51,7 +53,17 @@ const PageLayout: React.FC<PageLayoutProps> = ({ children, showAds = true }) => 
           px: { xs: 2, sm: 3 },
         }}
       >
+        {/* Top Ad Banner - Above content */}
+        {showAds && (
+          <Advertisement position="top" />
+        )}
+        
         {children}
+        
+        {/* Bottom Ad Banner - Below content */}
+        {showAds && (
+          <Advertisement position="bottom" />
+        )}
       </Box>
       
       {/* Right Ad Banner - Fixed position at screen edge */}
@@ -67,7 +79,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({ children, showAds = true }) => 
             alignItems: 'center',
           }}
         >
-          <AdBanner position="right" size="medium" />
+          <Advertisement position="right" />
         </Box>
       )}
     </Box>

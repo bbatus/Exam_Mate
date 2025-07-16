@@ -43,6 +43,7 @@ import { createAppTheme, getStoredTheme, setStoredTheme } from './lib/theme';
 import LegalFooter from './components/LegalFooter';
 import AccessibilityMenu from './components/AccessibilityMenu';
 import PageLayout from './components/PageLayout';
+import { initializeAdsense } from './lib/adsenseLoader';
 
 // Erişilebilirlik ayarları için context
 interface AccessibilitySettings {
@@ -225,6 +226,11 @@ function App() {
       </ThemeProvider>
     );
   }
+
+  // AdSense'i başlat
+  useEffect(() => {
+    initializeAdsense();
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>

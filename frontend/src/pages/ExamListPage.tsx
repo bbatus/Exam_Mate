@@ -35,6 +35,7 @@ import AssessmentIcon from '@mui/icons-material/Assessment';
 import ListIcon from '@mui/icons-material/List';
 import { useTranslation } from 'react-i18next';
 import AdBanner from '../components/AdBanner';
+import Advertisement from '../components/Advertisement';
 import ExamStatistics from '../components/ExamStatistics';
 import ExamModeSelector, { ExamMode } from '../components/ExamModeSelector';
 import PageLayout from '../components/PageLayout';
@@ -319,86 +320,101 @@ const ExamListPage: React.FC = () => {
           )}
 
           <Grid container spacing={3}>
-            {filteredExams.map((exam, index) => (
-              <Grid item xs={12} sm={6} md={4} key={exam.id}>
-                <Card 
-                  sx={{ 
-                    height: '100%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    borderRadius: 3,
-                    transition: 'transform 0.3s, box-shadow 0.3s',
-                    '&:hover': {
-                      transform: 'translateY(-5px)',
-                      boxShadow: `0 12px 20px -10px ${alpha(getRandomColor(index), 0.4)}`,
-                    },
-                  }}
-                >
-                  <Box 
-                    sx={{ 
-                      bgcolor: alpha(getRandomColor(index), 0.1),
-                      p: 2,
-                      display: 'flex',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <Avatar
-                      sx={{
-                        bgcolor: getRandomColor(index),
-                        width: 48,
-                        height: 48,
-                      }}
-                    >
-                      <SchoolIcon />
-                    </Avatar>
-                    <Box sx={{ ml: 2 }}>
-                      <Chip 
-                        label={getRandomDifficulty(index)} 
-                        size="small"
-                        sx={{ 
-                          bgcolor: alpha(getRandomColor(index), 0.2),
-                          color: getRandomColor(index),
-                          fontWeight: 500,
-                        }}
+            {filteredExams.map((exam, index) => {
+              // Add an advertisement after every 3rd exam card
+              const shouldShowAd = index > 0 && index % 3 === 0;
+              
+              return (
+                <React.Fragment key={exam.id}>
+                  {shouldShowAd && (
+                    <Grid item xs={12}>
+                      <Advertisement 
+                        position="middle" 
+                        style={{ marginBottom: 2, marginTop: 2 }}
                       />
-                      <Typography variant="caption" display="block" color="text.secondary">
-                        {getRandomQuestionCount(index)} {t('examList.questions')}
-                      </Typography>
-                    </Box>
-                  </Box>
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography variant="h6" component="h2" gutterBottom>
-                      {exam.title}
-                    </Typography>
-                  </CardContent>
-                  <CardActions sx={{ p: 2, pt: 0 }}>
-                    <Button 
-                      component={RouterLink}
-                      to={`/quiz/${exam.id}?mode=${examMode}`}
-                      variant="contained"
-                      startIcon={<PlayArrowIcon />}
-                      fullWidth
-                      sx={{
-                        background: `linear-gradient(45deg, ${getRandomColor(index)}, ${alpha(getRandomColor(index), 0.8)})`,
-                        boxShadow: `0 4px 10px ${alpha(getRandomColor(index), 0.4)}`,
+                    </Grid>
+                  )}
+                  <Grid item xs={12} sm={6} md={4}>
+                    <Card 
+                      sx={{ 
+                        height: '100%',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        borderRadius: 3,
+                        transition: 'transform 0.3s, box-shadow 0.3s',
+                        '&:hover': {
+                          transform: 'translateY(-5px)',
+                          boxShadow: `0 12px 20px -10px ${alpha(getRandomColor(index), 0.4)}`,
+                        },
                       }}
                     >
-                      {t('examList.startExam')}
-                    </Button>
-                  </CardActions>
-                  <Box sx={{ p: 2, pt: 0 }}>
-                    <Button 
-                      variant="text" 
-                      fullWidth
-                      onClick={() => handleExamSelect(exam.id)}
-                      sx={{ color: getRandomColor(index) }}
-                    >
-                      {t('examList.viewStatistics')}
-                    </Button>
-                  </Box>
-                </Card>
-              </Grid>
-            ))}
+                      <Box 
+                        sx={{ 
+                          bgcolor: alpha(getRandomColor(index), 0.1),
+                          p: 2,
+                          display: 'flex',
+                          alignItems: 'center',
+                        }}
+                      >
+                        <Avatar
+                          sx={{
+                            bgcolor: getRandomColor(index),
+                            width: 48,
+                            height: 48,
+                          }}
+                        >
+                          <SchoolIcon />
+                        </Avatar>
+                        <Box sx={{ ml: 2 }}>
+                          <Chip 
+                            label={getRandomDifficulty(index)} 
+                            size="small"
+                            sx={{ 
+                              bgcolor: alpha(getRandomColor(index), 0.2),
+                              color: getRandomColor(index),
+                              fontWeight: 500,
+                            }}
+                          />
+                          <Typography variant="caption" display="block" color="text.secondary">
+                            {getRandomQuestionCount(index)} {t('examList.questions')}
+                          </Typography>
+                        </Box>
+                      </Box>
+                      <CardContent sx={{ flexGrow: 1 }}>
+                        <Typography variant="h6" component="h2" gutterBottom>
+                          {exam.title}
+                        </Typography>
+                      </CardContent>
+                      <CardActions sx={{ p: 2, pt: 0 }}>
+                        <Button 
+                          component={RouterLink}
+                          to={`/quiz/${exam.id}?mode=${examMode}`}
+                          variant="contained"
+                          startIcon={<PlayArrowIcon />}
+                          fullWidth
+                          sx={{
+                            background: `linear-gradient(45deg, ${getRandomColor(index)}, ${alpha(getRandomColor(index), 0.8)})`,
+                            boxShadow: `0 4px 10px ${alpha(getRandomColor(index), 0.4)}`,
+                          }}
+                        >
+                          {t('examList.startExam')}
+                        </Button>
+                      </CardActions>
+                      <Box sx={{ p: 2, pt: 0 }}>
+                        <Button 
+                          variant="text" 
+                          fullWidth
+                          onClick={() => handleExamSelect(exam.id)}
+                          sx={{ color: getRandomColor(index) }}
+                        >
+                          {t('examList.viewStatistics')}
+                        </Button>
+                      </Box>
+                    </Card>
+                  </Grid>
+                </React.Fragment>
+              );
+            })}
           </Grid>
 
           {filteredExams.length === 0 && (
@@ -426,7 +442,7 @@ const ExamListPage: React.FC = () => {
         </Button>
       </Box>
       
-      <AdBanner position="bottom" size="large" />
+      <Advertisement position="bottom" />
     </PageLayout>
   );
 };
