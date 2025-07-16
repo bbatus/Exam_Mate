@@ -39,6 +39,7 @@ import Advertisement from '../components/Advertisement';
 import ExamStatistics from '../components/ExamStatistics';
 import ExamModeSelector, { ExamMode } from '../components/ExamModeSelector';
 import PageLayout from '../components/PageLayout';
+import { fetchApi } from '../lib/apiConfig';
 
 interface Exam {
   id: number;
@@ -76,7 +77,7 @@ const ExamListPage: React.FC = () => {
     const fetchExams = async () => {
       try {
         // Önce API'den veri çekmeyi dene
-        const response = await fetch('http://localhost:5001/exams');
+        const response = await fetchApi('/exams');
         if (!response.ok) {
           throw new Error('Sınavlar yüklenirken bir sorun oluştu.');
         }

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Box } from '@mui/material';
 import { publisherId, getAdConfig } from '../lib/adConfig';
 
@@ -39,12 +39,22 @@ const Advertisement: React.FC<AdProps> = ({
   const finalWidth = width || defaultConfig.width;
   const finalHeight = height || defaultConfig.height;
   
+  // Create a unique ID for this ad instance
+  const adId = `ad-${position}-${finalAdSlot}`;
+  
+  // Use ref to track if this ad has been initialized
+  const initialized = useRef(false);
+  
   useEffect(() => {
-    try {
-      // AdSense kodunu yeniden çalıştır
-      (window.adsbygoogle = window.adsbygoogle || []).push({});
-    } catch (e) {
-      console.error('AdSense hatası:', e);
+    // Only initialize once
+    if (!initialized.current) {
+      try {
+        // AdSense kodunu yeniden çalıştır
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+        initialized.current = true;
+      } catch (e) {
+        console.error('AdSense hatası:', e);
+      }
     }
   }, []);
 
@@ -63,6 +73,7 @@ const Advertisement: React.FC<AdProps> = ({
       }}
     >
       <ins
+        id={adId}
         className="adsbygoogle"
         style={{ 
           display: 'block',
