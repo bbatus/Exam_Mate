@@ -78,7 +78,7 @@ const CareerPathMap: React.FC<CareerPathMapProps> = ({ careerPathId }) => {
         estimatedStudyHours: 40,
         examCost: '$99',
         popularity: 4,
-        position: { x: 100, y: 100 }
+        position: { x: 150, y: 120 }
       },
       {
         id: 2,
@@ -91,7 +91,7 @@ const CareerPathMap: React.FC<CareerPathMapProps> = ({ careerPathId }) => {
         estimatedStudyHours: 120,
         examCost: '$125',
         popularity: 5,
-        position: { x: 300, y: 100 }
+        position: { x: 400, y: 120 }
       },
       {
         id: 3,
@@ -104,7 +104,7 @@ const CareerPathMap: React.FC<CareerPathMapProps> = ({ careerPathId }) => {
         estimatedStudyHours: 200,
         examCost: '$200',
         popularity: 5,
-        position: { x: 500, y: 50 }
+        position: { x: 650, y: 80 }
       },
       {
         id: 4,
@@ -117,7 +117,7 @@ const CareerPathMap: React.FC<CareerPathMapProps> = ({ careerPathId }) => {
         estimatedStudyHours: 180,
         examCost: '$200',
         popularity: 4,
-        position: { x: 500, y: 150 }
+        position: { x: 650, y: 200 }
       },
       {
         id: 5,
@@ -130,7 +130,7 @@ const CareerPathMap: React.FC<CareerPathMapProps> = ({ careerPathId }) => {
         estimatedStudyHours: 190,
         examCost: '$200',
         popularity: 4,
-        position: { x: 500, y: 250 }
+        position: { x: 650, y: 320 }
       },
       {
         id: 6,
@@ -143,7 +143,7 @@ const CareerPathMap: React.FC<CareerPathMapProps> = ({ careerPathId }) => {
         estimatedStudyHours: 500,
         examCost: 'By invitation',
         popularity: 5,
-        position: { x: 700, y: 150 }
+        position: { x: 900, y: 200 }
       },
       {
         id: 7,
@@ -156,7 +156,7 @@ const CareerPathMap: React.FC<CareerPathMapProps> = ({ careerPathId }) => {
         estimatedStudyHours: 80,
         examCost: '$125',
         popularity: 5,
-        position: { x: 300, y: 200 }
+        position: { x: 400, y: 280 }
       }
     ]
   };
@@ -178,7 +178,7 @@ const CareerPathMap: React.FC<CareerPathMapProps> = ({ careerPathId }) => {
         estimatedStudyHours: 30,
         examCost: '$100',
         popularity: 5,
-        position: { x: 100, y: 100 }
+        position: { x: 150, y: 120 }
       },
       {
         id: 2,
@@ -191,7 +191,7 @@ const CareerPathMap: React.FC<CareerPathMapProps> = ({ careerPathId }) => {
         estimatedStudyHours: 120,
         examCost: '$150',
         popularity: 5,
-        position: { x: 300, y: 100 }
+        position: { x: 400, y: 120 }
       },
       {
         id: 3,
@@ -204,7 +204,7 @@ const CareerPathMap: React.FC<CareerPathMapProps> = ({ careerPathId }) => {
         estimatedStudyHours: 200,
         examCost: '$300',
         popularity: 4,
-        position: { x: 500, y: 100 }
+        position: { x: 650, y: 120 }
       },
       {
         id: 4,
@@ -217,7 +217,7 @@ const CareerPathMap: React.FC<CareerPathMapProps> = ({ careerPathId }) => {
         estimatedStudyHours: 180,
         examCost: '$300',
         popularity: 4,
-        position: { x: 700, y: 50 }
+        position: { x: 850, y: 80 }
       },
       {
         id: 5,
@@ -230,7 +230,7 @@ const CareerPathMap: React.FC<CareerPathMapProps> = ({ careerPathId }) => {
         estimatedStudyHours: 160,
         examCost: '$300',
         popularity: 4,
-        position: { x: 700, y: 150 }
+        position: { x: 850, y: 200 }
       },
       {
         id: 6,
@@ -243,7 +243,125 @@ const CareerPathMap: React.FC<CareerPathMapProps> = ({ careerPathId }) => {
         estimatedStudyHours: 170,
         examCost: '$300',
         popularity: 4,
-        position: { x: 900, y: 100 }
+        position: { x: 1100, y: 140 }
+      }
+    ]
+  };
+
+  // Mock data for Kubernetes/Container Orchestration career path
+  const mockKubernetesPath: CareerPath = {
+    id: 3,
+    name: t('careerPath.paths.kubernetes'),
+    description: t('careerPath.descriptions.kubernetes'),
+    certifications: [
+      {
+        id: 5,
+        name: t('examTitles.kubernetes'),
+        provider: 'Cloud Native Computing Foundation',
+        level: 'beginner',
+        description: t('careerPath.certDescriptions.kubernetes'),
+        prerequisites: [],
+        leadsTo: [16],
+        estimatedStudyHours: 80,
+        examCost: '$300',
+        popularity: 4,
+        position: { x: 150, y: 120 }
+      },
+      {
+        id: 16,
+        name: t('examTitles.kubernetesIntermediate'),
+        provider: 'Cloud Native Computing Foundation',
+        level: 'intermediate',
+        description: t('careerPath.certDescriptions.kubernetesIntermediate'),
+        prerequisites: [5],
+        leadsTo: [],
+        estimatedStudyHours: 120,
+        examCost: '$375',
+        popularity: 5,
+        position: { x: 400, y: 120 }
+      }
+    ]
+  };
+
+  // Mock data for Language Learning career path
+  const mockLanguagePath: CareerPath = {
+    id: 4,
+    name: t('careerPath.paths.language'),
+    description: t('careerPath.descriptions.language'),
+    certifications: [
+      {
+        id: 17,
+        name: t('examTitles.englishA1'),
+        provider: 'Cambridge Assessment',
+        level: 'beginner',
+        description: t('careerPath.certDescriptions.englishA1'),
+        prerequisites: [],
+        leadsTo: [18],
+        estimatedStudyHours: 60,
+        examCost: '$150',
+        popularity: 4,
+        position: { x: 150, y: 120 }
+      },
+      {
+        id: 18,
+        name: t('examTitles.englishA2'),
+        provider: 'Cambridge Assessment',
+        level: 'beginner',
+        description: t('careerPath.certDescriptions.englishA2'),
+        prerequisites: [17],
+        leadsTo: [19],
+        estimatedStudyHours: 80,
+        examCost: '$160',
+        popularity: 4,
+        position: { x: 300, y: 120 }
+      },
+      {
+        id: 19,
+        name: t('examTitles.englishB1'),
+        provider: 'Cambridge Assessment',
+        level: 'intermediate',
+        description: t('careerPath.certDescriptions.englishB1'),
+        prerequisites: [18],
+        leadsTo: [20],
+        estimatedStudyHours: 100,
+        examCost: '$170',
+        popularity: 5,
+        position: { x: 450, y: 120 }
+      },
+      {
+        id: 20,
+        name: t('examTitles.englishB2'),
+        provider: 'Cambridge Assessment',
+        level: 'intermediate',
+        description: t('careerPath.certDescriptions.englishB2'),
+        prerequisites: [19],
+        leadsTo: [],
+        estimatedStudyHours: 120,
+        examCost: '$180',
+        popularity: 5,
+        position: { x: 600, y: 120 }
+      }
+    ]
+  };
+
+  // Mock data for AI/ML career path
+  const mockAIPath: CareerPath = {
+    id: 5,
+    name: t('careerPath.paths.ai'),
+    description: t('careerPath.descriptions.ai'),
+    certifications: [
+      {
+        id: 2,
+        name: t('examTitles.gcpGenAI'),
+        provider: 'Google Cloud',
+        level: 'intermediate',
+        description: t('careerPath.certDescriptions.gcpGenAI'),
+        prerequisites: [],
+        leadsTo: [],
+        estimatedStudyHours: 80,
+        examCost: '$125',
+        popularity: 5,
+        position: { x: 150, y: 120 }
       }
     ]
   };
@@ -251,7 +369,10 @@ const CareerPathMap: React.FC<CareerPathMapProps> = ({ careerPathId }) => {
   // Mock career paths data
   const mockCareerPaths: Record<number, CareerPath> = {
     1: mockCloudEngineerPath,
-    2: mockAWSPath
+    2: mockAWSPath,
+    3: mockKubernetesPath,
+    4: mockLanguagePath,
+    5: mockAIPath
   };
 
   useEffect(() => {
@@ -428,9 +549,11 @@ const CareerPathMap: React.FC<CareerPathMapProps> = ({ careerPathId }) => {
         <Box 
           sx={{ 
             position: 'relative', 
-            height: '500px',
+            height: '600px',
+            width: '100%',
+            minWidth: '1200px',
             bgcolor: alpha(theme.palette.background.default, 0.5),
-            overflow: 'hidden',
+            overflow: 'auto',
             transform: `scale(${zoomLevel})`,
             transformOrigin: 'center center',
             transition: 'transform 0.3s ease',
@@ -467,8 +590,8 @@ const CareerPathMap: React.FC<CareerPathMapProps> = ({ careerPathId }) => {
                   elevation={selectedCertification?.id === cert.id ? 6 : 1}
                   onClick={() => handleCertificationClick(cert)}
                   sx={{
-                    p: 1.5,
-                    width: 180, // Daha küçük genişlik
+                    p: 2,
+                    width: 200, // Biraz daha geniş
                     borderRadius: 2,
                     cursor: 'pointer',
                     border: `2px solid ${getLevelColor(cert.level)}`,

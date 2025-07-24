@@ -37,7 +37,7 @@ const AdminLoginPage: React.FC = () => {
     // Check if admin account exists
     const checkAdminExists = async () => {
       try {
-        const response = await fetch('/api/auth/check');
+        const response = await fetch('http://localhost:5001/auth/check');
         const data = await response.json();
         setAdminExists(data.exists);
       } catch (error) {
@@ -56,7 +56,7 @@ const AdminLoginPage: React.FC = () => {
     setError('');
 
     try {
-      const response = await fetch('/api/auth/login', {
+      const response = await fetch('http://localhost:5001/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -89,7 +89,7 @@ const AdminLoginPage: React.FC = () => {
     setError('');
 
     try {
-      const response = await fetch('/api/auth/admin', {
+      const response = await fetch('http://localhost:5001/auth/admin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -103,7 +103,7 @@ const AdminLoginPage: React.FC = () => {
       }
 
       // After creating admin, log in
-      const loginResponse = await fetch('/api/auth/login', {
+      const loginResponse = await fetch('http://localhost:5001/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

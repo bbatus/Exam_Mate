@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider      = "prisma-client-js"
   binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x"]
@@ -23,51 +17,51 @@ model Admin {
 }
 
 model Exam {
-  id        Int      @id @default(autoincrement())
-  title     String   @unique
-  questions Question[]
+  id        Int          @id @default(autoincrement())
+  title     String       @unique
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
   results   ExamResult[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  questions Question[]
 }
 
 model Question {
-  id          Int      @id @default(autoincrement())
+  id          Int              @id @default(autoincrement())
   section     String
   question    String
   options     String[]
   correct     Int
   explanation String
-  category    String?  // Added category field for topic-based analysis
-  exam        Exam     @relation(fields: [examId], references: [id])
   examId      Int
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  category    String?
+  exam        Exam             @relation(fields: [examId], references: [id])
   answers     QuestionAnswer[]
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
 }
 
 model ExamResult {
   id              Int              @id @default(autoincrement())
-  exam            Exam             @relation(fields: [examId], references: [id])
   examId          Int
   score           Int
   totalQuestions  Int
-  examMode        String           @default("practice") // Added examMode field: "practice", "real", "topic"
-  timeSpent       Int?             // Added timeSpent field in seconds
-  questionAnswers QuestionAnswer[]
   createdAt       DateTime         @default(now())
   updatedAt       DateTime         @updatedAt
+  examMode        String           @default("practice")
+  timeSpent       Int?
+  exam            Exam             @relation(fields: [examId], references: [id])
+  questionAnswers QuestionAnswer[]
 }
 
 model QuestionAnswer {
-  id            Int        @id @default(autoincrement())
-  examResult    ExamResult @relation(fields: [examResultId], references: [id], onDelete: Cascade)
-  examResultId  Int
-  question      Question   @relation(fields: [questionId], references: [id])
-  questionId    Int
+  id             Int        @id @default(autoincrement())
+  examResultId   Int
+  questionId     Int
   selectedAnswer String?
-  isCorrect     Boolean
-  timeSpent     Int?       // Added timeSpent field in seconds for per-question timing
-  createdAt     DateTime   @default(now())
-  updatedAt     DateTime   @updatedAt
+  isCorrect      Boolean
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  timeSpent      Int?
+  examResult     ExamResult @relation(fields: [examResultId], references: [id], onDelete: Cascade)
+  question       Question   @relation(fields: [questionId], references: [id])
 }

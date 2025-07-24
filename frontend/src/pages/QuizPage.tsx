@@ -55,6 +55,7 @@ interface Question {
   correct: number; // `correctAnswer` yerine `correct` (index olarak)
   explanation: string;
   category?: string; // Add category field for topic-based analysis
+  originalCorrect?: number; // Orijinal doğru cevap indeksi (backend karıştırma için)
 }
 
 interface Exam {
@@ -354,18 +355,52 @@ const QuizPage: React.FC = () => {
         if (!response.ok) {
           throw new Error('Sınav yüklenirken bir sorun oluştu.');
         }
-        const data = await response.json();
-        setExam(data);
-        setSelectedAnswers(new Array(data.questions.length).fill(null));
-        setQuestionTimeSpent(new Array(data.questions.length).fill(0));
+        const examData = await response.json();
+        
+        // Soruları ayrıca çek (karıştırılmış olarak gelecek)
+        const questionsResponse = await fetch(`http://localhost:5001/exams/${examId}/questions`);
+        if (!questionsResponse.ok) {
+          throw new Error('Sorular yüklenirken bir sorun oluştu.');
+        }
+        const questionsData = await questionsResponse.json();
+        
+        // Exam nesnesini oluştur, soruları karıştırılmış versiyonla değiştir
+        const examWithShuffledQuestions = {
+          ...examData,
+          questions: questionsData
+        };
+        
+        setExam(examWithShuffledQuestions);
+        setSelectedAnswers(new Array(questionsData.length).fill(null));
+        setQuestionTimeSpent(new Array(questionsData.length).fill(0));
       } catch (error) {
         console.error('API hatası:', error);
         // API hatası durumunda mock veriyi kullan
         if (examId && mockExams[parseInt(examId)]) {
           const mockExam = mockExams[parseInt(examId)];
-          setExam(mockExam);
-          setSelectedAnswers(new Array(mockExam.questions.length).fill(null));
-          setQuestionTimeSpent(new Array(mockExam.questions.length).fill(0));
+          
+          // Mock verilerde de soruları ve şıkları karıştır
+          const shuffledMockExam = {
+            ...mockExam,
+            questions: mockExam.questions.map(q => {
+              // Şıkları karıştır
+              const options = [...q.options];
+              const correctOption = options[q.correct];
+              const shuffledOptions = [...options].sort(() => Math.random() - 0.5);
+              const newCorrectIndex = shuffledOptions.findIndex(opt => opt === correctOption);
+              
+              return {
+                ...q,
+                options: shuffledOptions,
+                correct: newCorrectIndex,
+                originalCorrect: q.correct
+              };
+            }).sort(() => Math.random() - 0.5) // Soruları karıştır
+          };
+          
+          setExam(shuffledMockExam);
+          setSelectedAnswers(new Array(shuffledMockExam.questions.length).fill(null));
+          setQuestionTimeSpent(new Array(shuffledMockExam.questions.length).fill(0));
           setError("Backend API'ye erişilemedi. Demo veriler gösteriliyor.");
         } else {
           setError("Sınav bulunamadı.");
@@ -378,10 +413,10 @@ const QuizPage: React.FC = () => {
     fetchExam();
   }, [examId]);
   
-  // Süre sayacı
+  // Süre sayacı (sadece real exam mode'da aktif)
   useEffect(() => {
-    if (loading || score !== null) return;
-    
+    if (loading || score !== null || examMode !== 'real') return;
+
     const timer = setInterval(() => {
       setTimeRemaining((prev) => {
         if (prev <= 1) {
@@ -391,13 +426,11 @@ const QuizPage: React.FC = () => {
         }
         return prev - 1;
       });
-      
-      // Update total time spent
       setTotalTimeSpent(prev => prev + 1);
     }, 1000);
-    
+
     return () => clearInterval(timer);
-  }, [loading, score]);
+  }, [loading, score, examMode]);
   
   // Track time spent on current question
   useEffect(() => {
@@ -501,44 +534,41 @@ const QuizPage: React.FC = () => {
       questionAnswers.push({
         questionId: question.id,
         selectedAnswer: selectedAnswers[index],
-        isCorrect: isCorrect,
+        isCorrect,
         timeSpent: finalQuestionTimeSpent[index]
       });
     });
     
     setScore(newScore);
     
-    // Sınav sonuçlarını backend'e gönder
     try {
+      // Sınav sonucunu API'ye gönder
+      const resultData = {
+        examId: parseInt(examId!),
+        score: newScore,
+        totalQuestions: exam.questions.length,
+        questionAnswers,
+        examMode,
+        timeSpent: totalTimeSpent
+      };
+      
       const response = await fetch(`http://localhost:5001/exams/${examId}/results`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          examId: parseInt(examId || '0'),
-          score: newScore,
-          totalQuestions: exam.questions.length,
-          examMode: examMode,
-          timeSpent: totalTimeSpent,
-          questionAnswers: questionAnswers
-        }),
+        body: JSON.stringify(resultData),
       });
       
-      if (!response.ok) {
-        console.error('Sınav sonuçları kaydedilemedi:', await response.text());
-      } else {
+      if (response.ok) {
         const result = await response.json();
-        console.log('Sınav sonuçları kaydedildi:', result);
-        
-        // Sonuç sayfasına yönlendirme yapmak için bir timeout kullanıyoruz
-        // Bu, kullanıcının kısa bir süre sonuç ekranını görmesini sağlar
-        setTimeout(() => {
-          navigate(`/results/${result.id}`);
-        }, 2000);
+        navigate(`/results/${result.id}`);
+      } else {
+        console.error('Sonuç kaydedilirken bir hata oluştu');
       }
     } catch (error) {
-      console.error('Sınav sonuçları gönderilirken hata oluştu:', error);
+      console.error('API hatası:', error);
+      // API hatası durumunda sonucu yerel olarak göster
     }
   };
 
@@ -1193,20 +1223,20 @@ const QuizPage: React.FC = () => {
           gap: 2,
           mb: 2
         }}>
-          {/* Replace the simple Chip with ExamSimulationFeatures */}
-          <ExamSimulationFeatures 
-            timeRemaining={timeRemaining}
-            totalTime={totalExamTime}
-            examMode={examMode}
-            onTimeUp={handleSubmit}
-          />
-          
+          {/* Sayaç ve ExamSimulationFeatures sadece real exam mode'da gösterilecek */}
+          {examMode === 'real' && (
+            <ExamSimulationFeatures 
+              timeRemaining={timeRemaining}
+              totalTime={totalExamTime}
+              examMode={examMode}
+              onTimeUp={handleSubmit}
+            />
+          )}
           <Box>
             <Chip 
               label={`${t('quiz.question')} ${currentQuestionIndex + 1} / ${exam.questions.length}`} 
               sx={{ mr: 1 }} 
             />
-            
             <Chip 
               icon={examMode === 'practice' ? <SchoolIcon /> : examMode === 'real' ? <TimerIcon /> : <HelpOutlineIcon />}
               label={`${examMode === 'practice' ? t('quiz.practiceMode') : examMode === 'real' ? t('quiz.realExamMode') : t('quiz.topicBasedStudy')}`}

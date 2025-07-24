@@ -51,36 +51,51 @@ const LegalFooter: React.FC = () => {
       <Divider sx={{ mb: 3 }} />
       
       <Typography variant="body2" color="text.secondary" gutterBottom>
-        © {currentYear} Exam Mate v2.0. {t('footer.allRightsReserved')}
+        © {currentYear} Exam Mate v3.0. {t('footer.allRightsReserved')}
       </Typography>
       
       <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 2, mt: 1 }}>
         <Link 
           href="/terms" 
-          color="inherit" 
           underline="hover" 
           variant="body2"
-          sx={{ mx: 1 }}
+          sx={{ 
+            mx: 1,
+            color: theme.palette.text.secondary,
+            '&:hover': {
+              color: theme.palette.primary.main,
+            }
+          }}
         >
           {t('footer.termsOfService')}
         </Link>
         
         <Link 
           href="/privacy" 
-          color="inherit" 
           underline="hover" 
           variant="body2"
-          sx={{ mx: 1 }}
+          sx={{ 
+            mx: 1,
+            color: theme.palette.text.secondary,
+            '&:hover': {
+              color: theme.palette.primary.main,
+            }
+          }}
         >
           {t('footer.privacyPolicy')}
         </Link>
         
         <Link 
           href="/cookies" 
-          color="inherit" 
           underline="hover" 
           variant="body2"
-          sx={{ mx: 1 }}
+          sx={{ 
+            mx: 1,
+            color: theme.palette.text.secondary,
+            '&:hover': {
+              color: theme.palette.primary.main,
+            }
+          }}
         >
           {t('footer.cookiePolicy')}
         </Link>

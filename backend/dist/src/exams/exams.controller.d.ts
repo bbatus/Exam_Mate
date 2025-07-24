@@ -33,13 +33,14 @@ export declare class ExamsController {
         updatedAt: Date;
     }) | null, null, import("@prisma/client/runtime/library").DefaultArgs, import(".prisma/client").Prisma.PrismaClientOptions>;
     getExamQuestions(examId: number): Promise<{
+        options: string[];
+        correct: number;
+        originalCorrect: number;
         id: number;
         createdAt: Date;
         updatedAt: Date;
         question: string;
         section: string;
-        options: string[];
-        correct: number;
         explanation: string;
         category: string | null;
         examId: number;

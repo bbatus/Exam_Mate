@@ -16,6 +16,9 @@ import { FadeIn } from '../components/UIAnimations';
 import AdBanner from '../components/AdBanner';
 import PageLayout from '../components/PageLayout';
 import { useTranslation } from 'react-i18next';
+import AnimatedBackground from '../components/visual/AnimatedBackground';
+import FloatingIcons from '../components/visual/FloatingIcons';
+import ParticleSystem from '../components/visual/ParticleSystem';
 
 const CareerPathPage: React.FC = () => {
   const [selectedCareerPathId, setSelectedCareerPathId] = useState<number>(1); // Default to Cloud Engineer
@@ -28,6 +31,9 @@ const CareerPathPage: React.FC = () => {
 
   return (
     <PageLayout>
+      <AnimatedBackground />
+      <FloatingIcons />
+      <ParticleSystem />
       <FadeIn>
         <Box sx={{ mb: 4 }}>
           <Typography variant="h4" component="h1" gutterBottom fontWeight="bold">
@@ -62,6 +68,9 @@ const CareerPathPage: React.FC = () => {
                 >
                   <MenuItem value={1}>Google Cloud Engineer</MenuItem>
                   <MenuItem value={2}>AWS Solutions Architect</MenuItem>
+                  <MenuItem value={3}>{t('careerPath.paths.kubernetes')}</MenuItem>
+                  <MenuItem value={4}>{t('careerPath.paths.language')}</MenuItem>
+                  <MenuItem value={5}>{t('careerPath.paths.ai')}</MenuItem>
                 </Select>
               </FormControl>
             </Box>

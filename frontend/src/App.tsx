@@ -281,7 +281,7 @@ function App() {
                   sx={{ 
                     fontWeight: 700,
                     ...(accessibilitySettings.highContrast 
-                      ? { color: 'inherit' } 
+                      ? { color: theme.palette.text.primary } 
                       : {
                         background: 'linear-gradient(90deg, #6366f1, #10b981)',
                         WebkitBackgroundClip: 'text',
@@ -296,26 +296,41 @@ function App() {
               {/* New navigation menu */}
               <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 2 }}>
                 <Button 
-                  color="inherit" 
                   startIcon={<MapIcon />}
                   onClick={() => navigate('/learning-path')}
-                  sx={{ mx: 0.5 }}
+                  sx={{ 
+                    mx: 0.5,
+                    color: theme.palette.text.primary,
+                    '&:hover': {
+                      backgroundColor: theme.palette.action.hover,
+                    }
+                  }}
                 >
                   {t('navigation.learningPath')}
                 </Button>
                 <Button 
-                  color="inherit" 
                   startIcon={<WorkIcon />}
                   onClick={() => navigate('/career-path')}
-                  sx={{ mx: 0.5 }}
+                  sx={{ 
+                    mx: 0.5,
+                    color: theme.palette.text.primary,
+                    '&:hover': {
+                      backgroundColor: theme.palette.action.hover,
+                    }
+                  }}
                 >
                   {t('navigation.careerPath')}
                 </Button>
                 <Button 
-                  color="inherit" 
                   startIcon={<AssessmentIcon />}
                   onClick={() => navigate('/analytics')}
-                  sx={{ mx: 0.5 }}
+                  sx={{ 
+                    mx: 0.5,
+                    color: theme.palette.text.primary,
+                    '&:hover': {
+                      backgroundColor: theme.palette.action.hover,
+                    }
+                  }}
                 >
                   {t('navigation.analytics')}
                 </Button>
@@ -324,9 +339,11 @@ function App() {
               {/* Mobile menu */}
               <Box sx={{ display: { xs: 'block', md: 'none' }, mr: 2 }}>
                 <IconButton
-                  color="inherit"
                   aria-label="menu"
                   onClick={handleMenuOpen}
+                  sx={{
+                    color: theme.palette.text.primary,
+                  }}
                 >
                   <MenuIcon />
                 </IconButton>
@@ -368,6 +385,14 @@ function App() {
               <Route path="/learning-path" element={<LearningPathPage />} />
               <Route path="/career-path" element={<CareerPathPage />} />
               <Route path="/analytics" element={<StudyAnalyticsPage />} />
+              
+              {/* Admin Routes */}
+              <Route path="/admin/login" element={<AdminLoginPage />} />
+              <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
+              <Route path="/admin/exams" element={<ExamsPage />} />
+              <Route path="/admin/exams/new" element={<ExamFormPage />} />
+              <Route path="/admin/exams/:id/edit" element={<ExamFormPage />} />
+              <Route path="/admin/exams/:id/questions" element={<QuestionsPage />} />
             </Routes>
           </Box>
           <Container maxWidth="lg">

@@ -62,7 +62,35 @@
       "intermediate": "intermediate",
       "advanced": "advanced",
       "expert": "expert"
+    },
+    "paths": {
+      "kubernetes": "Kubernetes & Container Orchestration",
+      "language": "Language Learning",
+      "ai": "Artificial Intelligence & Machine Learning"
+    },
+    "descriptions": {
+      "kubernetes": "Essential certifications to specialize in container technologies and Kubernetes orchestration platform.",
+      "language": "Step-by-step English proficiency exams to improve your language skills.",
+      "ai": "Required certifications for a career in artificial intelligence and machine learning."
+    },
+    "certDescriptions": {
+      "kubernetes": "Validates Kubernetes fundamentals and container orchestration concepts.",
+      "kubernetesIntermediate": "Validates advanced Kubernetes management and security expertise.",
+      "englishA1": "Validates basic English level - everyday simple expressions and words.",
+      "englishA2": "Validates elementary English level - simple communication and routine tasks.",
+      "englishB1": "Validates intermediate English level - effective communication in work and school environments.",
+      "englishB2": "Validates upper-intermediate English level - understanding complex texts and fluent conversation.",
+      "gcpGenAI": "Validates ability to understand and implement generative AI solutions on Google Cloud."
     }
+  },
+  "examTitles": {
+    "kubernetes": "Kubernetes",
+    "kubernetesIntermediate": "Kubernetes Intermediate Level",
+    "englishA1": "English A1 Level",
+    "englishA2": "English A2 Level",
+    "englishB1": "English B1 Level",
+    "englishB2": "English B2 Level",
+    "gcpGenAI": "Google Cloud Generative AI Leader"
   },
   "analytics": {
     "title": "Study Analytics",
@@ -87,6 +115,34 @@
     "accuracyRate": "Accuracy Rate (%)",
     "studyTime": "Study Time (min)",
     "suggestions": "Suggestions",
+    "recommendations": "Recommendations",
+    "focusTopics": "Focus on Weak Topics",
+    "focusTopicsTip": "We recommend more practice in Cloud Security topics.",
+    "reviewRegularly": "Review Regularly",
+    "reviewRegularlyTip": "Review learned topics at regular intervals.",
+    "balanceStudy": "Balance Your Study",
+    "balanceStudyTip": "Create a balanced study program across different topics.",
+    "detailedAnalysis": "Detailed Analysis",
+    "progressOverTime": "Progress Over Time",
+    "topicPerformance": "Topic Performance",
+    "weeklyPattern": "Weekly Pattern",
+    "topicPerformanceDescription": "Your performance across different topics and study time distribution.",
+    "weeklyDescription": "Your study habits across the days of the week.",
+    "hero": {
+      "title": "Prepare for Certification Exams",
+      "subtitle": "Start practicing immediately without registration",
+      "cta": "Explore Exams",
+      "analytics": "View Analytics"
+    },
+    "features": {
+      "title": "Why Exam Mate?",
+      "noRegistration": "No Registration Required",
+      "noRegistrationDesc": "Start taking exams immediately without signing up",
+      "detailedAnalysis": "Detailed Analysis",
+      "detailedAnalysisDesc": "Track your performance with detailed charts",
+      "currentQuestions": "Current Questions",
+      "currentQuestionsDesc": "Continuously updated question pool"
+    },
     "studyDuration": "Study Duration",
     "studyDurationTip": "Your most productive studies take place in 60-90 minute sessions. Try to target this duration.",
     "regularity": "Regularity",
@@ -163,7 +219,19 @@
     "difficultyLabel": "Difficulty Level",
     "searchLabel": "Search Exams",
     "questions": "Questions",
-    "viewStatistics": "View Statistics"
+    "viewStatistics": "View Statistics",
+    "categories": {
+      "cloudComputing": "Cloud Computing",
+      "containerOrchestration": "Container & Orchestration",
+      "languageLearning": "Language Learning",
+      "artificialIntelligence": "Artificial Intelligence"
+    },
+    "difficulties": {
+      "all": "All",
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced"
+    }
   },
   "examMode": {
     "title": "Select Exam Mode",
@@ -433,5 +501,17 @@
     "termsOfService": "Terms of Service",
     "privacyPolicy": "Privacy Policy",
     "cookiePolicy": "Cookie Policy"
+  },
+  "examTitles": {
+    "Google Cloud Digital Leader": "Google Cloud Digital Leader",
+    "Google Cloud Generative AI Leader": "Google Cloud Generative AI Leader",
+    "Google Cloud Associate Cloud Engineer": "Google Cloud Associate Cloud Engineer",
+    "Kubernetes": "Kubernetes",
+    "Kubernetes Orta Seviye": "Kubernetes Intermediate Level",
+    "English A1 Level": "English A1 Level",
+    "English A2 Level": "English A2 Level",
+    "English B1 Level": "English B1 Level",
+    "English B2 Level": "English B2 Level",
+    "AWS Cloud Practitioner": "AWS Cloud Practitioner"
   }
 } 

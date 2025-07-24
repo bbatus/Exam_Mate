@@ -13,6 +13,16 @@ export interface WrongAnswerPattern {
   wrongAnswers: { answer: string; count: number }[];
 }
 
+// Soruları ve şıkları karıştırmak için yardımcı fonksiyonlar
+function shuffleArray<T>(array: T[]): T[] {
+  const newArray = [...array];
+  for (let i = newArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+  }
+  return newArray;
+}
+
 @Injectable()
 export class ExamsService {
   constructor(private prisma: PrismaService) {}
@@ -31,8 +41,31 @@ export class ExamsService {
   }
 
   async getExamQuestions(examId: number) {
-    return this.prisma.question.findMany({
+    // Soruları veritabanından al
+    const questions = await this.prisma.question.findMany({
       where: { examId },
+    });
+    
+    // Soruları karıştır
+    const shuffledQuestions = shuffleArray(questions);
+    
+    // Her sorunun şıklarını karıştır ve doğru cevap indeksini güncelle
+    return shuffledQuestions.map(question => {
+      const options = [...question.options];
+      const correctOption = options[question.correct];
+      
+      // Şıkları karıştır
+      const shuffledOptions = shuffleArray(options);
+      
+      // Doğru cevabın yeni indeksini bul
+      const newCorrectIndex = shuffledOptions.findIndex(option => option === correctOption);
+      
+      return {
+        ...question,
+        options: shuffledOptions,
+        correct: newCorrectIndex,
+        originalCorrect: question.correct // Orijinal doğru cevap indeksini de sakla
+      };
     });
   }
 

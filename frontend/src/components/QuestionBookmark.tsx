@@ -152,14 +152,17 @@ const QuestionBookmark: React.FC<QuestionBookmarkProps> = ({ examId, questionId,
         </Tooltip>
         
         <Tooltip title={note ? "Notu Düzenle" : "Not Ekle"}>
-          <IconButton 
-            onClick={openNoteDialog}
-            color={note ? "primary" : "default"}
-            size="small"
-            disabled={!isBookmarked}
-          >
-            {note ? <NoteIcon /> : <NoteAddIcon />}
-          </IconButton>
+          {/* Disabled IconButton'u span ile sarmalıyoruz */}
+          <span>
+            <IconButton 
+              onClick={openNoteDialog}
+              color={note ? "primary" : "default"}
+              size="small"
+              disabled={!isBookmarked}
+            >
+              {note ? <NoteIcon /> : <NoteAddIcon />}
+            </IconButton>
+          </span>
         </Tooltip>
         
         <Tooltip title="İşaretlenen Soruları Göster">

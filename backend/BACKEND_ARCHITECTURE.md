@@ -1,189 +1,189 @@
-# Exam_Mate Backend Architecture
+# Exam_Mate Backend Mimarisi
 
-## Overview
+## Genel Bakış
 
-The Exam_Mate backend is built with NestJS, a progressive Node.js framework for building efficient and scalable server-side applications. It uses TypeScript for type safety and follows a modular architecture pattern. The application connects to a PostgreSQL database using Prisma ORM.
+Exam_Mate backend'i, verimli ve ölçeklenebilir sunucu taraflı uygulamalar oluşturmak için tasarlanmış ilerici bir Node.js framework'ü olan NestJS ile geliştirilmiştir. Tip güvenliği için TypeScript kullanır ve modüler bir mimari desenini takip eder. Uygulama, Prisma ORM kullanarak PostgreSQL veritabanına bağlanır.
 
-## Directory Structure
+## Dizin Yapısı
 
 ```
 backend/
-├── prisma/                 # Prisma ORM configuration and schema
-│   ├── migrations/         # Database migrations
-│   ├── schema.prisma       # Database schema definition
-│   └── seed*.ts            # Seed scripts for populating the database
-├── src/                    # Source code
-│   ├── auth/               # Authentication module
-│   │   ├── dto/            # Data Transfer Objects for auth
-│   │   ├── guards/         # JWT authentication guards
-│   │   ├── auth.controller.ts  # Auth endpoints
-│   │   ├── auth.module.ts      # Auth module definition
-│   │   ├── auth.service.ts     # Auth business logic
-│   │   └── jwt.strategy.ts     # JWT strategy for Passport
-│   ├── exams/              # Exams module (core functionality)
-│   │   ├── dto/            # Data Transfer Objects for exams
-│   │   ├── exams.controller.ts # Exam endpoints
-│   │   ├── exams.module.ts     # Exams module definition
-│   │   └── exams.service.ts    # Exams business logic
-│   ├── prisma/             # Prisma module for database connection
-│   │   ├── prisma.module.ts    # Prisma module definition
-│   │   └── prisma.service.ts   # Prisma service for database access
-│   ├── app.controller.ts   # Main app controller
-│   ├── app.module.ts       # Main app module
-│   ├── app.service.ts      # Main app service
-│   └── main.ts             # Application entry point
+├── prisma/                 # Prisma ORM yapılandırması ve şeması
+│   ├── migrations/         # Veritabanı migrasyonları
+│   ├── schema.prisma       # Veritabanı şema tanımı
+│   └── seed*.ts            # Veritabanını doldurmak için seed scriptleri
+├── src/                    # Kaynak kodu
+│   ├── auth/               # Authentication modülü
+│   │   ├── dto/            # Auth için Data Transfer Objects
+│   │   ├── guards/         # JWT authentication guard'ları
+│   │   ├── auth.controller.ts  # Auth endpoint'leri
+│   │   ├── auth.module.ts      # Auth modül tanımı
+│   │   ├── auth.service.ts     # Auth iş mantığı
+│   │   └── jwt.strategy.ts     # Passport için JWT stratejisi
+│   ├── exams/              # Sınavlar modülü (temel işlevsellik)
+│   │   ├── dto/            # Sınavlar için Data Transfer Objects
+│   │   ├── exams.controller.ts # Sınav endpoint'leri
+│   │   ├── exams.module.ts     # Sınavlar modül tanımı
+│   │   └── exams.service.ts    # Sınavlar iş mantığı
+│   ├── prisma/             # Veritabanı bağlantısı için Prisma modülü
+│   │   ├── prisma.module.ts    # Prisma modül tanımı
+│   │   └── prisma.service.ts   # Veritabanı erişimi için Prisma servisi
+│   ├── app.controller.ts   # Ana uygulama controller'ı
+│   ├── app.module.ts       # Ana uygulama modülü
+│   ├── app.service.ts      # Ana uygulama servisi
+│   └── main.ts             # Uygulama giriş noktası
 ```
 
-## Core Components
+## Temel Bileşenler
 
-### 1. Main Application
+### 1. Ana Uygulama
 
-- **main.ts**: Entry point of the application. Sets up the NestJS application, enables CORS, and starts the server on port 5000.
-- **app.module.ts**: Root module that imports all other modules (PrismaModule, ExamsModule, AuthModule).
-- **app.controller.ts**: Basic controller for the root endpoint.
-- **app.service.ts**: Basic service for the root endpoint.
+- **main.ts**: Uygulamanın giriş noktası. NestJS uygulamasını kurar, CORS'u etkinleştirir ve sunucuyu 5000 portunda başlatır.
+- **app.module.ts**: Tüm diğer modülleri (PrismaModule, ExamsModule, AuthModule) içe aktaran kök modül.
+- **app.controller.ts**: Kök endpoint için temel controller.
+- **app.service.ts**: Kök endpoint için temel servis.
 
-### 2. Database Layer (Prisma)
+### 2. Veritabanı Katmanı (Prisma)
 
-- **prisma/schema.prisma**: Defines the database schema with the following models:
-  - `Admin`: Admin users for the system
-  - `Exam`: Certification exams
-  - `Question`: Exam questions with options and answers
-  - `ExamResult`: Results of exam attempts
-  - `QuestionAnswer`: Individual question answers for each exam attempt
+- **prisma/schema.prisma**: Aşağıdaki modellerle veritabanı şemasını tanımlar:
+  - `Admin`: Sistem için admin kullanıcıları
+  - `Exam`: Sertifikasyon sınavları
+  - `Question`: Sınav soruları, seçenekleri ve cevapları
+  - `ExamResult`: Sınav girişimlerinin sonuçları
+  - `QuestionAnswer`: Bir sınav girişimindeki her bir soruya verilen cevaplar
 
-- **prisma/prisma.service.ts**: Provides database access to other services, handling connection lifecycle.
-- **prisma/prisma.module.ts**: Makes the PrismaService available throughout the application.
+- **prisma/prisma.service.ts**: Bağlantı yaşam döngüsünü yöneterek diğer servislere veritabanı erişimi sağlar.
+- **prisma/prisma.module.ts**: PrismaService'i tüm uygulamada kullanılabilir hale getirir.
 
-- **prisma/seed*.ts**: Scripts for populating the database with initial data:
-  - `seed.ts`: General seed script
-  - `seed-gcp-digital-leader.ts`: Google Cloud Digital Leader exam questions
-  - `seed-gcp-ace.ts`: Google Cloud Associate Cloud Engineer exam questions
+- **prisma/seed*.ts**: Veritabanını başlangıç verileriyle doldurmak için scriptler:
+  - `seed.ts`: Genel seed scripti
+  - `seed-gcp-digital-leader.ts`: Google Cloud Digital Leader sınav soruları
+  - `seed-gcp-ace.ts`: Google Cloud Associate Cloud Engineer sınav soruları
 
-### 3. Authentication Module
+### 3. Authentication Modülü
 
-- **auth/auth.service.ts**: Handles admin authentication, password validation, JWT token generation, and admin creation.
-- **auth/auth.controller.ts**: Exposes endpoints for login and admin creation.
-- **auth/jwt.strategy.ts**: Implements JWT authentication strategy using Passport.
-- **auth/guards/jwt-auth.guard.ts**: Guard to protect admin-only routes.
+- **auth/auth.service.ts**: Admin kimlik doğrulaması, şifre doğrulama, JWT token oluşturma ve admin oluşturma işlemlerini yönetir.
+- **auth/auth.controller.ts**: Login ve admin oluşturma için endpoint'leri sunar.
+- **auth/jwt.strategy.ts**: Passport için JWT authentication stratejisini uygular.
+- **auth/guards/jwt-auth.guard.ts**: Sadece admin'e özel route'ları korumak için guard.
 - **auth/dto/**:
-  - `login.dto.ts`: Data structure for login requests
-  - `create-admin.dto.ts`: Data structure for admin creation
+  - `login.dto.ts`: Login istekleri için veri yapısı
+  - `create-admin.dto.ts`: Admin oluşturma için veri yapısı
 
-### 4. Exams Module (Core Business Logic)
+### 4. Sınavlar Modülü (Temel İş Mantığı)
 
-- **exams/exams.service.ts**: Core business logic for:
-  - Managing exams (CRUD operations)
-  - Managing questions (CRUD operations)
-  - Processing exam results
-  - Generating statistics and analytics
-  - Bulk operations for questions
+- **exams/exams.service.ts**: Şunlar için temel iş mantığı:
+  - Sınavları yönetme (CRUD işlemleri)
+  - Soruları yönetme (CRUD işlemleri)
+  - Sınav sonuçlarını işleme
+  - İstatistikler ve analizler oluşturma
+  - Sorular için toplu işlemler
 
-- **exams/exams.controller.ts**: Exposes endpoints for:
-  - Public routes: Getting exams, questions, submitting results
-  - Protected routes: Creating/updating/deleting exams and questions
+- **exams/exams.controller.ts**: Şunlar için endpoint'leri sunar:
+  - Genel route'lar: Sınavları alma, soruları alma, sonuçları gönderme
+  - Korumalı route'lar: Sınav ve soru oluşturma/güncelleme/silme
 
 - **exams/dto/**:
-  - `create-exam.dto.ts`: Data structure for exam creation
-  - `update-exam.dto.ts`: Data structure for exam updates
-  - `create-question.dto.ts`: Data structure for question creation
-  - `update-question.dto.ts`: Data structure for question updates
-  - `create-exam-result.dto.ts`: Data structure for submitting exam results
+  - `create-exam.dto.ts`: Sınav oluşturma için veri yapısı
+  - `update-exam.dto.ts`: Sınav güncellemeleri için veri yapısı
+  - `create-question.dto.ts`: Soru oluşturma için veri yapısı
+  - `update-question.dto.ts`: Soru güncellemeleri için veri yapısı
+  - `create-exam-result.dto.ts`: Sınav sonuçlarını gönderme için veri yapısı
 
-## API Endpoints
+## API Endpoint'leri
 
-### Public Endpoints
+### Genel Endpoint'ler
 
-- `GET /exams`: Get all available exams
-- `GET /exams/:id`: Get a specific exam by ID
-- `GET /exams/:examId/questions`: Get all questions for a specific exam
-- `POST /exams/:id/results`: Submit results for an exam attempt
-- `GET /exams/:id/results`: Get all results for a specific exam
-- `GET /exams/results/:resultId`: Get a specific exam result by ID
-- `GET /exams/:id/statistics`: Get statistics for a specific exam
+- `GET /exams`: Tüm mevcut sınavları al
+- `GET /exams/:id`: ID'ye göre belirli bir sınavı al
+- `GET /exams/:examId/questions`: Belirli bir sınav için tüm soruları al
+- `POST /exams/:id/results`: Bir sınav girişimi için sonuçları gönder
+- `GET /exams/:id/results`: Belirli bir sınav için tüm sonuçları al
+- `GET /exams/results/:resultId`: ID'ye göre belirli bir sınav sonucunu al
+- `GET /exams/:id/statistics`: Belirli bir sınav için istatistikleri al
 
-### Protected Endpoints (Admin Only)
+### Korumalı Endpoint'ler (Sadece Admin)
 
-- `POST /auth/login`: Admin login
-- `POST /auth/register`: Create a new admin (only if no admins exist)
+- `POST /auth/login`: Admin girişi
+- `POST /auth/register`: Yeni bir admin oluştur (sadece hiç admin yoksa)
 
-- `POST /exams`: Create a new exam
-- `PUT /exams/:id`: Update an existing exam
-- `DELETE /exams/:id`: Delete an exam
+- `POST /exams`: Yeni bir sınav oluştur
+- `PUT /exams/:id`: Mevcut bir sınavı güncelle
+- `DELETE /exams/:id`: Bir sınavı sil
 
-- `POST /exams/:examId/questions`: Create a new question for an exam
-- `PUT /exams/questions/:id`: Update an existing question
-- `DELETE /exams/questions/:id`: Delete a question
-- `POST /exams/:examId/questions/bulk`: Bulk create questions for an exam
+- `POST /exams/:examId/questions`: Bir sınav için yeni bir soru oluştur
+- `PUT /exams/questions/:id`: Mevcut bir soruyu güncelle
+- `DELETE /exams/questions/:id`: Bir soruyu sil
+- `POST /exams/:examId/questions/bulk`: Bir sınav için toplu soru oluştur
 
-## Authentication Flow
+## Authentication Akışı
 
-1. Admin users authenticate via `/auth/login` endpoint
-2. Upon successful authentication, a JWT token is issued
-3. This token must be included in the Authorization header for all protected endpoints
-4. The JwtAuthGuard validates the token for protected routes
+1. Admin kullanıcıları `/auth/login` endpoint'i üzerinden kimlik doğrulama yapar
+2. Başarılı kimlik doğrulama sonrasında bir JWT token verilir
+3. Bu token, tüm korumalı endpoint'ler için Authorization header'ında bulunmalıdır
+4. JwtAuthGuard, korumalı route'lar için token'ı doğrular
 
-## Database Models
+## Veritabanı Modelleri
 
 ### Admin
-- Stores admin user credentials
-- Fields: id, username, password (hashed), createdAt, updatedAt
+- Admin kullanıcı kimlik bilgilerini saklar
+- Alanlar: id, username, password (hash'lenmiş), createdAt, updatedAt
 
 ### Exam
-- Represents a certification exam
-- Fields: id, title, createdAt, updatedAt
-- Relations: questions (one-to-many), results (one-to-many)
+- Bir sertifikasyon sınavını temsil eder
+- Alanlar: id, title, createdAt, updatedAt
+- İlişkiler: questions (one-to-many), results (one-to-many)
 
 ### Question
-- Represents an exam question
-- Fields: id, section, question, options, correct, explanation, category, examId, createdAt, updatedAt
-- Relations: exam (many-to-one), answers (one-to-many)
+- Bir sınav sorusunu temsil eder
+- Alanlar: id, section, question, options, correct, explanation, category, examId, createdAt, updatedAt
+- İlişkiler: exam (many-to-one), answers (one-to-many)
 
 ### ExamResult
-- Represents a completed exam attempt
-- Fields: id, examId, score, totalQuestions, examMode, timeSpent, createdAt, updatedAt
-- Relations: exam (many-to-one), questionAnswers (one-to-many)
+- Tamamlanmış bir sınav girişimini temsil eder
+- Alanlar: id, examId, score, totalQuestions, examMode, timeSpent, createdAt, updatedAt
+- İlişkiler: exam (many-to-one), questionAnswers (one-to-many)
 
 ### QuestionAnswer
-- Represents an answer to a specific question in an exam attempt
-- Fields: id, examResultId, questionId, selectedAnswer, isCorrect, timeSpent, createdAt, updatedAt
-- Relations: examResult (many-to-one), question (many-to-one)
+- Bir sınav girişiminde belirli bir soruya verilen cevabı temsil eder
+- Alanlar: id, examResultId, questionId, selectedAnswer, isCorrect, timeSpent, createdAt, updatedAt
+- İlişkiler: examResult (many-to-one), question (many-to-one)
 
-## Data Flow
+## Veri Akışı
 
-1. **Exam Creation**:
-   - Admin creates an exam via the admin interface
-   - Admin adds questions to the exam (individually or in bulk)
+1. **Sınav Oluşturma**:
+   - Admin, admin arayüzü üzerinden bir sınav oluşturur
+   - Admin sınava sorular ekler (tek tek veya toplu olarak)
 
-2. **Exam Taking**:
-   - User selects an exam from the frontend
-   - Frontend fetches questions for the selected exam
-   - User answers questions and submits the exam
-   - Backend processes the answers, calculates the score, and stores the result
+2. **Sınav Alma**:
+   - Kullanıcı frontend'den bir sınav seçer
+   - Frontend seçilen sınav için soruları getirir
+   - Kullanıcı soruları cevaplar ve sınavı gönderir
+   - Backend cevapları işler, puanı hesaplar ve sonucu kaydeder
 
-3. **Result Analysis**:
-   - Frontend fetches exam results and statistics
-   - Backend provides detailed analysis of performance
+3. **Sonuç Analizi**:
+   - Frontend sınav sonuçlarını ve istatistiklerini getirir
+   - Backend performans hakkında detaylı analiz sağlar
 
-## Development Guidelines
+## Geliştirme Kılavuzu
 
-### Adding a New Feature
+### Yeni Bir Özellik Ekleme
 
-1. Determine which module the feature belongs to (exams, auth, etc.)
-2. Create any necessary DTOs in the appropriate dto/ directory
-3. Add business logic in the relevant service
-4. Expose endpoints in the relevant controller
-5. Update the module file if necessary to import any new dependencies
+1. Özelliğin hangi modüle ait olduğunu belirle (exams, auth, vb.)
+2. İlgili dto/ dizininde gerekli DTO'ları oluştur
+3. İlgili serviste iş mantığını ekle
+4. İlgili controller'da endpoint'leri sun
+5. Gerekirse yeni bağımlılıkları içe aktarmak için modül dosyasını güncelle
 
-### Database Changes
+### Veritabanı Değişiklikleri
 
-1. Modify the schema.prisma file
-2. Run `npx prisma migrate dev --name <migration-name>` to generate a migration
-3. Update any affected services to use the new schema
+1. schema.prisma dosyasını değiştir
+2. Bir migrasyon oluşturmak için `npx prisma migrate dev --name <migration-name>` komutunu çalıştır
+3. Yeni şemayı kullanmak için etkilenen servisleri güncelle
 
-### Security Considerations
+### Güvenlik Önlemleri
 
-- All admin routes are protected with JWT authentication
-- Passwords are hashed using bcrypt
-- Environment variables are used for sensitive information
-- CORS is enabled for frontend access 
+- Tüm admin route'ları JWT authentication ile korunur
+- Şifreler bcrypt kullanılarak hash'lenir
+- Hassas bilgiler için environment variable'lar kullanılır
+- Frontend erişimi için CORS etkinleştirilir 

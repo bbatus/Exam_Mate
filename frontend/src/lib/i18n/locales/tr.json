@@ -64,7 +64,35 @@
       "intermediate": "orta",
       "advanced": "ileri",
       "expert": "uzman"
+    },
+    "paths": {
+      "kubernetes": "Kubernetes & Container Orchestration",
+      "language": "Dil Öğrenimi",
+      "ai": "Yapay Zeka & Makine Öğrenimi"
+    },
+    "descriptions": {
+      "kubernetes": "Container teknolojileri ve Kubernetes orkestrasyon platformu konusunda uzmanlaşmak için gerekli sertifikalar.",
+      "language": "İngilizce dil yeterlilik seviyenizi geliştirmek için adım adım ilerleyebileceğiniz sınavlar.",
+      "ai": "Yapay zeka ve makine öğrenimi alanlarında kariyer yapmak için gerekli sertifikalar."
+    },
+    "certDescriptions": {
+      "kubernetes": "Kubernetes temellerini ve container orkestrasyon kavramlarını doğrular.",
+      "kubernetesIntermediate": "Gelişmiş Kubernetes yönetimi ve güvenlik konularında yetkinliği doğrular.",
+      "englishA1": "Temel İngilizce seviyesini doğrular - günlük basit ifadeler ve kelimeler.",
+      "englishA2": "Temel-orta İngilizce seviyesini doğrular - basit iletişim ve rutin görevler.",
+      "englishB1": "Orta İngilizce seviyesini doğrular - iş ve okul ortamında etkili iletişim.",
+      "englishB2": "Orta-üst İngilizce seviyesini doğrular - karmaşık metinleri anlama ve akıcı konuşma.",
+      "gcpGenAI": "Google Cloud'da üretken yapay zeka çözümlerini anlama ve uygulama yeteneğini doğrular."
     }
+  },
+  "examTitles": {
+    "kubernetes": "Kubernetes",
+    "kubernetesIntermediate": "Kubernetes Orta Seviye",
+    "englishA1": "English A1 Level",
+    "englishA2": "English A2 Level",
+    "englishB1": "English B1 Level",
+    "englishB2": "English B2 Level",
+    "gcpGenAI": "Google Cloud Generative AI Leader"
   },
   "analytics": {
     "title": "Çalışma Analitikleri",
@@ -89,6 +117,34 @@
     "accuracyRate": "Doğruluk Oranı (%)",
     "studyTime": "Çalışma Süresi (dk)",
     "suggestions": "Öneriler",
+    "recommendations": "Öneriler",
+    "focusTopics": "Zayıf Konulara Odaklan",
+    "focusTopicsTip": "Cloud Security konusunda daha fazla çalışma yapmanız önerilir.",
+    "reviewRegularly": "Düzenli Tekrar Yap",
+    "reviewRegularlyTip": "Öğrendiğiniz konuları düzenli aralıklarla tekrar edin.",
+    "balanceStudy": "Çalışma Dengesini Koru",
+    "balanceStudyTip": "Farklı konular arasında dengeli bir çalışma programı oluşturun.",
+    "detailedAnalysis": "Detaylı Analiz",
+    "progressOverTime": "Zaman İçinde İlerleme",
+    "topicPerformance": "Konu Performansı",
+    "weeklyPattern": "Haftalık Desen",
+    "topicPerformanceDescription": "Farklı konulardaki performansınız ve çalışma saatlerinizin dağılımı.",
+    "weeklyDescription": "Haftanın günlerine göre çalışma alışkanlıklarınız.",
+    "hero": {
+      "title": "Sertifika Sınavlarına Hazırlanın",
+      "subtitle": "Üyelik gerektirmeden, hemen pratik yapın",
+      "cta": "Sınavları Keşfet",
+      "analytics": "Analitikleri Gör"
+    },
+    "features": {
+      "title": "Neden Exam Mate?",
+      "noRegistration": "Üyelik Gerektirmez",
+      "noRegistrationDesc": "Hemen kayıt olmadan sınavlara başlayabilirsiniz",
+      "detailedAnalysis": "Detaylı Analiz",
+      "detailedAnalysisDesc": "Performansınızı detaylı grafiklerle takip edin",
+      "currentQuestions": "Güncel Sorular",
+      "currentQuestionsDesc": "Sürekli güncellenen soru havuzu"
+    },
     "studyDuration": "Çalışma Süresi",
     "studyDurationTip": "En verimli çalışmalarınız 60-90 dakikalık oturumlarda gerçekleşiyor. Bu süreyi hedeflemeye çalışın.",
     "regularity": "Düzenlilik",
@@ -165,7 +221,19 @@
     "difficultyLabel": "Zorluk Seviyesi",
     "searchLabel": "Sınav Ara",
     "questions": "Soru",
-    "viewStatistics": "İstatistikleri Görüntüle"
+    "viewStatistics": "İstatistikleri Görüntüle",
+    "categories": {
+      "cloudComputing": "Bulut Bilişim",
+      "containerOrchestration": "Container & Orchestration",
+      "languageLearning": "Dil Öğrenimi",
+      "artificialIntelligence": "Yapay Zeka"
+    },
+    "difficulties": {
+      "all": "Tümü",
+      "beginner": "Başlangıç",
+      "intermediate": "Orta",
+      "advanced": "İleri"
+    }
   },
   "examMode": {
     "title": "Sınav Modu Seçin",
@@ -448,5 +516,17 @@
     "lineSpacing": "Satır Aralığı",
     "reset": "Ayarları Sıfırla",
     "close": "Kapat"
+  },
+  "examTitles": {
+    "Google Cloud Digital Leader": "Google Cloud Dijital Lider",
+    "Google Cloud Generative AI Leader": "Google Cloud Üretken AI Lideri",
+    "Google Cloud Associate Cloud Engineer": "Google Cloud Ortak Bulut Mühendisi",
+    "Kubernetes": "Kubernetes",
+    "Kubernetes Orta Seviye": "Kubernetes Orta Seviye",
+    "English A1 Level": "İngilizce A1 Seviyesi",
+    "English A2 Level": "İngilizce A2 Seviyesi",
+    "English B1 Level": "İngilizce B1 Seviyesi",
+    "English B2 Level": "İngilizce B2 Seviyesi",
+    "AWS Cloud Practitioner": "AWS Bulut Uygulayıcısı"
   }
 } 

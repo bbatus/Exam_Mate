@@ -10,6 +10,9 @@ import { FadeIn } from '../components/UIAnimations';
 import AdBanner from '../components/AdBanner';
 import PageLayout from '../components/PageLayout';
 import { useTranslation } from 'react-i18next';
+import AnimatedBackground from '../components/visual/AnimatedBackground';
+import FloatingIcons from '../components/visual/FloatingIcons';
+import ParticleSystem from '../components/visual/ParticleSystem';
 
 const StudyAnalyticsPage: React.FC = () => {
   const theme = useTheme();
@@ -17,6 +20,9 @@ const StudyAnalyticsPage: React.FC = () => {
 
   return (
     <PageLayout>
+      <AnimatedBackground />
+      <FloatingIcons />
+      <ParticleSystem />
       <FadeIn>
         <Box sx={{ mb: 4 }}>
           <Typography variant="h4" component="h1" gutterBottom fontWeight="bold">

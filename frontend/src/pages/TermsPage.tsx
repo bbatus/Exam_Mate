@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Typography, Paper, Box, Breadcrumbs, Link } from '@mui/material';
+import { Container, Typography, Paper, Box, Breadcrumbs, Link, useTheme } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import AdBanner from '../components/AdBanner';
@@ -7,11 +7,22 @@ import LegalFooter from '../components/LegalFooter';
 
 const TermsPage: React.FC = () => {
   const { t } = useTranslation();
+  const theme = useTheme();
   
   return (
     <Container maxWidth="md" sx={{ py: 4 }}>
       <Breadcrumbs sx={{ mb: 3 }}>
-        <Link component={RouterLink} to="/" underline="hover" color="inherit">
+        <Link 
+          component={RouterLink} 
+          to="/" 
+          underline="hover" 
+          sx={{
+            color: theme.palette.primary.main,
+            '&:hover': {
+              color: theme.palette.primary.dark,
+            }
+          }}
+        >
           {t('common.home')}
         </Link>
         <Typography color="text.primary">{t('legal.termsOfService')}</Typography>

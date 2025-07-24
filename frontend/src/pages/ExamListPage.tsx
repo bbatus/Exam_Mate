@@ -28,6 +28,7 @@ import {
 } from '@mui/material';
 import { HeroBanner } from '@/components/SparklesPreview';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import { getTranslatedExamTitle } from '@/lib/utils/examTitleUtils';
 import SchoolIcon from '@mui/icons-material/School';
 import SearchIcon from '@mui/icons-material/Search';
 import FilterListIcon from '@mui/icons-material/FilterList';
@@ -40,6 +41,12 @@ import ExamStatistics from '../components/ExamStatistics';
 import ExamModeSelector, { ExamMode } from '../components/ExamModeSelector';
 import PageLayout from '../components/PageLayout';
 import { fetchApi } from '../lib/apiConfig';
+
+// Visual Enhancement Components
+import AnimatedBackground from '../components/visual/AnimatedBackground';
+import FloatingIcons from '../components/visual/FloatingIcons';
+import ParticleSystem from '../components/visual/ParticleSystem';
+import FeatureCards from '../components/visual/FeatureCards';
 
 interface Exam {
   id: number;
@@ -55,9 +62,9 @@ const mockExams: Exam[] = [
   { id: 5, title: 'Google Cloud Generative AI Leader' }
 ];
 
-// Mock kategoriler
-const categories = ['Bulut Bilişim', 'DevOps', 'Güvenlik', 'Yazılım Geliştirme', 'Veri Bilimi', 'Yapay Zeka'];
-const difficulties = ['Tümü', 'Başlangıç', 'Orta', 'İleri'];
+// Mock kategoriler - Mevcut sınavlara göre güncellendi
+const getCategoryKeys = () => ['cloudComputing', 'containerOrchestration', 'languageLearning', 'artificialIntelligence'];
+const getDifficultyKeys = () => ['all', 'beginner', 'intermediate', 'advanced'];
 
 const ExamListPage: React.FC = () => {
   const [exams, setExams] = useState<Exam[]>([]);
@@ -66,7 +73,7 @@ const ExamListPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [categoryFilter, setCategoryFilter] = useState<string>('');
-  const [difficultyFilter, setDifficultyFilter] = useState<string>('Tümü');
+  const [difficultyFilter, setDifficultyFilter] = useState<string>('all');
   const [activeTab, setActiveTab] = useState<number>(0);
   const [selectedExamId, setSelectedExamId] = useState<number | null>(null);
   const [examMode, setExamMode] = useState<ExamMode>('practice');
@@ -104,27 +111,41 @@ const ExamListPage: React.FC = () => {
     
     // Arama sorgusuna göre filtrele
     if (searchQuery) {
-      result = result.filter(exam => 
-        exam.title.toLowerCase().includes(searchQuery.toLowerCase())
-      );
+      result = result.filter(exam => {
+        const originalTitle = exam.title.toLowerCase();
+        const translatedTitle = getTranslatedExamTitle(exam.title, t).toLowerCase();
+        const query = searchQuery.toLowerCase();
+        return originalTitle.includes(query) || translatedTitle.includes(query);
+      });
     }
     
-    // Kategori filtreleme (mock olarak sadece bazı ID'lere kategori atayacağız)
+    // Kategori filtreleme - Gerçek sınavlara göre güncellendi
     if (categoryFilter) {
-      // Gerçek uygulamada burada API'den gelen kategori bilgisine göre filtreleme yapılır
-      // Şimdilik mock olarak çift ID'li sınavları seçilen kategoriye ait kabul edelim
       result = result.filter(exam => {
-        if (categoryFilter === 'Bulut Bilişim') return exam.id % 2 === 0;
-        if (categoryFilter === 'DevOps') return exam.id % 3 === 0;
-        if (categoryFilter === 'Güvenlik') return exam.id % 5 === 0;
+        // Bulut Bilişim: Google Cloud, AWS sınavları
+        if (categoryFilter === 'cloudComputing') {
+          return [1, 2, 3, 21].includes(exam.id); // GCP Digital Leader, GCP GenAI, GCP Associate, AWS
+        }
+        // Container & Orchestration: Kubernetes sınavları
+        if (categoryFilter === 'containerOrchestration') {
+          return [5, 16].includes(exam.id); // Kubernetes, Kubernetes Orta Seviye
+        }
+        // Dil Öğrenimi: İngilizce sınavları
+        if (categoryFilter === 'languageLearning') {
+          return [17, 18, 19, 20].includes(exam.id); // English A1, A2, B1, B2
+        }
+        // Yapay Zeka: AI/ML sınavları
+        if (categoryFilter === 'artificialIntelligence') {
+          return [2].includes(exam.id); // GCP Generative AI Leader
+        }
         return true;
       });
     }
     
-    // Zorluk seviyesi filtreleme (mock olarak ID'ye göre zorluk atayacağız)
-    if (difficultyFilter !== 'Tümü') {
+    // Zorluk seviyesi filtreleme - Gerçek sınav zorluklarına göre
+    if (difficultyFilter !== 'all') {
       result = result.filter(exam => {
-        const difficulty = getRandomDifficulty(exam.id - 1);
+        const difficulty = getExamDifficultyKey(exam.id);
         return difficulty === difficultyFilter;
       });
     }
@@ -189,9 +210,27 @@ const ExamListPage: React.FC = () => {
     return colors[index % colors.length];
   };
 
-  const getRandomDifficulty = (index: number) => {
-    const difficulties = ['Başlangıç', 'Orta', 'İleri'];
-    return difficulties[index % difficulties.length];
+  const getExamDifficultyKey = (examId: number) => {
+    // Gerçek sınav zorluk seviyeleri - translation key'leri
+    const difficultyMap: Record<number, string> = {
+      1: 'beginner',   // Google Cloud Digital Leader
+      2: 'intermediate',        // Google Cloud Generative AI Leader
+      3: 'advanced',       // Google Cloud Associate Engineer
+      5: 'beginner',   // Kubernetes
+      16: 'intermediate',       // Kubernetes Orta Seviye
+      17: 'beginner',  // English A1
+      18: 'beginner',  // English A2
+      19: 'intermediate',       // English B1
+      20: 'intermediate',       // English B2
+      21: 'beginner',  // AWS Cloud Practitioner
+      22: 'beginner'   // test
+    };
+    return difficultyMap[examId] || 'beginner';
+  };
+
+  const getExamDifficulty = (examId: number) => {
+    const difficultyKey = getExamDifficultyKey(examId);
+    return t(`examList.difficulties.${difficultyKey}`);
   };
 
   const getRandomQuestionCount = (index: number) => {
@@ -201,6 +240,11 @@ const ExamListPage: React.FC = () => {
 
   return (
     <PageLayout>
+      {/* Visual Enhancement Components */}
+      <AnimatedBackground />
+      <FloatingIcons />
+      <ParticleSystem />
+      
       <HeroBanner />
       
       <Tabs
@@ -279,9 +323,9 @@ const ExamListPage: React.FC = () => {
                     <MenuItem value="">
                       {t('examList.allCategories')}
                     </MenuItem>
-                    {categories.map((category) => (
-                      <MenuItem key={category} value={category}>
-                        {category}
+                    {getCategoryKeys().map((categoryKey: string) => (
+                      <MenuItem key={categoryKey} value={categoryKey}>
+                        {t(`examList.categories.${categoryKey}`)}
                       </MenuItem>
                     ))}
                   </Select>
@@ -298,9 +342,9 @@ const ExamListPage: React.FC = () => {
                     label={t('examList.difficultyLabel')}
                     onChange={handleDifficultyChange}
                   >
-                    {difficulties.map((difficulty) => (
-                      <MenuItem key={difficulty} value={difficulty}>
-                        {difficulty}
+                    {getDifficultyKeys().map((difficultyKey: string) => (
+                      <MenuItem key={difficultyKey} value={difficultyKey}>
+                        {t(`examList.difficulties.${difficultyKey}`)}
                       </MenuItem>
                     ))}
                   </Select>
@@ -313,6 +357,9 @@ const ExamListPage: React.FC = () => {
             selectedMode={examMode} 
             onModeChange={handleExamModeChange}
           />
+
+          {/* Feature Cards Section */}
+          <FeatureCards />
 
           {error && (
             <Alert severity="warning" sx={{ mb: 4 }}>
@@ -368,7 +415,7 @@ const ExamListPage: React.FC = () => {
                         </Avatar>
                         <Box sx={{ ml: 2 }}>
                           <Chip 
-                            label={getRandomDifficulty(index)} 
+                            label={getExamDifficulty(exam.id)} 
                             size="small"
                             sx={{ 
                               bgcolor: alpha(getRandomColor(index), 0.2),
@@ -383,7 +430,7 @@ const ExamListPage: React.FC = () => {
                       </Box>
                       <CardContent sx={{ flexGrow: 1 }}>
                         <Typography variant="h6" component="h2" gutterBottom>
-                          {exam.title}
+                          {getTranslatedExamTitle(exam.title, t)}
                         </Typography>
                       </CardContent>
                       <CardActions sx={{ p: 2, pt: 0 }}>
@@ -429,19 +476,6 @@ const ExamListPage: React.FC = () => {
       ) : (
         <ExamStatistics examId={selectedExamId || 1} />
       )}
-      
-      {/* Admin Panel Link */}
-      <Box sx={{ mt: 4, textAlign: 'center', opacity: 0.7 }}>
-        <Button 
-          component={RouterLink} 
-          to="/admin/login" 
-          variant="text" 
-          size="small"
-          sx={{ fontSize: '0.8rem', color: 'text.secondary' }}
-        >
-          {t('admin.login.title')}
-        </Button>
-      </Box>
       
       <Advertisement position="bottom" />
     </PageLayout>

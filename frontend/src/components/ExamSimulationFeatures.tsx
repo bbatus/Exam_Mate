@@ -125,6 +125,7 @@ const ExamSimulationFeatures: React.FC<ExamSimulationFeaturesProps> = ({
             },
           }}
         />
+        {/* Büyük ve dikkat çekici sayaç */}
         <Box sx={{
           position: 'absolute',
           top: '50%',
@@ -133,21 +134,20 @@ const ExamSimulationFeatures: React.FC<ExamSimulationFeaturesProps> = ({
           display: 'flex',
           alignItems: 'center',
           gap: 1,
+          flexDirection: 'column',
           animation: isTimerPulsing ? 'pulse 1s infinite' : 'none',
           '@keyframes pulse': {
-            '0%': {
-              opacity: 1,
-            },
-            '50%': {
-              opacity: 0.5,
-            },
-            '100%': {
-              opacity: 1,
-            },
+            '0%': { opacity: 1 },
+            '50%': { opacity: 0.5 },
+            '100%': { opacity: 1 },
           },
         }}>
-          <TimerIcon fontSize="small" sx={{ color: getTimeColor() }} />
-          <Typography variant="caption" fontWeight="bold" sx={{ color: getTimeColor() }}>
+          <TimerIcon fontSize="medium" sx={{ color: getTimeColor(), mb: 0.5 }} />
+          <Typography 
+            variant="h3" 
+            fontWeight="bold" 
+            sx={{ color: getTimeColor(), letterSpacing: 2, fontVariantNumeric: 'tabular-nums', lineHeight: 1 }}
+          >
             {formatTime(timeRemaining)}
           </Typography>
         </Box>

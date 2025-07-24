@@ -279,13 +279,324 @@ const LearningPathMap: React.FC<LearningPathMapProps> = ({ examId }) => {
     ]
   };
 
+  // Mock data for Kubernetes exam
+  const mockKubernetesExam: Exam = {
+    id: 5,
+    title: 'Kubernetes',
+    topics: [
+      {
+        id: 1,
+        name: 'Kubernetes Fundamentals',
+        description: 'Understanding containers, pods, and basic Kubernetes concepts.',
+        progress: 50,
+        status: 'in-progress',
+        dependencies: [],
+        questionsCount: 20,
+        position: { x: 150, y: 200 }
+      },
+      {
+        id: 2,
+        name: 'Workloads & Scheduling',
+        description: 'Understanding deployments, services, and scheduling.',
+        progress: 30,
+        status: 'in-progress',
+        dependencies: [1],
+        questionsCount: 25,
+        position: { x: 450, y: 200 }
+      },
+      {
+        id: 3,
+        name: 'Services & Networking',
+        description: 'Understanding services, ingress, and networking concepts.',
+        progress: 20,
+        status: 'in-progress',
+        dependencies: [1, 2],
+        questionsCount: 18,
+        position: { x: 750, y: 200 }
+      },
+      {
+        id: 4,
+        name: 'Storage',
+        description: 'Understanding volumes, persistent volumes, and storage classes.',
+        progress: 10,
+        status: 'in-progress',
+        dependencies: [1],
+        questionsCount: 15,
+        position: { x: 450, y: 400 }
+      },
+      {
+        id: 5,
+        name: 'Troubleshooting',
+        description: 'Debugging and troubleshooting Kubernetes applications.',
+        progress: 0,
+        status: 'locked',
+        dependencies: [2, 3, 4],
+        questionsCount: 22,
+        position: { x: 750, y: 400 }
+      }
+    ]
+  };
+
+  // Mock data for Kubernetes Intermediate Level exam
+  const mockKubernetesIntermediateExam: Exam = {
+    id: 16,
+    title: 'Kubernetes Orta Seviye',
+    topics: [
+      {
+        id: 1,
+        name: 'Advanced Workloads',
+        description: 'StatefulSets, DaemonSets, and advanced deployment strategies.',
+        progress: 40,
+        status: 'in-progress',
+        dependencies: [],
+        questionsCount: 18,
+        position: { x: 150, y: 200 }
+      },
+      {
+        id: 2,
+        name: 'Security',
+        description: 'RBAC, security contexts, and network policies.',
+        progress: 25,
+        status: 'in-progress',
+        dependencies: [1],
+        questionsCount: 20,
+        position: { x: 450, y: 200 }
+      },
+      {
+        id: 3,
+        name: 'Monitoring & Logging',
+        description: 'Monitoring cluster health and application logs.',
+        progress: 15,
+        status: 'in-progress',
+        dependencies: [1],
+        questionsCount: 16,
+        position: { x: 450, y: 400 }
+      },
+      {
+        id: 4,
+        name: 'Cluster Administration',
+        description: 'Managing cluster resources and maintenance.',
+        progress: 0,
+        status: 'locked',
+        dependencies: [1, 2, 3],
+        questionsCount: 22,
+        position: { x: 750, y: 300 }
+      }
+    ]
+  };
+
+  // Mock data for English A1 Level exam
+  const mockEnglishA1Exam: Exam = {
+    id: 17,
+    title: 'English A1 Level',
+    topics: [
+      {
+        id: 1,
+        name: 'Basic Grammar',
+        description: 'Present tense, articles, and basic sentence structure.',
+        progress: 70,
+        status: 'in-progress',
+        dependencies: [],
+        questionsCount: 25,
+        position: { x: 150, y: 200 }
+      },
+      {
+        id: 2,
+        name: 'Vocabulary',
+        description: 'Common words, numbers, and everyday expressions.',
+        progress: 60,
+        status: 'in-progress',
+        dependencies: [],
+        questionsCount: 20,
+        position: { x: 150, y: 400 }
+      },
+      {
+        id: 3,
+        name: 'Speaking & Listening',
+        description: 'Basic conversations and understanding simple phrases.',
+        progress: 40,
+        status: 'in-progress',
+        dependencies: [1, 2],
+        questionsCount: 18,
+        position: { x: 450, y: 300 }
+      },
+      {
+        id: 4,
+        name: 'Reading & Writing',
+        description: 'Simple texts and basic writing skills.',
+        progress: 30,
+        status: 'in-progress',
+        dependencies: [1, 2],
+        questionsCount: 15,
+        position: { x: 750, y: 300 }
+      }
+    ]
+  };
+
+  // Mock data for English A2 Level exam
+  const mockEnglishA2Exam: Exam = {
+    id: 18,
+    title: 'English A2 Level',
+    topics: [
+      {
+        id: 1,
+        name: 'Intermediate Grammar',
+        description: 'Past tense, future tense, and comparative forms.',
+        progress: 55,
+        status: 'in-progress',
+        dependencies: [],
+        questionsCount: 22,
+        position: { x: 150, y: 200 }
+      },
+      {
+        id: 2,
+        name: 'Extended Vocabulary',
+        description: 'Family, work, hobbies, and travel vocabulary.',
+        progress: 45,
+        status: 'in-progress',
+        dependencies: [],
+        questionsCount: 25,
+        position: { x: 150, y: 400 }
+      },
+      {
+        id: 3,
+        name: 'Communication Skills',
+        description: 'Describing experiences and expressing opinions.',
+        progress: 35,
+        status: 'in-progress',
+        dependencies: [1, 2],
+        questionsCount: 20,
+        position: { x: 450, y: 300 }
+      },
+      {
+        id: 4,
+        name: 'Practical English',
+        description: 'Shopping, directions, and everyday situations.',
+        progress: 25,
+        status: 'in-progress',
+        dependencies: [1, 2],
+        questionsCount: 18,
+        position: { x: 750, y: 300 }
+      }
+    ]
+  };
+
+  // Mock data for English B1 Level exam
+  const mockEnglishB1Exam: Exam = {
+    id: 19,
+    title: 'English B1 Level',
+    topics: [
+      {
+        id: 1,
+        name: 'Advanced Grammar',
+        description: 'Conditional sentences, passive voice, and complex structures.',
+        progress: 40,
+        status: 'in-progress',
+        dependencies: [],
+        questionsCount: 28,
+        position: { x: 150, y: 200 }
+      },
+      {
+        id: 2,
+        name: 'Professional Vocabulary',
+        description: 'Work, education, and formal communication vocabulary.',
+        progress: 35,
+        status: 'in-progress',
+        dependencies: [],
+        questionsCount: 24,
+        position: { x: 150, y: 400 }
+      },
+      {
+        id: 3,
+        name: 'Fluency Skills',
+        description: 'Expressing ideas clearly and understanding main points.',
+        progress: 25,
+        status: 'in-progress',
+        dependencies: [1, 2],
+        questionsCount: 22,
+        position: { x: 450, y: 300 }
+      },
+      {
+        id: 4,
+        name: 'Text Comprehension',
+        description: 'Understanding complex texts and writing coherent texts.',
+        progress: 15,
+        status: 'in-progress',
+        dependencies: [1, 2, 3],
+        questionsCount: 20,
+        position: { x: 750, y: 300 }
+      }
+    ]
+  };
+
+  // Mock data for English B2 Level exam
+  const mockEnglishB2Exam: Exam = {
+    id: 20,
+    title: 'English B2 Level',
+    topics: [
+      {
+        id: 1,
+        name: 'Complex Grammar',
+        description: 'Advanced tenses, reported speech, and sophisticated structures.',
+        progress: 30,
+        status: 'in-progress',
+        dependencies: [],
+        questionsCount: 30,
+        position: { x: 150, y: 200 }
+      },
+      {
+        id: 2,
+        name: 'Academic Vocabulary',
+        description: 'Abstract concepts, academic writing, and specialized terms.',
+        progress: 25,
+        status: 'in-progress',
+        dependencies: [],
+        questionsCount: 26,
+        position: { x: 150, y: 400 }
+      },
+      {
+        id: 3,
+        name: 'Advanced Communication',
+        description: 'Debates, presentations, and nuanced expression.',
+        progress: 20,
+        status: 'in-progress',
+        dependencies: [1, 2],
+        questionsCount: 24,
+        position: { x: 450, y: 300 }
+      },
+      {
+        id: 4,
+        name: 'Critical Analysis',
+        description: 'Analyzing complex texts and writing detailed reports.',
+        progress: 10,
+        status: 'in-progress',
+        dependencies: [1, 2, 3],
+        questionsCount: 22,
+        position: { x: 750, y: 300 }
+      }
+    ]
+  };
+
   // Mock exams data
   const mockExams: Record<number, Exam> = {
     1: mockGoogleDigitalLeaderExam,
-    2: mockAWSCloudPractitionerExam,
+    2: mockGoogleCloudGenAILeaderExam,
     3: mockGoogleCloudAssociateEngineerExam,
-    5: mockGoogleCloudGenAILeaderExam
+    5: mockKubernetesExam,
+    16: mockKubernetesIntermediateExam,
+    17: mockEnglishA1Exam,
+    18: mockEnglishA2Exam,
+    19: mockEnglishB1Exam,
+    20: mockEnglishB2Exam,
+    21: mockAWSCloudPractitionerExam
   };
+
+  // Update selectedExamId when examId prop changes
+  useEffect(() => {
+    if (examId) {
+      setSelectedExamId(examId);
+    }
+  }, [examId]);
 
   useEffect(() => {
     const fetchExam = async () => {

@@ -12,6 +12,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ExamsService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma/prisma.service");
+function shuffleArray(array) {
+    const newArray = [...array];
+    for (let i = newArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+    }
+    return newArray;
+}
 let ExamsService = class ExamsService {
     prisma;
     constructor(prisma) {
@@ -29,8 +37,21 @@ let ExamsService = class ExamsService {
         });
     }
     async getExamQuestions(examId) {
-        return this.prisma.question.findMany({
+        const questions = await this.prisma.question.findMany({
             where: { examId },
+        });
+        const shuffledQuestions = shuffleArray(questions);
+        return shuffledQuestions.map(question => {
+            const options = [...question.options];
+            const correctOption = options[question.correct];
+            const shuffledOptions = shuffleArray(options);
+            const newCorrectIndex = shuffledOptions.findIndex(option => option === correctOption);
+            return {
+                ...question,
+                options: shuffledOptions,
+                correct: newCorrectIndex,
+                originalCorrect: question.correct
+            };
         });
     }
     async createExamResult(createExamResultDto) {
